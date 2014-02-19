@@ -1,0 +1,13 @@
+4
+現在は\n仮戦闘シーン、
+選択肢有りの会話オブジェクト、
+仮セーブシステム、
+仮メニュー画面を作りたいですか?
+3
+はい
+いいえ
+おはようございます?
+./scn/first_town/object_sign1-1.cns
+./scn/first_town/object_sign1-2.cns
+./scn/first_town/object_sign1-3.cns
+2

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Balloon.cpp" />
+    <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="Character_02.cpp" />
+    <ClCompile Include="Character_Data.cpp" />
+    <ClCompile Include="Character_Data_Save.cpp" />
+    <ClCompile Include="Character_Haruka.cpp" />
+    <ClCompile Include="Charcter_Management.cpp" />
+    <ClCompile Include="Defines.cpp" />
+    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Field_Base_Data.cpp" />
+    <ClCompile Include="First_Town.cpp" />
+    <ClCompile Include="Flags.cpp" />
+    <ClCompile Include="Green_Field.cpp" />
+    <ClCompile Include="Guild.cpp" />
+    <ClCompile Include="Guild_Entrance.cpp" />
+    <ClCompile Include="Guild_Main.cpp" />
+    <ClCompile Include="Guild_Main_Scene.cpp" />
+    <ClCompile Include="Guild_Scene_Base.cpp" />
+    <ClCompile Include="Guild_Warehouse.cpp" />
+    <ClCompile Include="G_F_Object.cpp" />
+    <ClCompile Include="G_F_O_Exit.cpp" />
+    <ClCompile Include="Ice_Field.cpp" />
+    <ClCompile Include="In_Battle.cpp" />
+    <ClCompile Include="Key_Input.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Objects.cpp" />
+    <ClCompile Include="PlayerBase.cpp" />
+    <ClCompile Include="Players.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="Talker.cpp" />
+    <ClCompile Include="World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Balloon.h" />
+    <ClInclude Include="Battle.h" />
+    <ClInclude Include="Character_02.h" />
+    <ClInclude Include="Character_Data.h" />
+    <ClInclude Include="Character_Data_Save.h" />
+    <ClInclude Include="Character_Haruka.h" />
+    <ClInclude Include="Charcter_Management.h" />
+    <ClInclude Include="Defines.h" />
+    <ClInclude Include="Events.h" />
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="Field_Base_Data.h" />
+    <ClInclude Include="First_Town.h" />
+    <ClInclude Include="Flags.h" />
+    <ClInclude Include="Green_Field.h" />
+    <ClInclude Include="Guild.h" />
+    <ClInclude Include="Guild_Entrance.h" />
+    <ClInclude Include="Guild_Main.h" />
+    <ClInclude Include="Guild_Main_Scene.h" />
+    <ClInclude Include="Guild_Scene_Base.h" />
+    <ClInclude Include="Guild_Warehouse.h" />
+    <ClInclude Include="G_F_Object.h" />
+    <ClInclude Include="G_F_O_Exit.h" />
+    <ClInclude Include="Ice_Field.h" />
+    <ClInclude Include="In_Battle.h" />
+    <ClInclude Include="Key_Input.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Objects.h" />
+    <ClInclude Include="PlayerBase.h" />
+    <ClInclude Include="Players.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="Talker.h" />
+    <ClInclude Include="World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A1524A9A-2E4A-490D-947A-9B2BE27201AF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>dx_test_2</RootNamespace>
+    <ProjectName>3d_dungeon</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\en\Documents\Visual Studio 2010\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\en\Documents\Visual Studio 2010\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\en\Documents\Visual Studio 2010\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Users\en\Documents\Visual Studio 2010\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
