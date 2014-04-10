@@ -15,6 +15,7 @@ Guild_Entrance::Guild_Entrance()
 	fscanf_r("./scn/guild/guild_list.cns");
 	choosed_number = 0;
 	choose_now = 0;
+	char_flag = 0;
 }
 
 
@@ -29,7 +30,7 @@ int Guild_Entrance::Reaction()
 	if (Flags::nowscene == 0x8011d && Key_Input::buff_time[KEY_INPUT_Z] == 1 && Flags::guild_now == 1)
 	{
 		choosed_number = choose_now + 2;
-		char_ran = GetRand(Defines::char_max - 1) + 1;
+		char_ran = GetRand(Defines::char_max - 1);
 	}
 
 	if (Flags::nowscene == 0x8011d && Flags::guild_now == 1) //ƒƒjƒ…[‚ğ‘I‘ğ‚·‚é

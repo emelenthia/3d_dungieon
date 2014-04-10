@@ -7,7 +7,8 @@
 #include"Flags.h"
 #include"Events.h"
 #include"Scene.h"
-#include"Character_Haruka.h"
+#include"Colors.h"
+
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -15,6 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 {
 
 	ChangeWindowMode(TRUE); // ウィンドウモードに設定
+	SetDrawScreen(DX_SCREEN_BACK);
 	//SetBackgroundColor(0, 0, 0); //背景の色変更5
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{
@@ -26,9 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	//int reaction_return; //Reaction()の返り値を受け取る
 	Flags flags;
 	Events *events = Events::GetInstance();
-	//Character_Haruka *Haruka;
-	Character_Data *char_p[2];
-	char_p[0] = Character_Haruka::GetInstance();
+	Colors colors; //コンストラクタ
+	
 	while (1) //メインループ
 	{
 

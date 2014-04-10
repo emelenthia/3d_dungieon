@@ -13,12 +13,15 @@
   <ItemGroup>
     <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Battle.cpp" />
-    <ClCompile Include="Character_02.cpp" />
+    <ClCompile Include="Characters.cpp" />
     <ClCompile Include="Character_Data.cpp" />
     <ClCompile Include="Character_Data_Save.cpp" />
-    <ClCompile Include="Character_Haruka.cpp" />
+    <ClCompile Include="Character_Show.cpp" />
+    <ClCompile Include="Character_Show_F.cpp" />
     <ClCompile Include="Charcter_Management.cpp" />
+    <ClCompile Include="Colors.cpp" />
     <ClCompile Include="Defines.cpp" />
+    <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Field_Base_Data.cpp" />
@@ -26,9 +29,11 @@
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="Green_Field.cpp" />
     <ClCompile Include="Guild.cpp" />
+    <ClCompile Include="Guild_Dungeon.cpp" />
     <ClCompile Include="Guild_Entrance.cpp" />
     <ClCompile Include="Guild_Main.cpp" />
     <ClCompile Include="Guild_Main_Scene.cpp" />
+    <ClCompile Include="Guild_PT.cpp" />
     <ClCompile Include="Guild_Scene_Base.cpp" />
     <ClCompile Include="Guild_Warehouse.cpp" />
     <ClCompile Include="G_F_Object.cpp" />
@@ -39,8 +44,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Objects.cpp" />
+    <ClCompile Include="Options.cpp" />
+    <ClCompile Include="Party.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="Players.cpp" />
+    <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="Talker.cpp" />
@@ -49,12 +57,15 @@
   <ItemGroup>
     <ClInclude Include="Balloon.h" />
     <ClInclude Include="Battle.h" />
-    <ClInclude Include="Character_02.h" />
+    <ClInclude Include="Characters.h" />
     <ClInclude Include="Character_Data.h" />
     <ClInclude Include="Character_Data_Save.h" />
-    <ClInclude Include="Character_Haruka.h" />
+    <ClInclude Include="Character_Show.h" />
+    <ClInclude Include="Character_Show_F.h" />
     <ClInclude Include="Charcter_Management.h" />
+    <ClInclude Include="Colors.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Field_Base_Data.h" />
@@ -62,9 +73,11 @@
     <ClInclude Include="Flags.h" />
     <ClInclude Include="Green_Field.h" />
     <ClInclude Include="Guild.h" />
+    <ClInclude Include="Guild_Dungeon.h" />
     <ClInclude Include="Guild_Entrance.h" />
     <ClInclude Include="Guild_Main.h" />
     <ClInclude Include="Guild_Main_Scene.h" />
+    <ClInclude Include="Guild_PT.h" />
     <ClInclude Include="Guild_Scene_Base.h" />
     <ClInclude Include="Guild_Warehouse.h" />
     <ClInclude Include="G_F_Object.h" />
@@ -74,8 +87,11 @@
     <ClInclude Include="Key_Input.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Objects.h" />
+    <ClInclude Include="Options.h" />
+    <ClInclude Include="Party.h" />
     <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="Players.h" />
+    <ClInclude Include="SaveData.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Talker.h" />
@@ -84,6 +100,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A1524A9A-2E4A-490D-947A-9B2BE27201AF}</ProjectGuid>

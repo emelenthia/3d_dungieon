@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Balloon" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAgAQAAAAAAAEAgAAABBAAIAAAAAAAAA=</HashCode>
+      <FileName>Balloon.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Battle" Collapsed="true">
+    <Position X="0.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAACAAAAAAAAAAAAAAAIAACAAA=</HashCode>
+      <FileName>Battle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character_02" Collapsed="true">
+    <Position X="8.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAABABAAAAAAAAgAAAQAAA=</HashCode>
+      <FileName>Character_02.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character_Data" Collapsed="true">
+    <Position X="9.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACIIIAAAQAAAAAIAgAAAAAICQAAAgABEYAAAIAA=</HashCode>
+      <FileName>Character_Data.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character_Data_Save" Collapsed="true">
+    <Position X="9.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAgAAEEAAAAAAAAAIAAAAEAAAACBAAAAAAAgA=</HashCode>
+      <FileName>Character_Data_Save.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character_Haruka" Collapsed="true">
+    <Position X="10.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAABQBAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Character_Haruka.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Charcter_Management" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQABAAAAAAAAAAAAAAAABAAAAAAIABAggAAAAAA=</HashCode>
+      <FileName>Charcter_Management.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Defines" Collapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAgAAAAAADAI=</HashCode>
+      <FileName>Defines.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Events" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAABAAAIAAAABgAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Events.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Field" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAgAAAAAAAAgAAAABIAAAIABAIBACggA=</HashCode>
+      <FileName>Field.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Field_Base_Data" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAgAQAAAAAAAAAAAAAAAAACAAIAAAAAA=</HashCode>
+      <FileName>Field_Base_Data.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Town" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAGAAgQEAAAQAAAAAAAAAAAAAAAAIAAACIA=</HashCode>
+      <FileName>First_Town.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flags" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABIAAAAAAAAAAAAAAAAhAAAACQBAAAAAAAAAAAAA=</HashCode>
+      <FileName>Flags.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Green_Field" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgGAAggEAAAAASAAAAAAAAEAAAAAIAAAAAA=</HashCode>
+      <FileName>Green_Field.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Guild" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAQAAAAAAAgQAAAAAAAYAAAAAAAAAAAAAIAAggQA=</HashCode>
+      <FileName>Guild.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Guild_Entrance" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIAAAQA=</HashCode>
+      <FileName>Guild_Entrance.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Guild_Main" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Guild_Main.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Guild_Main_Scene" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgEAAAAAAAAAAAAAhAAAAAAAIAAkgAA=</HashCode>
+      <FileName>Guild_Main_Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Guild_Scene_Base" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAECAAAAAIwAAACABAAAEBAAQAAIEABAAoAgAAAA=</HashCode>
+      <FileName>Guild_Scene_Base.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Guild_Warehouse" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAIAQAAAA=</HashCode>
+      <FileName>Guild_Warehouse.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="G_F_Object" Collapsed="true">
+    <Position X="2.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>G_F_Object.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="G_F_O_Exit" Collapsed="true">
+    <Position X="2.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAACAAAAIAAAAAA=</HashCode>
+      <FileName>G_F_O_Exit.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ice_Field" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAGCAgAEAAAAAAAAAAAAAAEAAAAAIAAAAAA=</HashCode>
+      <FileName>Ice_Field.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="In_Battle" Collapsed="true">
+    <Position X="0.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAIAAAAAA=</HashCode>
+      <FileName>In_Battle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Key_Input" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAChAAAAAAQgAAAAAABAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Key_Input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAQQECAAADAAgAAQAAAAAAAAAAIAAAIABAAICAAgAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Objects" Collapsed="true">
+    <Position X="1.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAJAAAAEAAgAAAACAEMAAAAEAgCEAAAAAAAAAAIA=</HashCode>
+      <FileName>Objects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerBase" Collapsed="true">
+    <Position X="5.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAEAAAQAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>PlayerBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Players" Collapsed="true">
+    <Position X="5.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAhIAAACAIgAAAAOQEEAAAAggACAAEAAAIAAAAAA=</HashCode>
+      <FileName>Players.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAgAAgIAEAAAAQAgAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneBase" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABgAAAAAAAAAAAAAAAgAAAAAAIAAAAAA=</HashCode>
+      <FileName>SceneBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Talker" Collapsed="true">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAQAAABiECAgAAgAAAAAIMAEAAhABACBAgIAAAAQA=</HashCode>
+      <FileName>Talker.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="World" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAABGAAgAEAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>World.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Meiryo UI" Size="9" />
+</ClassDiagram>

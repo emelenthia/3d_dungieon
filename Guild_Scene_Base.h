@@ -1,8 +1,9 @@
 #pragma once
 #include<stdio.h>
-#include"Character_Haruka.h" //キャラの絵などを表示するため
-#include"Character_02.h"
-#include"Character_Data_Save.h"
+#include"Characters.h" //キャラの絵などを表示するため
+#include"Party.h" //PTの表示
+#include"Colors.h"
+#include"Key_Input.h"
 
 class Guild_Scene_Base //ギルドクラスから行ける各画面のクラスの共通型
 {
@@ -24,8 +25,8 @@ public:
 	int choosed_number; //選択した行為
 	int str_size_max; //文字列の最大サイズ
 	int fscanf_r(char *file_name); //まとめたfscan_s
-	Character_Data *char_pt[2];
-	//Character_Haruka char_p[0] = Character_Haruka::GetInstance();
-	//Character_02 *Chihaya = Character_02::GetInstance(); //出来ればポインタの配列にしたい
+	Characters *char_pt;
 	static int char_ran; //ランダムに表示させている今のキャラの番号。1から
+	int char_flag = 1; //キャラの表示フラグ
+	Party *party;
 };

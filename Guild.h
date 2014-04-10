@@ -4,6 +4,7 @@
 #include"Guild_Main_Scene.h"
 #include"Guild_Scene_Base.h"
 #include"Guild_Entrance.h"
+#include"Guild_Dungeon.h"
 
 class Guild : //ギルド画面のクラス
 	public SceneBase
@@ -16,6 +17,7 @@ public:
 	Guild_Main_Scene guild_main_scene; //1番目
 	Guild_Entrance guild_entrance; //0番目
 	Guild_Scene_Base *guild_scene; //state
+	Guild_Dungeon guild_dungeon; //-1番目
 	int reaction_number;
 	int x_r; //右のx座標
 	int y_d; //下のy座標

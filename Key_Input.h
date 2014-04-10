@@ -1,4 +1,5 @@
 #pragma once
+#include"Options.h"
 class Key_Input //キーボードからの入力を受け取るクラス
 {
 public:
@@ -10,5 +11,10 @@ public:
 	int i;
 	void KeyUpdate();
 	int talkingflag; //話し中フラグ
+	int JoyPadInput;
+	int AnalogInputx;
+	int AnalogInputy;
+	Options *options;
+	//D_XINPUT_STATE xboxInput;
 };
 

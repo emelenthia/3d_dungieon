@@ -1,7 +1,7 @@
 #pragma once
 #include"Battle.h"
 #include"Guild.h"
-#include"Field.h"//->Dungeon‚Ì‚æ‚Ä‚¢
+#include"Dungeon.h"
 
 class Scene //ŠeƒV[ƒ“‚ğ‘JˆÚ
 {
@@ -10,7 +10,7 @@ public:
 	~Scene();
 	Battle battle;
 	Guild guild;
-	Field field;
+	Dungeon dungeon;
 	SceneBase* scene_now;
 	void Draw();
 	int Reaction();

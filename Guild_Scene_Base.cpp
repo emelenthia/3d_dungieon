@@ -18,11 +18,9 @@ Guild_Scene_Base::Guild_Scene_Base()
 	}
 	str_size_max = 0;
 	fp = NULL;
-	char_pt[0] = Character_Haruka::GetInstance();
-	char_pt[1] = Character_02::GetInstance();
-	char_pt[0]->Load_Char_n_s("./scn/char/char_DF_01.cns", "./scn/char/char_DS_01.cns");
-	char_pt[1]->Load_Char_n_s("./scn/char/char_DF_02.cns", "./scn/char/char_DS_02.cns");
-	char_ran = GetRand(Defines::char_max - 1) + 1;
+	char_pt = Characters::GetInstance();
+	party = Party::GetInstance();
+	char_ran = GetRand(Defines::char_max - 1);
 }
 
 
@@ -46,29 +44,23 @@ void Guild_Scene_Base::Draw()
 	DrawBox(19, 38, 4 + temp_size_x, 40, yellow_h, TRUE); //台詞欄の周り上
 	DrawBox(19, list_max * 20 + 41, 4 + temp_size_x, list_max * 20 + 43, yellow_h, TRUE); //台詞欄の周り下
 
+	if (char_flag)
+	{
+		DrawRotaGraph(480, 240, 0.7, 0, char_pt->char_h[char_ran][char_pt->job[char_ran] - 1], TRUE);
+	}
+
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透過
 	DrawBox(20, 40, 2 + temp_size_x, list_max * 20 + 40, black_h, TRUE); //台詞欄
 	DrawBox(0, 0, 640, 20, blue_h, TRUE); //説明欄
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
 
-	DrawBox(21, 41 + choose_now * 20, 2 + temp_size_x, 61 + choose_now * 20, yellow_h, TRUE); //選択中のを示す
+	DrawBox(21, 41 + choose_now * 20, 1 + temp_size_x, 60 + choose_now * 20, yellow_h, TRUE); //選択中のを示す
 	DrawFormatString(22, 2, white_h, "%s", menu_explanation[choose_now], TRUE); //説明しよう
 
 	for (int i = 0; i < list_max; i++)
 	{
 		DrawFormatString(22, 42 + i * 20, (choose_now == i ? black_h : white_h), " %s", menu_list[i]); //選ばれたのは、黒でした
-	}
-
-	switch (char_ran)
-	{
-	case 1:
-		DrawRotaGraph(480, 240, 0.7, 0, char_pt[0]->char_h[char_pt[0]->job-1], TRUE);
-		break;
-	case 2:
-		DrawRotaGraph(480, 240, 0.7, 0, char_pt[1]->char_h[char_pt[1]->job - 1], TRUE);
-		break;
-	default:
-		break;
 	}
 
 }
