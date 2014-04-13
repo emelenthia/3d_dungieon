@@ -15,11 +15,22 @@ Guild_PT::Guild_PT()
 	mini_size_x = 55;
 	mini_size_y = 44;
 	mini_crevice_x = 18;
-	temp_party_type = party->party_type;
-	keep_party_type = party->party_type;
 	pt_type_deside_flag = 0;
 	space_on_time = 6;
 	character_show_f = NULL;
+	keep_party_type = temp_party_type = party->party_type;
+	for (int i = 0; i < 5; i++)
+	{
+		keep_party_info[i] = temp_party_info[i] = party->party_info[i];
+	}
+	pos_x_lu2 = 460;
+	pos_y_lu2 = 240;
+	pos_x_rd2 = 630;
+	pos_y_rd2 = 320;
+	crevice_x2 = 10;
+	crevice_y2 = 20;
+	mini_size_x2 = (pos_x_rd2 - pos_x_lu2 - 2 * crevice_x2) / 3;
+	mini_size_y2 = (pos_y_rd2 - pos_y_lu2 - crevice_y2) / 2;
 }
 
 
@@ -52,6 +63,8 @@ void Guild_PT::Draw()
 		character_show_f->Draw();
 
 		DrawString(20, 0, "キャラクターを選択してください。", Colors::white);
+
+		DrawPartyType2(temp_party_type);
 	}
 	else
 	{
@@ -60,7 +73,7 @@ void Guild_PT::Draw()
 		DrawBox(0, 0, 640, 20, Colors::blue, TRUE);
 		for (int i = 0; i < num_chara && i < 5; i++)
 		{
-			DrawBox(pos_x_lu, pos_y_lu + (size_y + crevice_y)*i, pos_x_lu + size_x, pos_y_lu + (size_y + crevice_y)*i + size_y, Colors::blue, TRUE);
+			DrawBox(pos_x_lu, pos_y_lu + (size_y + crevice_y) * i, pos_x_lu + size_x, pos_y_lu + (size_y + crevice_y)*i + size_y, Colors::blue, TRUE);
 		}
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -111,6 +124,56 @@ int Guild_PT::Reaction()
 			pt_type_deside_flag = 0;
 			delete character_show_f;
 			character_show_f = NULL;
+		}
+		else if (Key_Input::buff_time[KEY_INPUT_Z] == 1)
+		{
+
+		}
+		if (Key_Input::buff_time[KEY_INPUT_UP] % 10 == 1)
+		{
+			if (temp_party_type != 11 && temp_party_type != 21 && temp_party_type != 31)
+			{
+				switch (temp_party_type)
+				{
+				case 22:
+					nowchoose = 1 - nowchoose;
+					break;
+				case 32:
+					nowchoose = nowchoose == 2 ? 0 : 2;
+					break;
+				case 33:
+					nowchoose = nowchoose ? 0 : 1;
+					break;
+				case 41:
+					nowchoose == nowchoose == 3 ? 1 : 3;
+					break;
+				case 42:
+					nowchoose = (nowchoose % 2 ? 2 : 4) - nowchoose;
+					break;
+				case 43:
+					nowchoose = nowchoose ? 0 : 2;
+					break;
+				case 51:
+					nowchoose = nowchoose > 2 ? nowchoose - 3 : (nowchoose ? 4 : 3);
+					break;
+				case 52:
+					nowchoose = nowchoose < 2 ? nowchoose + 2 : (nowchoose == 2 ? 0 : 1);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		else if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1)
+		{
+
+		}
+		else if (Key_Input::buff_time[KEY_INPUT_RIGHT] % 10 == 1)
+		{
+
+		}
+		else if (Key_Input::buff_time[KEY_INPUT_LEFT] % 10 == 1)
+		{
 		}
 	}
 	else
@@ -258,9 +321,9 @@ void Guild_PT::DrawPartyType(int pos_x, int pos_y, int party_type)
 		//真ん中
 		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5, Colors::red);
 		//左後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5 + 22, Colors::red);
+		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5 + 22, Colors::aqua);
 		//右後
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5 + 22, Colors::red);
+		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 41:
 		//左
@@ -319,5 +382,132 @@ void Guild_PT::DrawPartyType(int pos_x, int pos_y, int party_type)
 	default:
 		break;
 	}
+}
 
+
+void Guild_PT::DrawPartyType2(int party_type)
+{
+	countdpb = 0;
+	switch (party_type)
+	{
+	case 11:
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2, Colors::red);
+		break;
+	case 21:
+		//左
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 - mini_size_x, pos_y_lu2, Colors::red);
+		//右
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 + crevice_x2 / 2, pos_y_lu2, Colors::red);
+		break;
+	case 22:
+		//左
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2, Colors::red);
+		//後
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue); 
+		break;
+	case 31:
+		//左
+		DrawPartyBox(pos_x_lu2, pos_y_lu2, Colors::red);
+		//真ん中
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2, Colors::red);
+		//右
+		DrawPartyBox(pos_x_lu2 + 2 * (mini_size_x + crevice_x2), pos_y_lu2, Colors::red);
+		break;
+	case 32:
+		//左
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 - mini_size_x, pos_y_lu2, Colors::red);
+		//右
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 + crevice_x2 / 2, pos_y_lu2, Colors::red);
+		//後
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		break;
+	case 33:
+		//真ん中
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2, Colors::red);
+		//左後
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 - mini_size_x, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		//右後
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 + crevice_x2 / 2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		break;
+	case 41:
+		//左
+		DrawPartyBox(pos_x_lu2, pos_y_lu2, Colors::red);
+		//真ん中
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2, Colors::red);
+		//右
+		DrawPartyBox(pos_x_lu2 + 2 * (mini_size_x + crevice_x2), pos_y_lu2, Colors::red);
+		//後
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		break;
+	case 42:
+		//左
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 - mini_size_x, pos_y_lu2, Colors::red);
+		//右
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 + crevice_x2 / 2, pos_y_lu2, Colors::red);
+		//左後
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 - mini_size_x, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		//右後
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 + crevice_x2 / 2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		break;
+	case 43:
+		//真ん中
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2, Colors::red);
+		//左後
+		DrawPartyBox(pos_x_lu2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		//後
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		//右後
+		DrawPartyBox(pos_x_lu2 + 2 * (mini_size_x + crevice_x2), pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		break;
+	case 51:
+		//左
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 - mini_size_x, pos_y_lu2, Colors::red);
+		//右
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 + crevice_x2 / 2, pos_y_lu2, Colors::red);
+		//左後
+		DrawPartyBox(pos_x_lu2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		//後
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		//右後
+		DrawPartyBox(pos_x_lu2 + 2 * (mini_size_x + crevice_x2), pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		break;
+	case 52:
+		//左
+		DrawPartyBox(pos_x_lu2, pos_y_lu2, Colors::red);
+		//真ん中
+		DrawPartyBox(pos_x_lu2 + mini_size_x + crevice_x2, pos_y_lu2, Colors::red);
+		//右
+		DrawPartyBox(pos_x_lu2 + 2 * (mini_size_x + crevice_x2), pos_y_lu2, Colors::red);
+		//左後
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 - mini_size_x, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		//右後
+		DrawPartyBox(pos_x_lu2 + (pos_x_rd2 - pos_x_lu2 + crevice_x2) / 2 + crevice_x2 / 2, pos_y_lu2 + (mini_size_y2 + crevice_y2), Colors::blue);
+		break;
+	default:
+		break;
+	}
+}
+
+
+void Guild_PT::DrawPartyBox(int pos_x,int pos_y,int color)
+{
+	int frontcolor = Colors::red; //前列であることの条件判断の為
+	int backcolor = Colors::blue;
+
+	//現在選ばれてるのを表す
+	if (countdpb==nowchoose)
+	{
+		DrawBox(pos_x - 1, pos_y - 1, pos_x + mini_size_x2 + 1, pos_y + mini_size_y2 + 1, Colors::yellow, TRUE);
+	}
+
+	DrawBox(pos_x, pos_y, pos_x + mini_size_x2, pos_y + mini_size_y2, color, TRUE);
+	if (frontcolor == color)
+	{
+		DrawString(pos_x + mini_size_x2 / 2 - GetDrawStringWidth("前衛", strlen("前衛")) / 2, pos_y + 2, "前衛", Colors::white);
+	}
+	else if (backcolor == color)
+	{
+		DrawString(pos_x + mini_size_x2 / 2 - GetDrawStringWidth("後衛", strlen("後衛")) / 2, pos_y + 2, "後衛", Colors::white);
+	}
+	countdpb++;
 }

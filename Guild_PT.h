@@ -22,13 +22,27 @@ public:
 	Party *party;
 	void DrawHitogata(int pos_x, int pos_y, int color);
 	void DrawPartyType(int pos_x, int pos_t, int party_type);
+	void DrawPartyType2(int party_type); //決定後の選択欄
 	int mini_size_x;
 	int mini_size_y;
 	int mini_crevice_x; //パーティータイプ表示時の横の隙間
+	int space_on_time; //長押しの間隔
 	int temp_party_type;
-	int space_on_time;
 	int keep_party_type;
+	int temp_party_info[5];
+	int keep_party_info[5];
 	int pt_type_deside_flag;
 	Character_Show_F *character_show_f;
+	void DrawPartyBox(int pos_x, int pos_y, int color);
+	int countdpb; //1FにDrawPartyBoxを実行した回数。現在選ばれているのを示すのに使う
+	int pos_x_lu2 = 0;
+	int pos_y_lu2 = 0;
+	int pos_x_rd2 = 0;
+	int pos_y_rd2 = 0;
+	int mini_size_x2 = 0;
+	int mini_size_y2 = 0;
+	int crevice_x2 = 0;
+	int crevice_y2 = 0;
+	int nowchoose = 0; //左上から0
 };
 

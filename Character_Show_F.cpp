@@ -166,7 +166,7 @@ int Character_Show_F::Reaction()
 	}
 	if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1 && Key_Input::buff_time[KEY_INPUT_DOWN] != 11)
 	{
-		choosenow = (choosenow < numchar ? choosenow - 1 : 0);
+		choosenow = (choosenow < numchar ? choosenow + 1 : 0);
 	}
 
 	if (Key_Input::buff_time[KEY_INPUT_X] == 1 || (Key_Input::buff_time[KEY_INPUT_Z] == 1 && choosenow == numchar))
