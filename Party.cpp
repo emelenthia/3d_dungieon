@@ -1,6 +1,7 @@
 #include "Party.h"
 #include"DxLib.h"
 #include"Colors.h"
+
 //#include<stdio.h>
 
 Party* Party::instance;
@@ -34,6 +35,10 @@ Party::Party()
 	size_y = (pos_y_rd_territory - pos_y_lu_territory) / 2;
 	crevice_x = 4;
 	crevice_y = 3;
+	characters = Characters::GetInstance();
+
+	party_info[0] = 0; 
+	party_info[1] = 10;
 }
 
 
@@ -53,6 +58,7 @@ void Party::Draw()
 	int pos_x_rd = 0;
 	int pos_y_rd = 0;
 
+	countdbt = 0;
 	switch (party_type)
 	{
 	case 11:
@@ -155,7 +161,7 @@ void Party::Draw()
 }
 
 
-void Party::DrawBox_t(int front_or_back,float left_pos_number)
+void Party::DrawBox_t(int front_or_back, float left_pos_number)
 {
 	int pos_x_lu = 0;
 	int pos_y_lu = 0;
@@ -173,4 +179,66 @@ void Party::DrawBox_t(int front_or_back,float left_pos_number)
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
 
+	//個人情報の表示
+	/*if (!countdbt)
+	{
+		DrawExtendGraph(pos_x_lu + 2, pos_y_lu + 2, pos_x_lu + 2 + size_x / 2, pos_y_lu + 2 + size_y / 2, testgraph, TRUE);
+		DrawFormatString(pos_x_lu + 3 * size_x / 4 - GetDrawStringWidth("ハルカ", strlen("ハルカ")) / 2, pos_y_lu, Colors::white, "%s", "ハルカ");
+		DrawExtendString(pos_x_lu + 2, pos_y_lu + size_y / 4, 1.0, 1.0, "MU", Colors::white);
+		DrawExtendString(pos_x_lu + GetDrawStringWidth("FT", 2) / 2, pos_y_lu + size_y / 2 + 5, 1.0, 0.7, "HP", Colors::yellow);
+		DrawString(pos_x_lu + size_x / 2 - GetDrawStringWidth("10", 2), pos_y_lu + size_y / 2, "10", Colors::white);
+		DrawString(pos_x_lu + size_x - GetDrawStringWidth("10", 2) - 5, pos_y_lu + size_y / 2, "14", Colors::white);
+		DrawBox(pos_x_lu + GetDrawStringWidth("FT", 2) / 2 - 1, pos_y_lu + size_y - 6, pos_x_lu + size_x / 2 - 2, pos_y_lu + size_y - 1, Colors::yellow, TRUE);
+		DrawBox(pos_x_lu + GetDrawStringWidth("FT", 2) / 2 - 1 + size_x / 2, pos_y_lu + size_y - 6, pos_x_lu + size_x - 2, pos_y_lu + size_y - 1, Colors::green, TRUE);
+		DrawExtendString(pos_x_lu + GetDrawStringWidth("FT", 2) / 2 + size_x / 2, pos_y_lu + size_y / 2 + 5, 1.0, 0.7, "TP", Colors::green);
+	}
+	else
+	{
+		DrawExtendGraph(pos_x_lu + 2, pos_y_lu + 2, pos_x_lu + 2 + size_x / 2, pos_y_lu + 2 + size_y / 2, testgraph2, TRUE);
+		DrawFormatString(pos_x_lu + 3 * size_x / 4 - GetDrawStringWidth("ミキ", strlen("ミキ")) / 2, pos_y_lu, Colors::white, "%s", "ミキ");
+		DrawExtendString(pos_x_lu + 2, pos_y_lu + size_y / 4, 1.0, 1.0, "FT", Colors::white);
+		DrawExtendString(pos_x_lu + GetDrawStringWidth("FT", 2) / 2, pos_y_lu + size_y / 2 + 5, 1.0, 0.7, "HP", Colors::yellow);
+		DrawString(pos_x_lu + size_x / 2 - GetDrawStringWidth("10", 2), pos_y_lu + size_y / 2, "16", Colors::white);
+		DrawString(pos_x_lu + size_x - GetDrawStringWidth("10", 2) - 5, pos_y_lu + size_y / 2, "10", Colors::white);
+		DrawBox(pos_x_lu + GetDrawStringWidth("FT", 2) / 2 - 1, pos_y_lu + size_y - 6, pos_x_lu + size_x / 2 - 2, pos_y_lu + size_y - 1, Colors::yellow, TRUE);
+		DrawBox(pos_x_lu + GetDrawStringWidth("FT", 2) / 2 - 1 + size_x / 2, pos_y_lu + size_y - 6, pos_x_lu + size_x - 2, pos_y_lu + size_y - 1, Colors::green, TRUE);
+		DrawExtendString(pos_x_lu + GetDrawStringWidth("FT", 2) / 2 + size_x / 2, pos_y_lu + size_y / 2 + 5, 1.0, 0.7, "TP", Colors::green);
+	}*/
+
+
+	int charnumb = party_info[countdbt];
+
+	//画像の表示
+	DrawExtendGraph(pos_x_lu + 2, pos_y_lu + 2, pos_x_lu + 2 + size_x / 2, pos_y_lu + 2 + size_y / 2,characters->char_h_i[charnumb][characters->job[charnumb]], TRUE);
+
+	char c_name[21];
+	strcpy(c_name, characters->name[charnumb]);
+	DrawFormatString(pos_x_lu + 3 * size_x / 4 - GetDrawStringWidth(c_name, strlen(c_name)) / 2, pos_y_lu, Colors::white, "%s", c_name);
+	
+	char j_name[5];
+	strcpy(j_name, characters->GetJobNameabb(charnumb));
+	DrawExtendString(pos_x_lu + 2, pos_y_lu + size_y / 4, 1.0, 1.0, j_name, Colors::white);
+	
+	int job_size = GetDrawStringWidth(j_name, strlen(j_name));
+	DrawExtendString(pos_x_lu +job_size / 2, pos_y_lu + size_y / 2 + 5, 1.0, 0.7, "HP", Colors::yellow);
+
+	char str_hp[9];
+	sprintf(str_hp, "%d", characters->nowhp[charnumb]); //長さを測るために文字列に変換
+	DrawFormatString(pos_x_lu + size_x / 2 - GetDrawStringWidth(str_hp, strlen(str_hp)), pos_y_lu + size_y / 2, Colors::white, "%d", characters->nowhp[charnumb]);
+	
+	DrawBox(pos_x_lu + job_size / 2 - 1, pos_y_lu + size_y - 6, pos_x_lu + size_x / 2 - 2, pos_y_lu + size_y - 1, Colors::yellow, TRUE);
+	
+	DrawExtendString(pos_x_lu + job_size / 2 + size_x / 2, pos_y_lu + size_y / 2 + 5, 1.0, 0.7, "TP", Colors::green);
+
+	char str_tp[9];
+	sprintf(str_tp, "%d", characters->nowtp[charnumb]);
+	DrawFormatString(pos_x_lu + size_x - GetDrawStringWidth(str_tp, strlen(str_tp)) - 5, pos_y_lu + size_y / 2, Colors::white, "%d", characters->nowtp[charnumb]);
+
+	DrawBox(pos_x_lu + job_size / 2 - 1 + size_x / 2, pos_y_lu + size_y - 6, pos_x_lu + size_x - 2, pos_y_lu + size_y - 1, Colors::green, TRUE);
+	
+
+	countdbt++;
+
 }
+
+

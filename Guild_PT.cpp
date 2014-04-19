@@ -145,7 +145,7 @@ int Guild_PT::Reaction()
 					nowchoose = nowchoose ? 0 : 1;
 					break;
 				case 41:
-					nowchoose == nowchoose == 3 ? 1 : 3;
+					nowchoose = nowchoose == 3 ? 1 : 3;
 					break;
 				case 42:
 					nowchoose = (nowchoose % 2 ? 2 : 4) - nowchoose;
@@ -497,7 +497,7 @@ void Guild_PT::DrawPartyBox(int pos_x,int pos_y,int color)
 	//åªç›ëIÇŒÇÍÇƒÇÈÇÃÇï\Ç∑
 	if (countdpb==nowchoose)
 	{
-		DrawBox(pos_x - 1, pos_y - 1, pos_x + mini_size_x2 + 1, pos_y + mini_size_y2 + 1, Colors::yellow, TRUE);
+		DrawBox(pos_x - 2, pos_y - 2, pos_x + mini_size_x2 + 2, pos_y + mini_size_y2 + 2, Colors::yellow, TRUE);
 	}
 
 	DrawBox(pos_x, pos_y, pos_x + mini_size_x2, pos_y + mini_size_y2, color, TRUE);

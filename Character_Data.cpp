@@ -42,10 +42,27 @@ void Character_Data::Load_Char_n_s(char *file_pointer, char *file_pointer_save,i
 	}
 
 	fscanf(fp_n_s[n], "%d", &job_system[n]);
-	fscanf_s(fp_n_s[n], "%s", char_h_name[n][0], 99);
-		//fscanf_s(fp_n_s[n], "%s", char_h_i_name[n][i], 49);
-	char_h[n][0] = LoadGraph(char_h_name[n][0]);
-		//char_h_i[i] = LoadGraph(char_h_i_name[i]);
+	
+	
+	//画像の読み込み
+	for (int i = 0; i < 1; i++) //画像が増えた時の対処ができるようにする
+	{
+		fscanf_s(fp_n_s[n], "%s", char_h_name[n][i], 99);
+		char_h[n][i] = LoadGraph(char_h_name[n][i]);
+
+
+		fscanf_s(fp_n_s[n], "%s", char_h_i_name[n][i], 99);
+		char_h_i[n][i] = LoadGraph(char_h_i_name[n][i]);
+	}
+	//とりあえず全部同じ画像を使う
+	for (int i = 0; i < 10; i++)
+	{
+		char_h[n][i] = char_h[n][0];
+		char_h_i[n][i] = char_h_i[n][0];
+	}
+
+
+
 	if (char_h[n][0] == -1) //エラー処理
 		{
 		DrawExtendFormatString(0, 0, 1.0, 1.0, GetColor(255, 0, 0), "Error!:I miss opening to %s", char_h_name[n][0]);
@@ -1232,6 +1249,151 @@ char* Character_Data::GetJobName(int n)
 			break;
 		case 6:
 			strcpy(job_name, "ジョーカー");
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+
+
+	return job_name;
+}
+
+
+char* Character_Data::GetJobNameabb(int n)
+{
+	char job_name[5];
+	switch (job_system[n])
+	{
+	case 1: //ファイター系
+		switch (job[n])
+		{
+		case 1:
+			strcpy(job_name, "FT");
+			break;
+		case 2:
+			strcpy(job_name, "PL");
+			break;
+		case 3:
+			strcpy(job_name, "BE");
+			break;
+		case 4:
+			strcpy(job_name, "VL");
+			break;
+		case 5:
+			strcpy(job_name, "SA");
+			break;
+		case 6:
+			strcpy(job_name, "DL");
+			break;
+		default:
+			break;
+		}
+		break;
+	case 2: //マジックユーザー系
+		switch (job[n])
+		{
+		case 1:
+			strcpy(job_name, "MU");
+			break;
+		case 2:
+			strcpy(job_name, "SO");
+			break;
+		case 3:
+			strcpy(job_name, "EN");
+			break;
+		case 4:
+			strcpy(job_name, "PR");
+			break;
+		case 5:
+			strcpy(job_name, "WT");
+			break;
+		case 6:
+			strcpy(job_name, "MP");
+			break;
+		case 7:
+			strcpy(job_name, "SG");
+			break;
+		case 8:
+			strcpy(job_name, "BS");
+			break;
+		default:
+			break;
+		}
+		break;
+	case 3: //スカウト系
+		switch (job[n])
+		{
+		case 1:
+			strcpy(job_name, "SC");
+			break;
+		case 2:
+			strcpy(job_name, "AR");
+			break;
+		case 3:
+			strcpy(job_name, "AS");
+			break;
+		case 4:
+			strcpy(job_name, "SN");
+			break;
+		case 5:
+			strcpy(job_name, "TH");
+			break;
+		case 6:
+			strcpy(job_name, "KN");
+			break;
+		default:
+			break;
+		}
+		break;
+	case 4: //メイド系
+		switch (job[n])
+		{
+		case 1:
+			strcpy(job_name, "MD");
+			break;
+		case 2:
+			strcpy(job_name, "BD");
+			break;
+		case 3:
+			strcpy(job_name, "DN");
+			break;
+		case 4:
+			strcpy(job_name, "DI");
+			break;
+		case 5:
+			strcpy(job_name, "MI");
+			break;
+		case 6:
+			strcpy(job_name, "ET");
+			break;
+		default:
+			break;
+		}
+		break;
+	case 5: //スピエラー系
+		switch (job[n])
+		{
+		case 1:
+			strcpy(job_name, "SP");
+			break;
+		case 2:
+			strcpy(job_name, "DM");
+			break;
+		case 3:
+			strcpy(job_name, "TS");
+			break;
+		case 4:
+			strcpy(job_name, "SS");
+			break;
+		case 5:
+			strcpy(job_name, "PA");
+			break;
+		case 6:
+			strcpy(job_name, "JO");
 			break;
 		default:
 			break;

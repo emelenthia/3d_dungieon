@@ -1,5 +1,6 @@
 #pragma once
 #include<stdio.h>
+#include"Characters.h"
 
 class Party
 {
@@ -34,9 +35,10 @@ public:
 	int crevice_y; //キャラ毎の隙間の縦の大きさ
 	int size_x; //キャラ描画枠の横の大きさ
 	int size_y; //キャラ描画枠の縦の大きさ
-
+	int countdbt; // DrawBox_tを実行した回数
 	void DrawBox_t(int front_or_back,float left_pos_number); //0で前、1で後。0で左上、1で真ん中、0.5単位で2まで
-
+	int testgraph,testgraph2;
+	Characters *characters;
 private:
 	// 生成やコピーを禁止する
 	Party();
