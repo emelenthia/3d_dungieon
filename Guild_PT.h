@@ -44,5 +44,7 @@ public:
 	int crevice_x2 = 0;
 	int crevice_y2 = 0;
 	int nowchoose = 0; //左上から0
+	int already_flag = 0;
+	int choosing_place_flag = 0; //キャラの置く場所を考えているフラグ
 };
 

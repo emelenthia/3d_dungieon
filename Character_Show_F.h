@@ -27,6 +27,10 @@ public:
 	int namemax;
 	void DrawIntRight(int x, int y, int num, int color);
 
+	int pos_x_lu = 20;
+	int pos_y_lu = 24;
+	int pos_x_rd = 120;
+	int pos_y_rd = 0;
 	Character_Show_F();
 	~Character_Show_F(){};
 };

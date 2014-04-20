@@ -95,6 +95,7 @@ int Guild_Main::Reaction()
 		if (choosed_number == 211)
 		{
 			savedata->Save();
+			party->Save();
 		}
 		if (choosed_number == 213)
 		{
@@ -108,6 +109,8 @@ int Guild_Main::Reaction()
 		if (choosed_number == 202)
 		{
 			guild_pt->guild_pt_flag++;
+			//PTを初期化する処理をやってもらうためのフラグ
+			guild_pt->already_flag++;
 		}
 
 		if (Flags::nowscene == 0x8011d && Flags::guild_now == 2) //メニューを選択する

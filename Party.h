@@ -39,6 +39,7 @@ public:
 	void DrawBox_t(int front_or_back,float left_pos_number); //0で前、1で後。0で左上、1で真ん中、0.5単位で2まで
 	int testgraph,testgraph2;
 	Characters *characters;
+	void Save();
 private:
 	// 生成やコピーを禁止する
 	Party();

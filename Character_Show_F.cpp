@@ -64,10 +64,7 @@ void Character_Show_F::Draw()
 		}
 	}
 
-	int pos_x_lu = 20;
-	int pos_y_lu = 24;
-	int pos_x_rd = 120;
-	int pos_y_rd = pos_y_lu + numchar * 20;
+	pos_y_rd = pos_y_lu + numchar * 20;
 
 	DrawBox(pos_x_lu, pos_y_lu, pos_x_rd, pos_y_rd, black, TRUE);
 
@@ -166,7 +163,7 @@ int Character_Show_F::Reaction()
 	}
 	if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1 && Key_Input::buff_time[KEY_INPUT_DOWN] != 11)
 	{
-		choosenow = (choosenow < numchar ? choosenow + 1 : 0);
+		choosenow = (choosenow < numchar - 1 ? choosenow + 1 : 0);
 	}
 
 	if (Key_Input::buff_time[KEY_INPUT_X] == 1 || (Key_Input::buff_time[KEY_INPUT_Z] == 1 && choosenow == numchar))
