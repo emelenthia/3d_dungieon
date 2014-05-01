@@ -30,7 +30,7 @@ public:
 	VECTOR target_camera;
 	VECTOR player_camera;
 	int y = 1;
-	int state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。5で右平行移動。6で左平行移動。7で街に戻ろうとしている
+	int state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。5で右平行移動。6で左平行移動。
 	int time; //状態にかかっている時間を保持。
 	void Return_right(); //右転回
 	int down_help = 0; //下ボタン時のヘルパー
@@ -55,4 +55,6 @@ public:
 	SaveData *savedata;
 	Options *options;
 	Party *party;
+	int non_walk_flag = 0; //帰るかのメッセージの表示しないフラグ
+	int minimap_flag = 0; //0で非表示、1で通常表示、2で全体表示?
 };

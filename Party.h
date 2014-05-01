@@ -40,6 +40,7 @@ public:
 	int testgraph,testgraph2;
 	Characters *characters;
 	void Save();
+	void DrawPartyType();
 private:
 	// ¶¬‚âƒRƒs[‚ğ‹Ö~‚·‚é
 	Party();

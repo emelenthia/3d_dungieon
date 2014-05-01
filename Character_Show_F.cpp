@@ -49,7 +49,12 @@ void Character_Show_F::Draw()
 		{
 			if (characters->in_team[i])
 			{
+				number_list[i] = numchar;
 				numchar++;
+			}
+			else
+			{
+				number_list[i] = -1;
 			}
 		}
 	}
@@ -59,7 +64,12 @@ void Character_Show_F::Draw()
 		{
 			if (characters->in_party[i])
 			{
+				number_list[i] = numchar;
 				numchar++;
+			}
+			else
+			{
+				number_list[i] = -1;
 			}
 		}
 	}
@@ -116,8 +126,8 @@ void Character_Show_F::Draw()
 		{
 			if (characters->in_team[i])
 			{
-				DrawFormatString(pos_x_lu + 2, pos_y_lu + 2 + already * 20, (choosenow == i ? black : white), "%s", characters->name[i]);
-				if (choosenow == i)
+				DrawFormatString(pos_x_lu + 2, pos_y_lu + 2 + already * 20, (choosenow == number_list[i] ? black : white), "%s", characters->name[i]);
+				if (choosenow == number_list[i])
 				{
 					Guild_Scene_Base::char_ran = i; //現在選ばれているキャラを表示する
 
@@ -177,4 +187,22 @@ int Character_Show_F::Reaction()
 void Character_Show_F::DrawIntRight(int x, int y, int num, int color)
 {
 	DrawFormatString(x - GetDrawFormatStringWidth("%d", num), y, color, "%d", num);
+}
+
+
+int Character_Show_F::GetCharNow()
+{
+	int number = -1;
+
+	for (int i = 0; i < 13; i++)
+	{
+		//現在選択しているキャラが見つかった場合
+		if (choosenow == number_list[i])
+		{
+			number = i;
+			break;
+		}
+	}
+
+	return number;
 }

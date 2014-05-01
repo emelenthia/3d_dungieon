@@ -62,7 +62,11 @@ void Guild_PT::Draw()
 		{
 			if (temp_party_info[i] != -1)
 			{
-				DrawBox(character_show_f->pos_x_lu + 1, temp_party_info[i] * 20 + character_show_f->pos_y_lu + 1, character_show_f->pos_x_rd - 1, (temp_party_info[i] + 1) * 20 + character_show_f->pos_y_lu - 1, Colors::black, TRUE); //今選ばれてるのを示す
+				DrawBox(character_show_f->pos_x_lu + 1,
+						character_show_f->number_list[temp_party_info[i]] * 20 + character_show_f->pos_y_lu + 1, 
+						character_show_f->pos_x_rd - 1, 
+						(character_show_f->number_list[temp_party_info[i]] + 1) * 20 + character_show_f->pos_y_lu - 1, 
+						Colors::black, TRUE); //今選ばれてるのを示す
 			}
 		}
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
@@ -173,6 +177,10 @@ int Guild_PT::Reaction()
 				if (Key_Input::buff_time[KEY_INPUT_X] == 1)
 				{
 					pt_type_deside_flag = 0;
+					for (int i = 0; i < 5; i++)
+					{
+						temp_party_info[i] = -1;
+					}
 					delete character_show_f;
 					character_show_f = NULL;
 				}
@@ -184,7 +192,7 @@ int Guild_PT::Reaction()
 						if (temp_party_info[i] != -1)
 						{
 							//既に使われているキャラは選べない
-							if (character_show_f->choosenow == temp_party_info[i])
+							if (character_show_f->GetCharNow() == temp_party_info[i])
 							{
 								goto sugusoko;
 							}
@@ -253,7 +261,7 @@ int Guild_PT::Reaction()
 					}
 					else //置かれてないなら置ける
 					{
-						temp_party_info[nowchoose] = character_show_f->choosenow;
+						temp_party_info[nowchoose] = character_show_f->GetCharNow();
 						choosing_place_flag = 0;
 						for (int i = 0; i < temp_party_type / 10; i++)
 						{

@@ -53,9 +53,11 @@ void Dungeon::Draw()
 
 	//メイン描画
 	DrawMap_c(map_data, x_max, z_max);
+	//ミニマップ
+	DrawMiniMap();
 
-	//その他
-	if (state == 7)
+	//ダンジョンから出るか聞く表示
+	if (pos_x == start_x && pos_z == start_z && !non_walk_flag && !state)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 212); //透過
 		DrawBox(0, 190, 640, 290, black, TRUE);
@@ -67,10 +69,8 @@ void Dungeon::Draw()
 		DrawString(310, 240, "はい", (nowchoose ? white : black));
 		DrawString(305, 260, "いいえ", (nowchoose ? black : white));
 	}
-	else
-	{
-		DrawMiniMap();
-	}
+
+
 
 	//パーティの描画
 	party->Draw();
@@ -88,7 +88,23 @@ int Dungeon::Reaction()
 	if (!state)
 	{
 
-		if (Key_Input::buff_time[KEY_INPUT_LEFT] == 1)
+		if (pos_x == start_x && pos_z == start_z && !non_walk_flag)
+		{
+			if (!nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1)
+			{
+				Flags::nowscene = 0x8011d;
+			}
+			else if (nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1
+				|| Key_Input::buff_time[KEY_INPUT_X] == 1)
+			{
+				non_walk_flag++;
+			}
+			else if (Key_Input::buff_time[KEY_INPUT_UP] == 1 || Key_Input::buff_time[KEY_INPUT_DOWN] == 1)
+			{
+				nowchoose = !nowchoose;
+			}
+		}
+		else if (Key_Input::buff_time[KEY_INPUT_LEFT] == 1)
 		{
 			state = 4;
 		}
@@ -169,10 +185,14 @@ int Dungeon::Reaction()
 				state = 1;
 			}
 		}
-		else if (Key_Input::buff_time[KEY_INPUT_Z] == 1 && !Flags::menuflag && pos_x == start_x && pos_z == start_z) //スタート地点なら、街に戻る
+		else if (Key_Input::buff_time[KEY_INPUT_X] == 1)
 		{
-			state = 7;
+			minimap_flag = !minimap_flag; //現状は表示/非表示のみ
 		}
+	}
+	else if (non_walk_flag)
+	{
+		non_walk_flag = 0;
 	}
 
 	switch (state)
@@ -696,30 +716,6 @@ int Dungeon::Reaction()
 					state = 0;
 				}
 			break;
-	case 7:
-		if (flaging)
-		{
-			if (!nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1)
-			{
-				Flags::nowscene = 0x8011d;
-				flaging = 0;
-			}
-			else if (nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1)
-			{
-				state = 0;
-				flaging = 0;
-			}
-			else if (Key_Input::buff_time[KEY_INPUT_UP] == 1 || Key_Input::buff_time[KEY_INPUT_DOWN] == 1)
-			{
-				nowchoose = !nowchoose;
-			}
-		}
-		else
-		{
-			flaging++;
-		}
-
-		break;
 
 	default:
 		break;
@@ -1237,12 +1233,17 @@ void Dungeon::LoadDungeon() //行く予定の階層の情報を読み込むかつ初期化
 		}
 	}
 
+	//情報の初期化
 	pos_x = start_x;
 	pos_z = start_z;
 	state = 0;
 	time = 0;
 	muki = 0;
 	nowchoose = 0;
+	non_walk_flag++;
+	state = 0;
+	minimap_flag = 1;
+
 	//カメラの初期化
 	target_camera = VGet(pos_x * 100 + 50, 50, pos_z * 100 + 100);
 	player_camera = VGet(pos_x * 100 + 50, 50, pos_z * 100);
@@ -1251,23 +1252,26 @@ void Dungeon::LoadDungeon() //行く予定の階層の情報を読み込むかつ初期化
 	SetFogEnable(TRUE);
 	SetFogColor(fog_r, fog_g, fog_b);
 	SetFogStartEnd(fog_start, fog_goal);
+
 }
 
 
 void Dungeon::DrawMiniMap()
 {
-	//下地
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 72); //透過
-	for (int z = 0; z < z_max; z++)
+	if (minimap_flag)
 	{
-		for (int x = 0; x < x_max; x++)
+		//下地
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 72); //透過
+		for (int z = 0; z < z_max; z++)
 		{
-			DrawBox(640 - (x_max - x + 1) * 20, 280 - z * 20, 640 - (x_max - x) * 20, 280 - (z + 1) * 20, white, FALSE);
+			for (int x = 0; x < x_max; x++)
+			{
+				DrawBox(640 - (x_max - x + 1) * 20, 280 - z * 20, 640 - (x_max - x) * 20, 280 - (z + 1) * 20, white, FALSE);
+			}
 		}
-	}
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 212); //透過
-	DrawBox(640 - (x_max + 1) * 20, 279, 640 - 20, 279 - z_max * 20, black, TRUE);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 212); //透過
+		DrawBox(640 - (x_max + 1) * 20, 279, 640 - 20, 279 - z_max * 20, black, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
 
 
 		for (int z = 0; z < z_max; z++)
@@ -1327,5 +1331,6 @@ void Dungeon::DrawMiniMap()
 			}
 		}
 
-	DrawRotaGraph(640 - (x_max - pos_x) * 20 - 10, 280 - (pos_z + 1) * 20 + 10, 20.0 / 128.0, muki * PI / 2.0, yajirushi_h,TRUE);
+		DrawRotaGraph(640 - (x_max - pos_x) * 20 - 10, 280 - (pos_z + 1) * 20 + 10, 20.0 / 128.0, muki * PI / 2.0, yajirushi_h, TRUE);
+	}
 }
