@@ -5,6 +5,7 @@
 #include"SaveData.h"
 #include"Options.h"
 #include"Party.h"
+#include"Battle.h"
 
 class Dungeon :
 	public SceneBase
@@ -30,7 +31,8 @@ public:
 	VECTOR target_camera;
 	VECTOR player_camera;
 	int y = 1;
-	int state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。5で右平行移動。6で左平行移動。
+	int state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。5で右平行移動。6で左平行移動。7でエンカウント開始
+	int revflag = 0; //回転しているフラグ。要するに回転時はエンカウントしないため
 	int time; //状態にかかっている時間を保持。
 	void Return_right(); //右転回
 	int down_help = 0; //下ボタン時のヘルパー
