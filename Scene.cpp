@@ -30,12 +30,16 @@ int Scene::Reaction()
 	}
 	if (Flags::nowscene == 0xf1e1d && scene_now != &dungeon) //ダンジョンに移行する信号を受け取ったら
 	{
+		//ダンジョンに入った際の初期化
+		if (scene_now == &guild)
+		{
+			dungeon.LoadDungeon();
+		}
 		scene_now = &dungeon; //ダンジョンに移行する
-		dungeon.LoadDungeon();
 	}
 	if (Flags::nowscene == 0x8011d && scene_now != &guild) //ギルドに移行する信号を受け取ったら
 	{
-		scene_now = &guild; //ダンジョンに移行する
+		scene_now = &guild; //ギルドに移行する
 	}
 
 	return 0;

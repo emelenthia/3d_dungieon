@@ -748,6 +748,7 @@ int Dungeon::Reaction()
 				state = 0;
 				time = 0;
 				Flags::nowscene = 0xba771e;
+				revflag++;
 			}
 			break;
 
@@ -828,7 +829,7 @@ int Dungeon::DrawMap(unsigned char(*map_data)[10], int x_max, int z_max)
 	int now_num = 0;
 	const int debug = 0;
 
-	int ** map_dis = new int*[z_max];
+	/*int ** map_dis = new int*[z_max];
 	for (int i = 0; i<z_max; i++)
 	{
 		map_dis[i] = new int[x_max];
@@ -881,7 +882,7 @@ int Dungeon::DrawMap(unsigned char(*map_data)[10], int x_max, int z_max)
 		}
 	mininuke:;
 	}
-dainuke:;
+dainuke:;*/
 
 
 	for (int z = 0; z < z_max; z++)

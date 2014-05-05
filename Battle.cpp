@@ -14,17 +14,19 @@ Battle::~Battle()
 {
 }
 
+
 void Battle::Draw()
 {
 	DrawExtendGraph(0, 0, 640, 480, testgraph, TRUE);
 	DrawString(120, 120, "これは仮の戦闘シーンです", GetColor(0, 0, 255));
-	DrawString(120, 160, "Enterキーで戻ります", GetColor(0, 0, 255));
+	DrawString(120, 160, "決定キーで戻ります", GetColor(0, 0, 255));
 }
+
 
 int Battle::Reaction()
 {
 	int r = 0;
-	if (Key_Input::buff[KEY_INPUT_RETURN])
+	if (Key_Input::buff_time[KEY_INPUT_Z] == 1)
 	{
 		Flags::nowscene = 0xf1e1d;
 	}
