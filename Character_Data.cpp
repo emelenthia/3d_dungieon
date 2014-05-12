@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include"DxLib.h"
 #include"Defines.h"
+#include"Status.h"
 
 Character_Data::Character_Data()
 {
@@ -90,28 +91,28 @@ int Character_Data::GetStatus(int n,int want)
 			switch (want)
 			{
 			case 1:
-				temp = Lv[n];
+				temp = Lv[n] * 0.96 + 5;
 				break;
 			case 2:
-				temp = Lv[n];
+				temp = Lv[n] * 0.9 + 3;
 				break;
 			case 3:
-				temp = Lv[n];
+				temp = Lv[n] * 0.56 + 3;
 				break;
 			case 4:
-				temp = Lv[n];
+				temp = Lv[n] * 0.74 + 2;
 				break;
 			case 5:
-				temp = Lv[n];
+				temp = Lv[n] * 0.84 + 7;
 				break;
 			case 6:
-				temp = Lv[n];
+				temp = Lv[n] * 0.66 + 5;
 				break;
 			case 7:
-				temp = Lv[n] * 6;
+				temp = Lv[n] * 12.32 + 42;
 				break;
 			case 8:
-				temp = Lv[n];
+				temp = Lv[n] * 2.46 + 12;
 				break;
 			default:
 				break;
@@ -1406,3 +1407,1044 @@ char* Character_Data::GetJobNameabb(int n)
 
 	return job_name;
 }
+
+
+ /*status Character_Data::GetStatus2(int n)
+{
+	status status_t; //返り値
+
+	switch (job_system[n])
+	{
+	case 1: //ファイター系
+		switch (job[n])
+		{
+		case 1: //ファイター
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n] * 0.96 + 5;
+				break;
+			case 2:
+				temp = Lv[n] * 0.9 + 3;
+				break;
+			case 3:
+				temp = Lv[n] * 0.56 + 3;
+				break;
+			case 4:
+				temp = Lv[n] * 0.74 + 2;
+				break;
+			case 5:
+				temp = Lv[n] * 0.84 + 7;
+				break;
+			case 6:
+				temp = Lv[n] * 0.66 + 5;
+				break;
+			case 7:
+				temp = Lv[n] * 12.32 + 42;
+				break;
+			case 8:
+				temp = Lv[n] * 2.46 + 12;
+				break;
+			default:
+				break;
+			}
+			break;
+		case 2: //パラディン
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 3: //バーサーカー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 4: //ヴァルキリー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 5: //侍
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 6: //ダークロード
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
+	case 2: //マジックユーザー系
+		switch (job[n])
+		{
+		case 1: //マジックユーザー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 2: //ソーサレス
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 3: //エンチャントレス
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 4: //プリーステス
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 5: //ウィッチ
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 6: //マジカルプリンセス
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 7: //セージ
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 8: //ビショップ
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
+	case 3: //スカウト系
+		switch (job[n])
+		{
+		case 1: //スカウト
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 2: //アーチャー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 3: //アサシン
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 4: //スナイパー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 5: //トレジャーハンター
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 6: //くノ一
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
+	case 4: //メイド系
+		switch (job[n])
+		{
+		case 1: //メイド
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 2: //バード
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 3: //ダンサー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 4: //ディーヴァ
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 5: //ミストレス
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 6: //エトワール
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
+	case 5: //スピエラー系
+		switch (job[n])
+		{
+		case 1: //スピエラー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 2: //ドールマスター
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 3: //トリックスター
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 4: //ソウルサモナー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 5: //パピヨン
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		case 6: //ジョーカー
+			switch (want)
+			{
+			case 1:
+				temp = Lv[n];
+				break;
+			case 2:
+				temp = Lv[n];
+				break;
+			case 3:
+				temp = Lv[n];
+				break;
+			case 4:
+				temp = Lv[n];
+				break;
+			case 5:
+				temp = Lv[n];
+				break;
+			case 6:
+				temp = Lv[n];
+				break;
+			case 7:
+				temp = Lv[n] * 6;
+				break;
+			case 8:
+				temp = Lv[n];
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
+
+	default:
+		break;
+	}
+	return Status;
+}*/

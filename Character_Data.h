@@ -9,6 +9,7 @@ public:
 	Character_Data();
 	~Character_Data();
 	int GetStatus(int n, int want); //n番目のキャラのwant(1=atk,2=def,3=int,4=res,5=dex,6=agi,7=hp,8=tp,9=斬,10=突,11=欧,12=火,13=水,14=風,15=土,16=雷)を取得する
+	status GetStatus2(int n){ status status_t; return status_t; }; //n番目のキャラのstatus構造体を返す
 	char* GetJobName(int n); //n番目のキャラの現在のクラスの名前を返す
 	char* GetJobNameabb(int n); //n番目のキャラの現在のクラスの名前の省略形を返す
 	

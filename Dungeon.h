@@ -17,7 +17,6 @@ public:
 	int Reaction();
 	int DrawSquare(float pos_x_lu, float pos_y_lu, float pos_z_lu, float pos_x_rd, float pos_y_rd, float pos_z_rd); //3d空間に正四角形を書く関数
 	//int kabe_handle;
-	int DrawMap(unsigned char(*map_data)[10], int x_max, int z_max); //マップの描画。深度バッファする
 	int DrawMap_c(unsigned char(*map_data)[10], int x_max, int z_max); //マップの描画。深度バッファしない
 	void DrawMiniMap(); //ミニマップの描画
 	FILE *fp;

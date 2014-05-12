@@ -1,5 +1,7 @@
 #pragma once
 #include "SceneBase.h"
+#include"Monsters.h"
+
 class Battle :
 	public SceneBase
 {
@@ -9,5 +11,6 @@ public:
 	void Draw();
 	int Reaction();
 	int testgraph;
+	Monsters* monsters;
 };
 
