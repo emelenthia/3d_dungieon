@@ -7,7 +7,6 @@
 //ファイルから情報を読み込み、オブジェクト1つにつきモンスター1体分の挙動をする
 
 class Monsters
-	:Status
 {
 public:
 	Monsters(int n);
@@ -18,9 +17,8 @@ public:
 	{
 		MAJIC_LIFE //魔法生物
 	};
-
 	strain Strain;
-	status Status;
+	status Status_;
 
 	status_c Status_c;
 
@@ -32,5 +30,7 @@ public:
 	char monster_file_name[101]; //モンスターの名前(ファイル読み込み用)
 	char monster_file_name_temp[101]; //モンスターの名前(ファイル読み込み用)
 	MonsterList* monsterlist; //ファイル一覧
+
+	int monster_information_flag;
 };
 

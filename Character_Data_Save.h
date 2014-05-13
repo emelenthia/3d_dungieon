@@ -1,9 +1,7 @@
 #pragma once
 #include<stdio.h>
-#include"Status.h"
 
-class Character_Data_Save ://セーブされる各キャラの可変データ
-	public Status
+class Character_Data_Save //セーブされる各キャラの可変データ
 {
 public:
 	Character_Data_Save();

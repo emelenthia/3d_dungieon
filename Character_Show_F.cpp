@@ -130,6 +130,7 @@ void Character_Show_F::Draw()
 				if (choosenow == number_list[i])
 				{
 					Guild_Scene_Base::char_ran = i; //現在選ばれているキャラを表示する
+					Status_ = characters->GetStatus(i);
 
 					//現在選択されているヒロインの情報を表示
 					DrawFormatString(db_x_lu + 5 + GetDrawStringWidth(names[0], strlen(names[0])) + 5, db_y_lu + 2 - 20, white, "%d", characters->Lv[i]);
@@ -140,19 +141,19 @@ void Character_Show_F::Draw()
 
 					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->nowhp[i], white);
 					DrawString(db_x_lu + 15 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, "/", white);
-					DrawIntRight(db_x_lu + 20 + GetDrawFormatStringWidth("ATK9999") + GetDrawFormatStringWidth("/%d", 9999), db_y_lu + 2, characters->GetStatus(i, 7), white);
+					DrawIntRight(db_x_lu + 20 + GetDrawFormatStringWidth("ATK9999") + GetDrawFormatStringWidth("/%d", 9999), db_y_lu + 2, Status_.hpmax, white);
 
 					DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 5 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->nowtp[i], white);
 					DrawString((db_x_rd - db_x_lu)*0.5 + db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, "/", white);
-					DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 15 + GetDrawFormatStringWidth("/%d", 9999) + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->GetStatus(i, 8), white);
+					DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 15 + GetDrawFormatStringWidth("/%d", 9999) + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, Status_.tpmax, white);
 
 
-					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 22, characters->GetStatus(i, 1), white);
-					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 42, characters->GetStatus(i, 2), white);
-					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 62, characters->GetStatus(i, 3), white);
-					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 82, characters->GetStatus(i, 4), white);
-					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 102, characters->GetStatus(i, 5), white);
-					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 122, characters->GetStatus(i, 6), white);
+					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 22, Status_.atk, white);
+					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 42, Status_.def, white);
+					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 62, Status_.int_s, white);
+					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 82, Status_.res, white);
+					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 102, Status_.dex, white);
+					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 122, Status_.agi, white);
 
 					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999/EXP  9999999"), db_y_lu + 42, characters->exp[i], white);
 					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999/EXP  9999999"), db_y_lu + 62, characters->Lv[i] * 10 - characters->exp[i], white);

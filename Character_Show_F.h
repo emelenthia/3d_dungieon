@@ -1,6 +1,7 @@
 #pragma once
 #include<stdio.h>
 #include"Characters.h"
+#include"Status.h"
 
 class Character_Show_F //キャラクターのステータスを見る画面
 {
@@ -34,5 +35,6 @@ public:
 	int pos_y_rd = 0;
 	Character_Show_F();
 	~Character_Show_F(){};
+	status Status_; //status構造体を受け取る
 	int GetCharNow(); //現在選択しているキャラの番号を返す。番号とは固有番号である
 };

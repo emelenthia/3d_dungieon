@@ -1,6 +1,7 @@
 #pragma once
 #include "Character_Data_Save.h"
 #include<stdio.h>
+#include"Status.h"
 
 class Character_Data : //セーブされないキャラクターの固有データ
 	public Character_Data_Save
@@ -9,10 +10,11 @@ public:
 	Character_Data();
 	~Character_Data();
 	int GetStatus(int n, int want); //n番目のキャラのwant(1=atk,2=def,3=int,4=res,5=dex,6=agi,7=hp,8=tp,9=斬,10=突,11=欧,12=火,13=水,14=風,15=土,16=雷)を取得する
-	status GetStatus2(int n){ status status_t; return status_t; }; //n番目のキャラのstatus構造体を返す
 	char* GetJobName(int n); //n番目のキャラの現在のクラスの名前を返す
 	char* GetJobNameabb(int n); //n番目のキャラの現在のクラスの名前の省略形を返す
-	
+
+	status GetStatus(int n); //n番目のキャラのstatus構造体を返す
+
 	FILE *fp_n_s[15];
 	void Load_Char_n_s(char *file_pointer, char *file_pointer_save,int n);
 	char file_name_n_s[15][50]; //ファイル名を覚えておく
