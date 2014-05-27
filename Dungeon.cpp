@@ -71,7 +71,7 @@ void Dungeon::Draw()
 	//エンカウント表示
 	if (state == 7)
 	{
-		DrawBox(0, 0, time*6.4, 480, Colors::black, TRUE);
+		DrawBox(0, 0, (int)(time*6.4), 480, Colors::black, TRUE);
 	}
 
 

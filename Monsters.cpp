@@ -33,7 +33,7 @@ void Monsters::MonsterSet(int n)
 	int numitemmax = 0;
 	//Šî–{
 	sprintf(monster_file_name_temp, "./scn/monsters/%s", monsterlist->monsterlist[n]);
-
+	Status_c.alive = 1;
 
 	//î•ñ‚ğ“Ç‚İ‚Ş
 	sprintf(monster_file_name, "%s/info.cns", monster_file_name_temp);
@@ -48,8 +48,8 @@ void Monsters::MonsterSet(int n)
 	fscanf(individuals_fp, "%d", &Status_.dex);
 	fscanf(individuals_fp, "%d", &Status_.agi);
 	fscanf(individuals_fp, "%d", &Status_.Tolerance.cut);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.beat);
 	fscanf(individuals_fp, "%d", &Status_.Tolerance.stab);
+	fscanf(individuals_fp, "%d", &Status_.Tolerance.beat);
 	fscanf(individuals_fp, "%d", &Status_.Tolerance.fire);
 	fscanf(individuals_fp, "%d", &Status_.Tolerance.aqua);
 	fscanf(individuals_fp, "%d", &Status_.Tolerance.earth);
@@ -67,6 +67,7 @@ void Monsters::MonsterSet(int n)
 	}
 	fscanf(individuals_fp, "%d", &Status_.item_pa);
 	fscanf(individuals_fp, "%d", &Strain);
+	fclose(individuals_fp);
 
 	//‰æ‘œ‚ğ“Ç‚İ‚Ş
 	sprintf(monster_file_name, "%s/pic_b.png", monster_file_name_temp);

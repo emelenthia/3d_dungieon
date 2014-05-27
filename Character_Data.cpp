@@ -80,7 +80,7 @@ void Character_Data::Load_Char_n_s(char *file_pointer, char *file_pointer_save,i
 
 int Character_Data::GetStatus(int n,int want)
 {
-	int temp = 0; //返り値
+	double temp = 0; //返り値。doubleなのは警告がめんどくさいから
 
 	switch (job_system[n])
 	{
@@ -1115,7 +1115,7 @@ int Character_Data::GetStatus(int n,int want)
 	default:
 		break;
 	}
-	return temp;
+	return (int)temp;
 }
 
 
@@ -1412,6 +1412,14 @@ char* Character_Data::GetJobNameabb(int n)
 status Character_Data::GetStatus(int n)
 {
 	status Status_; //返り値
+	double temp_atk = 0; //警告の為にキャストするのが面倒なため
+	double temp_def = 0;
+	double temp_int_s = 0;
+	double temp_res = 0;
+	double temp_dex = 0;
+	double temp_agi = 0;
+	double temp_hpmax = 0;
+	double temp_tpmax = 0;
 
 	switch (job_system[n])
 	{
@@ -1419,148 +1427,148 @@ status Character_Data::GetStatus(int n)
 		switch (job[n])
 		{
 		case 1: //ファイター
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 2: //パラディン
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 3: //バーサーカー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 4: //ヴァルキリー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 5: //侍
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 6: //ダークロード
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		}
 	case 2: //マジックユーザー系
 		switch (job[n])
 		{
 		case 1: //マジックユーザー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 2: //ソーサレス
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 3: //エンチャントレス
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 4: //プリーステス
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 5: //ウィッチ
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 6: //マジカルプリンセス
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 7: //セージ
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 8: //ビショップ
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		default:
 			break;
@@ -1570,64 +1578,64 @@ status Character_Data::GetStatus(int n)
 		switch (job[n])
 		{
 		case 1: //スカウト
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 2: //アーチャー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 3: //アサシン
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 4: //スナイパー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 5: //トレジャーハンター
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 6: //くノ一
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		default:
 			break;
@@ -1637,64 +1645,64 @@ status Character_Data::GetStatus(int n)
 		switch (job[n])
 		{
 		case 1:
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 2: //バード
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 3: //ダンサー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 4: //ディーヴァ
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 5: //ミストレス
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 6: //エトワール
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 		default:
 			break;
 		}
@@ -1703,64 +1711,64 @@ status Character_Data::GetStatus(int n)
 		switch (job[n])
 		{
 		case 1: //スピエラー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 2: //ドールマスター
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 3: //トリックスター
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 4: //ソウルサモナー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 5: //パピヨン
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		case 6: //ジョーカー
-			Status_.atk = Lv[n] * 0.96 + 5;
-			Status_.def = Lv[n] * 0.9 + 3;
-			Status_.int_s = Lv[n] * 0.56 + 3;
-			Status_.res = Lv[n] * 0.74 + 2;
-			Status_.dex = Lv[n] * 0.84 + 7;
-			Status_.agi = Lv[n] * 0.66 + 5;
-			Status_.hpmax = Lv[n] * 12.32 + 42;
-			Status_.tpmax = Lv[n] * 2.46 + 12;
+			temp_atk = Lv[n] * 0.96 + 5;
+			temp_def = Lv[n] * 0.9 + 3;
+			temp_int_s = Lv[n] * 0.56 + 3;
+			temp_res = Lv[n] * 0.74 + 2;
+			temp_dex = Lv[n] * 0.84 + 7;
+			temp_agi = Lv[n] * 0.66 + 5;
+			temp_hpmax = Lv[n] * 12.32 + 42;
+			temp_tpmax = Lv[n] * 2.46 + 12;
 			break;
 		default:
 			break;
@@ -1770,6 +1778,14 @@ status Character_Data::GetStatus(int n)
 	default:
 		break;
 	}
+	Status_.atk = (int)temp_atk;
+	Status_.def = (int)temp_def;
+	Status_.int_s = (int)temp_int_s;
+	Status_.res = (int)temp_res;
+	Status_.dex = (int)temp_dex;
+	Status_.agi = (int)temp_agi;
+	Status_.hpmax = (int)temp_hpmax;
+	Status_.tpmax = (int)temp_tpmax;
 
 	return Status_;
 }

@@ -396,93 +396,93 @@ void Guild_PT::DrawPartyType(int pos_x, int pos_y, int party_type)
 	switch (party_type)
 	{
 	case 11:
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5, Colors::red);
 		break;
 	case 21:
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5, Colors::red);
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 2 - 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 + 5, pos_y + 5, Colors::red);
 		break;
 	case 22:
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5, Colors::red);
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 31:
 		//左
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1 - 5 - 0.5 * GetDrawStringWidth(("●"), strlen("●")), pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1 - 5 - GetDrawStringWidth(("●"), strlen("●")) / 2, pos_y + 5, Colors::red);
 		//真ん中
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5, Colors::red);
 		//右
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 5 + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + GetDrawStringWidth(("●"), strlen("●")) / 2 + 5 + 1, pos_y + 5, Colors::red);
 		break;
 	case 32:
 		//左
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 2 - 5, pos_y + 5, Colors::red);
 		//右
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 + 5, pos_y + 5, Colors::red);
 		//後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 33:
 		//真ん中
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5, Colors::red);
 		//左後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 2 - 5, pos_y + 5 + 22, Colors::aqua);
 		//右後
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 + 5, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 41:
 		//左
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1 - 5 - 0.5 * GetDrawStringWidth(("●"), strlen("●")), pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1 - 5 - GetDrawStringWidth(("●"), strlen("●")) / 2, pos_y + 5, Colors::red);
 		//真ん中
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5, Colors::red);
 		//右
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 5 + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + GetDrawStringWidth(("●"), strlen("●")) / 2 + 5 + 1, pos_y + 5, Colors::red);
 		//後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 42:
 		//左
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 2 - 5, pos_y + 5, Colors::red);
 		//右
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 + 5, pos_y + 5, Colors::red);
 		//左後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 2 - 5, pos_y + 5 + 22, Colors::aqua);
 		//右後
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 + 5, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 43:
 		//真ん中
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5 ,Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5 ,Colors::red);
 		//左後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1 - 5 - 0.5 * GetDrawStringWidth(("●"), strlen("●")), pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1 - 5 - GetDrawStringWidth(("●"), strlen("●")) / 2, pos_y + 5 + 22, Colors::aqua);
 		//後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5 + 22, Colors::aqua);
 		//右後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 5 + 1, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + GetDrawStringWidth(("●"), strlen("●")) / 2 + 5 + 1, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 51:
 		//左
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1 - 5 - 0.5 * GetDrawStringWidth(("●"), strlen("●")), pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1 - 5 - GetDrawStringWidth(("●"), strlen("●")) / 2, pos_y + 5, Colors::red);
 		//真ん中
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5, Colors::red);
 		//右
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 5 + 1, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + GetDrawStringWidth(("●"), strlen("●")) / 2 + 5 + 1, pos_y + 5, Colors::red);
 		//左後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 2 - 5, pos_y + 5 + 22, Colors::aqua);
 		//右後
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 + 5, pos_y + 5 + 22, Colors::aqua);
 		break;
 	case 52:
 		//左
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * GetDrawStringWidth(("●"), strlen("●")) - 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 2 - 5, pos_y + 5, Colors::red);
 		//右
-		DrawHitogata(pos_x + 0.5 * mini_size_x + 5, pos_y + 5, Colors::red);
+		DrawHitogata(pos_x + mini_size_x / 2 + 5, pos_y + 5, Colors::red);
 		//左後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1 - 5 - 0.5 * GetDrawStringWidth(("●"), strlen("●")), pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1 - 5 - GetDrawStringWidth(("●"), strlen("●")) / 2, pos_y + 5 + 22, Colors::aqua);
 		//後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 1, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + 1, pos_y + 5 + 22, Colors::aqua);
 		//右後
-		DrawHitogata(pos_x + 0.5 * mini_size_x - 0.5 * 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 0.5 * GetDrawStringWidth(("●"), strlen("●")) + 5 + 1, pos_y + 5 + 22, Colors::aqua);
+		DrawHitogata(pos_x + mini_size_x / 2 - GetDrawStringWidth(("●"), strlen("●")) / 4 + GetDrawStringWidth(("●"), strlen("●")) / 2 + 5 + 1, pos_y + 5 + 22, Colors::aqua);
 		break;
 	default:
 		break;

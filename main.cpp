@@ -16,6 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 {
 
 	ChangeWindowMode(TRUE); // ウィンドウモードに設定
+	SetMainWindowText("名称未設定"); //タイトルの指定。何にしよう
 	SetDrawScreen(DX_SCREEN_BACK);
 	//SetBackgroundColor(0, 0, 0); //背景の色変更5
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理

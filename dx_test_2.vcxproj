@@ -43,6 +43,8 @@
     <ClCompile Include="Key_Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MonsterList.cpp" />
+    <ClCompile Include="Monsters.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Party.cpp" />
@@ -51,6 +53,7 @@
     <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="Status.cpp" />
     <ClCompile Include="Talker.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -86,6 +89,8 @@
     <ClInclude Include="In_Battle.h" />
     <ClInclude Include="Key_Input.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MonsterList.h" />
+    <ClInclude Include="Monsters.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="Party.h" />
@@ -94,6 +99,7 @@
     <ClInclude Include="SaveData.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="Status.h" />
     <ClInclude Include="Talker.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

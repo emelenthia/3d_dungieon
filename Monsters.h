@@ -9,13 +9,14 @@
 class Monsters
 {
 public:
+	Monsters(){};
 	Monsters(int n);
 	~Monsters();
 	void Draw();
 
 	typedef enum strain //í‘°ˆê——
 	{
-		MAJIC_LIFE //–‚–@¶•¨
+		MAJIC_LIFE = 1//–‚–@¶•¨
 	};
 	strain Strain;
 	status Status_;

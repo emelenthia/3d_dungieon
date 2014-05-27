@@ -7,7 +7,7 @@ public:
 };
 
 //グローバルにしないと関数の返り値に出来ない
-typedef struct tolerance //基本耐性の構造体
+typedef struct tolerance_ //基本耐性の構造体
 {
 	int cut; //斬耐性
 	int beat; //殴耐性
@@ -17,31 +17,31 @@ typedef struct tolerance //基本耐性の構造体
 	int wind; //風
 	int earth; //土
 	int light; //雷
-};
+}tolerance;
 
-typedef struct toleranceadd //加算耐性の構造体
+typedef struct toleranceadd_ //加算耐性の構造体
 {
 	int cut; //斬耐性
-	int beat; //殴耐性
 	int stab; //突耐性
+	int beat; //殴耐性
 	int fire; //火
 	int aqua; //水
 	int wind; //風
 	int earth; //土
 	int light; //雷
-};
+}toleranceadd;
 
-typedef struct abnomalous //各状態異常のフラグ
+typedef struct abnomalous_ //各状態異常のフラグ
 {
 	bool sleep;
 	bool freez;
 	bool silent;
 	bool paralysis;
 	bool poison;
-};
+}abnomalous;
 
 
-typedef struct status //変化しない情報の構造体
+typedef struct status_ //変化しない情報の構造体
 {
 	char name[21];
 	int lv;
@@ -58,10 +58,11 @@ typedef struct status //変化しない情報の構造体
 	int item[5]; //落とすアイテム
 	int item_p[5]; //それぞれの落とす確率
 	int item_pa; //そもそも落とす確率
-};
+}status;
 
-typedef struct status_c //戦闘中に変化する情報の構造体
+typedef struct status_c_ //戦闘中に変化する情報の構造体
 {
+	int alive;
 	int hp;
 	int tp;
 	int atk_scale; //atkの倍率
@@ -72,5 +73,5 @@ typedef struct status_c //戦闘中に変化する情報の構造体
 	int agi_scale;
 	toleranceadd ToleranceAdd;
 	abnomalous Abnomalous;
-};
+}status_c;
 

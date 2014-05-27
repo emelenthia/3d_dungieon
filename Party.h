@@ -41,6 +41,7 @@ public:
 	Characters *characters;
 	void Save();
 	void DrawPartyType();
+	int GetNumMember(){ return party_type / 10; }
 private:
 	// ¶¬‚âƒRƒs[‚ğ‹Ö~‚·‚é
 	Party();

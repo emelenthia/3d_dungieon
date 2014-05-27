@@ -12,5 +12,6 @@ public:
 	static int aqua;
 	static int dark_aqua;
 	static int green;
+	static int purple;
 };
 

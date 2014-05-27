@@ -9,6 +9,7 @@ int Colors::black;
 int Colors::aqua;
 int Colors::dark_aqua;
 int Colors::green;
+int Colors::purple;
 
 Colors::Colors()
 {
@@ -20,6 +21,7 @@ Colors::Colors()
 	aqua = GetColor(0, 255, 255);
 	dark_aqua = GetColor(0, 35, 35);
 	green = GetColor(0, 255, 0);
+	purple = GetColor(255, 0, 255);
 }
 
 
