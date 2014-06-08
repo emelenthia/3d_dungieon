@@ -11,5 +11,6 @@ public:
 	static int menu_window_size_x; //ギルドのメニュー欄の右のx座標
 	static int menu_window_size_y; //ギルドのメニュー欄の右のy座標
 	static int character_show_flag; //キャラクターの情報を見ているフラグ
+	static int battleflag; //現在戦闘中であるフラグ
 };
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "SceneBase.h"
 #include"DxLib.h"
-#include<stdio.h>
+//#include<stdio.h>
 #include"SaveData.h"
 #include"Options.h"
 #include"Party.h"
@@ -59,4 +59,5 @@ public:
 	int non_walk_flag = 0; //帰るかのメッセージの表示しないフラグ
 	int minimap_flag = 0; //0で非表示、1で通常表示、2で全体表示?
 	static char dungeon_name[50];
+	Battle* battle;
 };

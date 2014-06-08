@@ -5,10 +5,26 @@
 #include"Colors.h"
 #include"Dungeon.h"
 
-
 #define swap(a,b) a^=b^=a^=b
 
-Battle::Battle(int e1, int e2 = 0, int e3 = 0, int e4 = 0, int e5 = 0)
+#define nfscanf(scan_target, format_text, ...) nfscanf_(__LINE__,__FILE__,scan_target, format_text,__VA_ARGS__);
+void Battle::nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...)
+{
+	FILE* scanf_fp;
+	int ret = 0;
+	va_list args;
+
+	scanf_fp = fopen("scanf_log.txt", "w");
+	fprintf(scanf_fp, "%s\ns:%d\n", file, line);
+	fclose(scanf_fp);
+
+	va_start(args, format_text);
+	ret = vfscanf(scan_target, format_text, args);
+	va_end(args);
+
+}
+
+Battle::Battle()//int e1, int e2 = 0, int e3 = 0, int e4 = 0, int e5 = 0)
 {
 	randomer = Randomer::GetInstance();
 
@@ -17,35 +33,36 @@ Battle::Battle(int e1, int e2 = 0, int e3 = 0, int e4 = 0, int e5 = 0)
 	char dungeon_name[50];
 	int enemysetkind = 0;
 	int monster_number[5] = { 0, 0, 0, 0, 0 };
-	strcpy(dungeon_name, "/dungeon/");
+	char* dammy[50];
+	strcpy(dungeon_name, "./dungeon/");
 	strcat(dungeon_name, Dungeon::dungeon_name);
 	strcat(dungeon_name, "/monsterset.cns");
 	fp = fopen(dungeon_name,"r");
-	fscanf(fp, "%d", &enemysetkindmax);
+	nfscanf(fp, "%d", &enemysetkindmax);
 	enemysetkind = randomer->GetRand() % enemysetkindmax;
 	{
 		for (int i = 0; i < enemysetkind; i++)
 		{
-			fscanf(fp, "");
-			fscanf(fp, "");
+			nfscanf(fp, "%s", dammy);
+			nfscanf(fp, "%s", dammy);
 		}
-		fscanf(fp, "%d", &numenemy);
+		nfscanf(fp, "%d", &numenemy);
 		switch (numenemy)
 		{
 		case 1:
-			fscanf(fp, "%d", &monster_number[0]);
+			nfscanf(fp, "%d", &monster_number[0]);
 			break;
 		case 2:
-			fscanf(fp, "%d,%d", &monster_number[0], &monster_number[1]);
+			nfscanf(fp, "%d,%d", &monster_number[0], &monster_number[1]);
 			break;
 		case 3:
-			fscanf(fp, "%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2]);
+			nfscanf(fp, "%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2]);
 			break;
 		case 4:
-			fscanf(fp, "%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3]);
+			nfscanf(fp, "%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3]);
 			break;
 		case 5:
-			fscanf(fp, "%d,%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3],&monster_number[4]);
+			nfscanf(fp, "%d,%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3],&monster_number[4]);
 			break;
 		default:
 			break;
@@ -74,11 +91,10 @@ Battle::Battle(int e1, int e2 = 0, int e3 = 0, int e4 = 0, int e5 = 0)
 	active_point[2] = -1;
 	active_point[3] = -1;
 	active_point[4] = -1;
-	active_point[5] = 5;
-	active_point[6] = 9;
-	active_point[7] = 11;
-	active_point[8] = 1;
-	active_point[9] = 7;
+	for (int i = 0; i < numenemy; i++)
+	{
+		active_point[i + 5] = i * 2 + 3;
+	}
 	minichar_size_x = 75;
 	minichar_size_y = 24;
 
@@ -88,13 +104,6 @@ Battle::Battle(int e1, int e2 = 0, int e3 = 0, int e4 = 0, int e5 = 0)
 
 Battle::~Battle()
 {
-	for (int i = 0; i < numenemy; i++)
-	{
-		if (monsters[i] != NULL)
-		{
-			delete monsters[i];
-		}
-	}
 }
 
 
@@ -106,7 +115,7 @@ void Battle::Draw()
 
 	DrawMonster();
 	DrawMiniChar();
-	party->Draw();
+	//party->Draw();
 	DrawCanActive();
 }
 
@@ -116,7 +125,14 @@ int Battle::Reaction()
 	int r = 0;
 	if (Key_Input::buff_time[KEY_INPUT_Z] == 1)
 	{
-		Flags::nowscene = 0xf1e1d;
+		Flags::battleflag = -1;
+		for (int i = 0; i < numenemy; i++)
+		{
+			if (monsters[i] != NULL)
+			{
+				delete monsters[i];
+			}
+		}
 	}
 	for (int i = 0; i < numenemy; i++)
 	{

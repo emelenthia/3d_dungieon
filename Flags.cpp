@@ -7,6 +7,7 @@ int Flags::guild_now;
 int Flags::menu_window_size_x;
 int Flags::menu_window_size_y;
 int Flags::character_show_flag;
+int Flags::battleflag;
 
 Flags::Flags()
 {
@@ -17,6 +18,7 @@ Flags::Flags()
 	menu_window_size_x = 160;
 	menu_window_size_y = 400;
 	character_show_flag = 0;
+	battleflag = 0;
 }
 
 

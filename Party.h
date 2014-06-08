@@ -8,7 +8,7 @@ public:
 	static Party* instance;
 	static Party* GetInstance()
 	{
-		if (instance == NULL)instance = new Party();
+		if (instance == NULL)instance = new Party;
 		return instance;
 	}
 
@@ -41,7 +41,7 @@ public:
 	Characters *characters;
 	void Save();
 	void DrawPartyType();
-	int GetNumMember(){ return party_type / 10; }
+	int GetNumMember();
 private:
 	// ¶¬‚âƒRƒs[‚ğ‹Ö~‚·‚é
 	Party();

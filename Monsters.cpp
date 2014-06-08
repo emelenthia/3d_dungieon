@@ -3,6 +3,23 @@
 #include<DxLib.h>
 #include"Colors.h"
 
+#define nfscanf(scan_target, format_text, ...) nfscanf_(__LINE__,__FILE__,scan_target, format_text,__VA_ARGS__);
+void Monsters::nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...)
+{
+	FILE* scanf_fp;
+	int ret = 0;
+	va_list args;
+
+	scanf_fp = fopen("scanf_log.txt", "w");
+	fprintf(scanf_fp, "%s\nçs:%d\n", file, line);
+	fclose(scanf_fp);
+
+	va_start(args, format_text);
+	ret = vfscanf(scan_target, format_text, args);
+	va_end(args);
+
+}
+
 Monsters::Monsters(int n)
 {
 	monster_information_flag = 0;
@@ -38,35 +55,35 @@ void Monsters::MonsterSet(int n)
 	//èÓïÒÇì«Ç›çûÇﬁ
 	sprintf(monster_file_name, "%s/info.cns", monster_file_name_temp);
 	individuals_fp = fopen(monster_file_name, "r");
-	fscanf(individuals_fp, "%s", Status_.name);
-	fscanf(individuals_fp, "%d", &Status_.hpmax);
-	fscanf(individuals_fp, "%d", &Status_.tpmax);
-	fscanf(individuals_fp, "%d", &Status_.atk);
-	fscanf(individuals_fp, "%d", &Status_.def);
-	fscanf(individuals_fp, "%d", &Status_.int_s);
-	fscanf(individuals_fp, "%d", &Status_.res);
-	fscanf(individuals_fp, "%d", &Status_.dex);
-	fscanf(individuals_fp, "%d", &Status_.agi);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.cut);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.stab);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.beat);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.fire);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.aqua);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.earth);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.wind);
-	fscanf(individuals_fp, "%d", &Status_.Tolerance.light);
-	fscanf(individuals_fp, "%d", &Status_.exp);
-	fscanf(individuals_fp, "%d", &numitemmax);
+	nfscanf(individuals_fp, "%s", Status_.name);
+	nfscanf(individuals_fp, "%d", &Status_.hpmax);
+	nfscanf(individuals_fp, "%d", &Status_.tpmax);
+	nfscanf(individuals_fp, "%d", &Status_.atk);
+	nfscanf(individuals_fp, "%d", &Status_.def);
+	nfscanf(individuals_fp, "%d", &Status_.int_s);
+	nfscanf(individuals_fp, "%d", &Status_.res);
+	nfscanf(individuals_fp, "%d", &Status_.dex);
+	nfscanf(individuals_fp, "%d", &Status_.agi);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.cut);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.stab);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.beat);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.fire);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.aqua);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.earth);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.wind);
+	nfscanf(individuals_fp, "%d", &Status_.Tolerance.light);
+	nfscanf(individuals_fp, "%d", &Status_.exp);
+	nfscanf(individuals_fp, "%d", &numitemmax);
 	for (int i = 0; i < numitemmax; i++)
 	{
-		fscanf(individuals_fp, "%d", &Status_.item[i]);
+		nfscanf(individuals_fp, "%d", &Status_.item[i]);
 	}
 	for (int i = 0; i < numitemmax; i++)
 	{
-		fscanf(individuals_fp, "%d", &Status_.item_p[i]);
+		nfscanf(individuals_fp, "%d", &Status_.item_p[i]);
 	}
-	fscanf(individuals_fp, "%d", &Status_.item_pa);
-	fscanf(individuals_fp, "%d", &Strain);
+	nfscanf(individuals_fp, "%d", &Status_.item_pa);
+	nfscanf(individuals_fp, "%d", &Strain);
 	fclose(individuals_fp);
 
 	//âÊëúÇì«Ç›çûÇﬁ

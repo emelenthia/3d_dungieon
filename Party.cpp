@@ -239,3 +239,9 @@ void Party::DrawPartyType()
 		break;
 	}
 }
+
+
+int Party::GetNumMember()
+{ 
+	return party_type / 10; 
+}

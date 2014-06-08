@@ -1,6 +1,6 @@
 #include "Dungeon.h"
 #include"DxLib.h"
-#include<stdio.h>
+//#include<stdio.h>
 #include"Key_Input.h"
 #include"Options.h"
 #include<math.h>
@@ -8,7 +8,6 @@
 #include"SaveData.h"
 #include"Party.h"
 #include"Colors.h"
-#pragma warning disable c4244
 
 #define PI    3.1415926535897932384626433832795f
 
@@ -47,6 +46,8 @@ Dungeon::~Dungeon()
 
 void Dungeon::Draw()
 {
+	if (!Flags::battleflag)
+	{
 	//カメラの移動
 	//target_camera = VGet(pos_x * 100 + (muki % 2 ? (muki - 1 ? 0 : 100) : 50), y * 100 - 50, (pos_z * 100 + (muki % 2 ? 50 : (muki ? 0 : 100))));
 	//player_camera = VGet(pos_x * 100 + (muki % 2 ? (muki - 1 ? 100 : 0) : 50), y * 100 - 50, (pos_z * 100 + (muki % 2 ? 50 : (muki ? 100 : 0))));
@@ -75,7 +76,11 @@ void Dungeon::Draw()
 	{
 		DrawBox(0, 0, (int)(time*6.4), 480, Colors::black, TRUE);
 	}
-
+	}
+	else
+	{
+		battle->Draw();
+	}
 
 
 	//パーティの描画
@@ -85,688 +90,701 @@ void Dungeon::Draw()
 
 int Dungeon::Reaction()
 {
-	//マップの踏破
-	if (!(savedata->map_open_flag[floors - 1][pos_z][pos_x]))
+	if (!Flags::battleflag)
 	{
-		savedata->map_open_flag[floors - 1][pos_z][pos_x] = 1;
-	}
+		//マップの踏破
+		if (!(savedata->map_open_flag[floors - 1][pos_z][pos_x]))
+		{
+			savedata->map_open_flag[floors - 1][pos_z][pos_x] = 1;
+		}
 
-	if (!state)
-	{
+		if (!state)
+		{
 
-		if (pos_x == start_x && pos_z == start_z && !non_walk_flag)
-		{
-			if (!nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1)
+			if (pos_x == start_x && pos_z == start_z && !non_walk_flag)
 			{
-				Flags::nowscene = 0x8011d;
+				if (!nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1)
+				{
+					Flags::nowscene = 0x8011d;
+				}
+				else if (nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1
+					|| Key_Input::buff_time[KEY_INPUT_X] == 1)
+				{
+					non_walk_flag++;
+				}
+				else if (Key_Input::buff_time[KEY_INPUT_UP] == 1 || Key_Input::buff_time[KEY_INPUT_DOWN] == 1)
+				{
+					nowchoose = !nowchoose;
+				}
 			}
-			else if (nowchoose && Key_Input::buff_time[KEY_INPUT_Z] == 1
-				|| Key_Input::buff_time[KEY_INPUT_X] == 1)
+			else if (Key_Input::buff_time[KEY_INPUT_LEFT]) //stateで管理しているため%X==1が必要ない
 			{
-				non_walk_flag++;
+				state = 4;
 			}
-			else if (Key_Input::buff_time[KEY_INPUT_UP] == 1 || Key_Input::buff_time[KEY_INPUT_DOWN] == 1)
+			else if (Key_Input::buff_time[KEY_INPUT_RIGHT])
 			{
-				nowchoose = !nowchoose;
+				state = 2;
 			}
-		}
-		else if (Key_Input::buff_time[KEY_INPUT_LEFT]) //stateで管理しているため%X==1が必要ない
-		{
-			state = 4;
-		}
-		else if (Key_Input::buff_time[KEY_INPUT_RIGHT])
-		{
-			state = 2;
-		}
-		else if (Key_Input::buff_time[KEY_INPUT_DOWN])
-		{
-			state = 3;
-		}
-		else if (Key_Input::buff_time[KEY_INPUT_A])
-		{
-			for (int i = 0; !i; i++) //隣が壁なら移動しない
+			else if (Key_Input::buff_time[KEY_INPUT_DOWN])
 			{
-				if (muki == 0 && (map_data[pos_z][pos_x] & 8))
-				{
-					break;
-				}
-				if (muki == 1 && (map_data[pos_z][pos_x] & 1))
-				{
-					break;
-				}
-				if (muki == 2 && (map_data[pos_z][pos_x] & 2))
-				{
-					break;
-				}
-				if (muki == 3 && (map_data[pos_z][pos_x] & 4))
-				{
-					break;
-				}
-				state = 6;
+				state = 3;
 			}
-		}
-		else if (Key_Input::buff_time[KEY_INPUT_D])
-		{
-			for (int i = 0; !i; i++) //隣が壁なら移動しない
+			else if (Key_Input::buff_time[KEY_INPUT_A])
 			{
-				if (muki == 0 && (map_data[pos_z][pos_x] & 2))
+				for (int i = 0; !i; i++) //隣が壁なら移動しない
 				{
-					break;
-				}
-				if (muki == 1 && (map_data[pos_z][pos_x] & 4))
-				{
-					break;
-				}
-				if (muki == 2 && (map_data[pos_z][pos_x] & 8))
-				{
-					break;
-				}
-				if (muki == 3 && (map_data[pos_z][pos_x] & 1))
-				{
-					break;
-				}
-				state = 5;
-			}
-		}
-		else if (Key_Input::buff_time[KEY_INPUT_UP])
-		{
-			for (int i = 0; !i; i++)
-			{
-				if (muki == 0 && (map_data[pos_z][pos_x] & 1))
-				{
-					break;
-				}
-				if (muki == 1 && (map_data[pos_z][pos_x] & 2))
-				{
-					break;
-				}
-				if (muki == 2 && (map_data[pos_z][pos_x] & 4))
-				{
-					break;
-				}
-				if (muki == 3 && (map_data[pos_z][pos_x] & 8))
-				{
-					break;
-				}
-				state = 1;
-			}
-		}
-		else if (Key_Input::buff_time[KEY_INPUT_X] == 1)
-		{
-			minimap_flag = !minimap_flag; //現状は表示/非表示のみ
-		}
-	}
-	else if (non_walk_flag)
-	{
-		non_walk_flag = 0;
-	}
-
-	if (state)
-	{
-		switch (state)
-		{
-		case 1: //前進
-		{
-					time += options->move_speed;
-					if (time >= 60 && !flaging) //一方通行の時に壁が見えてしまうので応急処置
+					if (muki == 0 && (map_data[pos_z][pos_x] & 8))
 					{
-						flaging++;
-						switch (muki)
-						{
-						case 0:
-							pos_z++;
-							break;
-						case 1:
-							pos_x++;
-							break;
-						case 2:
-							pos_z--;
-							break;
-						case 3:
-							pos_x--;
-							break;
-						default:
-							break;
-						}
+						break;
 					}
-					if (time < 100)
+					if (muki == 1 && (map_data[pos_z][pos_x] & 1))
 					{
+						break;
+					}
+					if (muki == 2 && (map_data[pos_z][pos_x] & 2))
+					{
+						break;
+					}
+					if (muki == 3 && (map_data[pos_z][pos_x] & 4))
+					{
+						break;
+					}
+					state = 6;
+				}
+			}
+			else if (Key_Input::buff_time[KEY_INPUT_D])
+			{
+				for (int i = 0; !i; i++) //隣が壁なら移動しない
+				{
+					if (muki == 0 && (map_data[pos_z][pos_x] & 2))
+					{
+						break;
+					}
+					if (muki == 1 && (map_data[pos_z][pos_x] & 4))
+					{
+						break;
+					}
+					if (muki == 2 && (map_data[pos_z][pos_x] & 8))
+					{
+						break;
+					}
+					if (muki == 3 && (map_data[pos_z][pos_x] & 1))
+					{
+						break;
+					}
+					state = 5;
+				}
+			}
+			else if (Key_Input::buff_time[KEY_INPUT_UP])
+			{
+				for (int i = 0; !i; i++)
+				{
+					if (muki == 0 && (map_data[pos_z][pos_x] & 1))
+					{
+						break;
+					}
+					if (muki == 1 && (map_data[pos_z][pos_x] & 2))
+					{
+						break;
+					}
+					if (muki == 2 && (map_data[pos_z][pos_x] & 4))
+					{
+						break;
+					}
+					if (muki == 3 && (map_data[pos_z][pos_x] & 8))
+					{
+						break;
+					}
+					state = 1;
+				}
+			}
+			else if (Key_Input::buff_time[KEY_INPUT_X] == 1)
+			{
+				minimap_flag = !minimap_flag; //現状は表示/非表示のみ
+			}
+		}
+		else if (non_walk_flag)
+		{
+			non_walk_flag = 0;
+		}
+
+		if (state)
+		{
+			switch (state)
+			{
+			case 1: //前進
+			{
+						time += options->move_speed;
+						if (time >= 60 && !flaging) //一方通行の時に壁が見えてしまうので応急処置
+						{
+							flaging++;
+							switch (muki)
+							{
+							case 0:
+								pos_z++;
+								break;
+							case 1:
+								pos_x++;
+								break;
+							case 2:
+								pos_z--;
+								break;
+							case 3:
+								pos_x--;
+								break;
+							default:
+								break;
+							}
+						}
+						if (time < 100)
+						{
+							switch (muki)
+							{
+							case 0:
+								target_camera.z += options->move_speed;
+								player_camera.z += options->move_speed;
+								break;
+							case 1:
+								target_camera.x += options->move_speed;
+								player_camera.x += options->move_speed;
+								break;
+							case 2:
+								target_camera.z -= options->move_speed;
+								player_camera.z -= options->move_speed;
+								break;
+							case 3:
+								target_camera.x -= options->move_speed;
+								player_camera.x -= options->move_speed;
+								break;
+							default:
+								DrawString(0, 0, "Error! Dungeon.cpp have missing muki.", GetColor(255, 0, 0));
+								WaitKey();
+								break;
+							}
+						}
+						else
+						{
+							switch (muki)
+							{
+							case 0:
+								target_camera.z = pos_z * 100 + 100;
+								player_camera.z = pos_z * 100;
+								break;
+							case 1:
+								target_camera.x = pos_x * 100 + 100;
+								player_camera.x = pos_x * 100;
+								break;
+							case 2:
+								target_camera.z = pos_z * 100;
+								player_camera.z = pos_z * 100 + 100;
+								break;
+							case 3:
+								target_camera.x = pos_x * 100;
+								player_camera.x = pos_x * 100 + 100;
+								break;
+							default:
+								DrawString(0, 0, "Error! Dungeon.cpp have missing muki.", GetColor(255, 0, 0));
+								WaitKey();
+								break;
+							}
+							flaging = 0;
+							state = 0;
+							time = 0;
+						}
+			}
+				break;
+
+				//右転回
+			case 2:
+			{
+					  if (time < 50)
+					  {
+						  time += options->revolve_speed;
+						  Return_right();
+					  }
+					  else
+					  {
+						  time = 0;
+						  state = 0;
+						  revflag++;
+					  }
+			}
+				break;
+			case 3: //下向き。2倍速で2回右転回
+			{
+						options->revolve_speed *= 2;
 						switch (muki)
 						{
 						case 0:
-							target_camera.z += options->move_speed;
-							player_camera.z += options->move_speed;
+							/*if (time < 50)
+							{
+							time += options->revolve_speed;
+							Return_right();
+							}
+							else
+							{
+							time = 0;
+							down_help++;
+							if (down_help>1) //右転回を2回呼び出す
+							{
+							state = 0;
+							down_help = 0;
+							}
+							}*/
+							/*if (time < 100)
+							{
+							time += 1;
+							target_camera.z -= 1;
+							player_camera.z += 1;
+							if (time > 100)
+							{
+							target_camera.z += time - 100;
+							player_camera.z -= time - 100;
+							}
+							}
+							else
+							{
+							time = 0;
+							state = 0;
+							}*/
+							if (time < 100)
+							{
+								if (time < 50)
+								{
+									time += options->revolve_speed;
+									target_camera.x += options->revolve_speed;
+									player_camera.x -= options->revolve_speed;
+									target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 50)
+									{
+										target_camera.x -= time - 50;
+										player_camera.x += time - 50;
+										target_camera.z = pos_z * 100 + 50;
+										player_camera.z = pos_z * 100 + 50;
+										time = 50;
+									}
+								}
+								else
+								{
+									time += options->revolve_speed;
+									target_camera.x -= options->revolve_speed;
+									player_camera.x += options->revolve_speed;
+									target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 100)
+									{
+										target_camera.x += time - 100;
+										player_camera.x -= time - 100;
+										target_camera.z = pos_z * 100;
+										player_camera.z = pos_z * 100 + 100;
+									}
+
+								}
+							}
+							else
+							{
+								time = 0;
+								state = 0;
+								muki = 2;
+							}
 							break;
-						case 1:
-							target_camera.x += options->move_speed;
-							player_camera.x += options->move_speed;
+
+						case 1: //右→左
+							if (time < 100)
+							{
+								if (time < 50)
+								{
+									time += options->revolve_speed;
+									target_camera.x -= options->revolve_speed;
+									player_camera.x += options->revolve_speed;
+									target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 50)
+									{
+										target_camera.x += time - 50;
+										player_camera.x -= time - 50;
+										target_camera.z = pos_z * 100;
+										player_camera.z = pos_z * 100 + 100;
+										time = 50;
+									}
+								}
+								else
+								{
+									time += options->revolve_speed;
+									target_camera.x -= options->revolve_speed;
+									player_camera.x += options->revolve_speed;
+									target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 100)
+									{
+										target_camera.x += time - 100;
+										player_camera.x -= time - 100;
+										target_camera.z = pos_z * 100 + 50;
+										player_camera.z = pos_z * 100 + 50;
+									}
+
+								}
+							}
+							else
+							{
+								time = 0;
+								state = 0;
+								muki = 3;
+							}
 							break;
-						case 2:
-							target_camera.z -= options->move_speed;
-							player_camera.z -= options->move_speed;
+
+						case 2: //下→上
+							if (time < 100)
+							{
+								if (time < 50)
+								{
+									time += options->revolve_speed;
+									target_camera.x -= options->revolve_speed;
+									player_camera.x += options->revolve_speed;
+									target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 50)
+									{
+										target_camera.x += time - 50;
+										player_camera.x -= time - 50;
+										target_camera.z = pos_z * 100;
+										player_camera.z = pos_z * 100 + 100;
+										time = 50;
+									}
+								}
+								else
+								{
+									time += options->revolve_speed;
+									target_camera.x += options->revolve_speed;
+									player_camera.x -= options->revolve_speed;
+									target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 100)
+									{
+										target_camera.x -= time - 100;
+										player_camera.x += time - 100;
+										target_camera.z = pos_z * 100 + 100;
+										player_camera.z = pos_z * 100;
+									}
+
+								}
+							}
+							else
+							{
+								time = 0;
+								state = 0;
+								muki = 0;
+							}
 							break;
-						case 3:
-							target_camera.x -= options->move_speed;
-							player_camera.x -= options->move_speed;
-							break;
-						default:
-							DrawString(0, 0, "Error! Dungeon.cpp have missing muki.", GetColor(255, 0, 0));
-							WaitKey();
+
+						case 3: //左→右
+							if (time < 100)
+							{
+								if (time < 50)
+								{
+									time += options->revolve_speed;
+									target_camera.x += options->revolve_speed;
+									player_camera.x -= options->revolve_speed;
+									target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 50)
+									{
+										target_camera.x -= time - 50;
+										player_camera.x += time - 50;
+										target_camera.z = pos_z * 100 + 100;
+										player_camera.z = pos_z * 100;
+										time = 50;
+									}
+								}
+								else
+								{
+									time += options->revolve_speed;
+									target_camera.x += options->revolve_speed;
+									player_camera.x -= options->revolve_speed;
+									target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
+									player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
+									if (time >= 100)
+									{
+										target_camera.x -= time - 100;
+										player_camera.x += time - 100;
+										target_camera.z = pos_z * 100 + 50;
+										player_camera.z = pos_z * 100 + 50;
+									}
+
+								}
+							}
+							else
+							{
+								time = 0;
+								state = 0;
+								muki = 1;
+							}
 							break;
 						}
+			}
+				if (!revflag)
+				{
+					revflag++;
+				}
+				options->revolve_speed /= 2;
+				break;
+
+				//左転回
+			case 4:
+			{
+					  if (time < 50)
+					  {
+						  time += options->revolve_speed;
+						  switch (muki)
+						  {
+						  case 0:
+							  target_camera.x -= options->revolve_speed;
+							  player_camera.x += options->revolve_speed;
+							  target_camera.z -= options->revolve_speed;
+							  player_camera.z += options->revolve_speed;
+							  if (time >= 50)
+							  {
+								  target_camera.x += time - 50;
+								  player_camera.x -= time - 50;
+								  target_camera.z += time - 50;
+								  player_camera.z -= time - 50;
+								  muki = 3;
+							  }
+							  break;
+						  case 1:
+							  target_camera.x -= options->revolve_speed;
+							  player_camera.x += options->revolve_speed;
+							  target_camera.z += options->revolve_speed;
+							  player_camera.z -= options->revolve_speed;
+							  if (time >= 50)
+							  {
+								  target_camera.x += time - 50;
+								  player_camera.x -= time - 50;
+								  target_camera.z -= time - 50;
+								  player_camera.z += time - 50;
+								  muki--;
+							  }
+							  break;
+						  case 2:
+							  target_camera.x += options->revolve_speed;
+							  player_camera.x -= options->revolve_speed;
+							  target_camera.z += options->revolve_speed;
+							  player_camera.z -= options->revolve_speed;
+							  if (time >= 50)
+							  {
+								  target_camera.x -= time - 50;
+								  player_camera.x += time - 50;
+								  target_camera.z -= time - 50;
+								  player_camera.z += time - 50;
+								  muki--;
+							  }
+							  break;
+						  case 3:
+							  target_camera.x += options->revolve_speed;
+							  player_camera.x -= options->revolve_speed;
+							  target_camera.z -= options->revolve_speed;
+							  player_camera.z += options->revolve_speed;
+							  if (time >= 50)
+							  {
+								  target_camera.x -= time - 50;
+								  player_camera.x += time - 50;
+								  target_camera.z += time - 50;
+								  player_camera.z -= time - 50;
+								  muki--;
+							  }
+							  break;
+						  default:
+							  break;
+						  }
+					  }
+					  else
+					  {
+						  time = 0;
+						  state = 0;
+					  }
+			}
+				if (!revflag)
+				{
+					revflag++;
+				}
+				break;
+
+				//Dボタン押し下時
+			case 5:
+				time += options->move_speed;
+				if (time < 100)
+				{
+					switch (muki)
+					{
+					case 0: //上向き
+						target_camera.x += options->move_speed;
+						player_camera.x += options->move_speed;
+						if (time >= 50 && !flaging) //半分で移動することにより壁の見え方がおかしくなるのを防ぐ
+						{
+							pos_x++;
+							flaging++;
+						}
+						break;
+					case 1:
+						target_camera.z -= options->move_speed;
+						player_camera.z -= options->move_speed;
+						if (time >= 50 && !flaging)
+						{
+							pos_z--;
+							flaging++;
+						}
+						break;
+					case 2:
+						target_camera.x -= options->move_speed;
+						player_camera.x -= options->move_speed;
+						if (time >= 50 && !flaging)
+						{
+							pos_x--;
+							flaging++;
+						}
+						break;
+					case 3:
+						target_camera.z += options->move_speed;
+						player_camera.z += options->move_speed;
+						if (time >= 50 && !flaging)
+						{
+							pos_z++;
+							flaging++;
+						}
+						break;
+					default:
+						break;
+					}
+				}
+				else
+				{
+					if (muki % 2) //右か左を向いている
+					{
+						target_camera.z = pos_z * 100 + 50;
+						player_camera.z = pos_z * 100 + 50;
 					}
 					else
 					{
-						switch (muki)
-						{
-						case 0:
-							target_camera.z = pos_z * 100 + 100;
-							player_camera.z = pos_z * 100;
-							break;
-						case 1:
-							target_camera.x = pos_x * 100 + 100;
-							player_camera.x = pos_x * 100;
-							break;
-						case 2:
-							target_camera.z = pos_z * 100;
-							player_camera.z = pos_z * 100 + 100;
-							break;
-						case 3:
-							target_camera.x = pos_x * 100;
-							player_camera.x = pos_x * 100 + 100;
-							break;
-						default:
-							DrawString(0, 0, "Error! Dungeon.cpp have missing muki.", GetColor(255, 0, 0));
-							WaitKey();
-							break;
-						}
-						flaging = 0;
-						state = 0;
-						time = 0;
+						target_camera.x = pos_x * 100 + 50;
+						player_camera.x = pos_x * 100 + 50;
 					}
-		}
-			break;
+					flaging = 0;
+					time = 0;
+					state = 0;
+				}
+				break;
 
-		//右転回
-		case 2:
-		{
-				  if (time < 50)
-				  {
-					  time += options->revolve_speed;
-					  Return_right();
-				  }
-				  else
-				  {
-					  time = 0;
-					  state = 0;
-					  revflag++;
-				  }
-		}
-			break;
-		case 3: //下向き。2倍速で2回右転回
-		{
-					options->revolve_speed *= 2;
+				//Aボタン押し下時
+			case 6:
+				time += options->move_speed;
+				if (time < 100)
+				{
 					switch (muki)
 					{
 					case 0:
-						/*if (time < 50)
+						target_camera.x -= options->move_speed;
+						player_camera.x -= options->move_speed;
+						if (time >= 50 && !flaging)
 						{
-						time += options->revolve_speed;
-						Return_right();
-						}
-						else
-						{
-						time = 0;
-						down_help++;
-						if (down_help>1) //右転回を2回呼び出す
-						{
-						state = 0;
-						down_help = 0;
-						}
-						}*/
-						/*if (time < 100)
-						{
-						time += 1;
-						target_camera.z -= 1;
-						player_camera.z += 1;
-						if (time > 100)
-						{
-						target_camera.z += time - 100;
-						player_camera.z -= time - 100;
-						}
-						}
-						else
-						{
-						time = 0;
-						state = 0;
-						}*/
-						if (time < 100)
-						{
-							if (time < 50)
-							{
-								time += options->revolve_speed;
-								target_camera.x += options->revolve_speed;
-								player_camera.x -= options->revolve_speed;
-								target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 50)
-								{
-									target_camera.x -= time - 50;
-									player_camera.x += time - 50;
-									target_camera.z = pos_z * 100 + 50;
-									player_camera.z = pos_z * 100 + 50;
-									time = 50;
-								}
-							}
-							else
-							{
-								time += options->revolve_speed;
-								target_camera.x -= options->revolve_speed;
-								player_camera.x += options->revolve_speed;
-								target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 100)
-								{
-									target_camera.x += time - 100;
-									player_camera.x -= time - 100;
-									target_camera.z = pos_z * 100;
-									player_camera.z = pos_z * 100 + 100;
-								}
-
-							}
-						}
-						else
-						{
-							time = 0;
-							state = 0;
-							muki = 2;
+							pos_x--;
+							flaging++;
 						}
 						break;
 
-					case 1: //右→左
-						if (time < 100)
+					case 1:
+						target_camera.z += options->move_speed;
+						player_camera.z += options->move_speed;
+						if (time >= 50 && !flaging)
 						{
-							if (time < 50)
-							{
-								time += options->revolve_speed;
-								target_camera.x -= options->revolve_speed;
-								player_camera.x += options->revolve_speed;
-								target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 50)
-								{
-									target_camera.x += time - 50;
-									player_camera.x -= time - 50;
-									target_camera.z = pos_z * 100;
-									player_camera.z = pos_z * 100 + 100;
-									time = 50;
-								}
-							}
-							else
-							{
-								time += options->revolve_speed;
-								target_camera.x -= options->revolve_speed;
-								player_camera.x += options->revolve_speed;
-								target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 100)
-								{
-									target_camera.x += time - 100;
-									player_camera.x -= time - 100;
-									target_camera.z = pos_z * 100 + 50;
-									player_camera.z = pos_z * 100 + 50;
-								}
-
-							}
-						}
-						else
-						{
-							time = 0;
-							state = 0;
-							muki = 3;
+							pos_z++;
+							flaging++;
 						}
 						break;
 
-					case 2: //下→上
-						if (time < 100)
+					case 2:
+						target_camera.x += options->move_speed;
+						player_camera.x += options->move_speed;
+						if (time >= 50 && !flaging)
 						{
-							if (time < 50)
-							{
-								time += options->revolve_speed;
-								target_camera.x -= options->revolve_speed;
-								player_camera.x += options->revolve_speed;
-								target_camera.z = -(int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 50)
-								{
-									target_camera.x += time - 50;
-									player_camera.x -= time - 50;
-									target_camera.z = pos_z * 100;
-									player_camera.z = pos_z * 100 + 100;
-									time = 50;
-								}
-							}
-							else
-							{
-								time += options->revolve_speed;
-								target_camera.x += options->revolve_speed;
-								player_camera.x -= options->revolve_speed;
-								target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 100)
-								{
-									target_camera.x -= time - 100;
-									player_camera.x += time - 100;
-									target_camera.z = pos_z * 100 + 100;
-									player_camera.z = pos_z * 100;
-								}
-
-							}
-						}
-						else
-						{
-							time = 0;
-							state = 0;
-							muki = 0;
+							pos_x++;
+							flaging++;
 						}
 						break;
 
-					case 3: //左→右
-						if (time < 100)
+					case 3:
+						target_camera.z -= options->move_speed;
+						player_camera.z -= options->move_speed;
+						if (time >= 50 && !flaging)
 						{
-							if (time < 50)
-							{
-								time += options->revolve_speed;
-								target_camera.x += options->revolve_speed;
-								player_camera.x -= options->revolve_speed;
-								target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 50)
-								{
-									target_camera.x -= time - 50;
-									player_camera.x += time - 50;
-									target_camera.z = pos_z * 100 + 100;
-									player_camera.z = pos_z * 100;
-									time = 50;
-								}
-							}
-							else
-							{
-								time += options->revolve_speed;
-								target_camera.x += options->revolve_speed;
-								player_camera.x -= options->revolve_speed;
-								target_camera.z = (int)sqrt((double)(2500 - ((int)target_camera.x % 100 - 50)*((int)target_camera.x % 100 - 50))) + 50 + pos_z * 100;
-								player_camera.z = 100 - (int)target_camera.z % 100 + pos_z * 100;
-								if (time >= 100)
-								{
-									target_camera.x -= time - 100;
-									player_camera.x += time - 100;
-									target_camera.z = pos_z * 100 + 50;
-									player_camera.z = pos_z * 100 + 50;
-								}
-
-							}
-						}
-						else
-						{
-							time = 0;
-							state = 0;
-							muki = 1;
+							pos_z--;
+							flaging++;
 						}
 						break;
-					}
-		}
-		if (!revflag)
-		{
-			revflag++;
-		}
-			options->revolve_speed /= 2;
-			break;
 
-		//左転回
-		case 4:
-		{
-				  if (time < 50)
-				  {
-					  time += options->revolve_speed;
-					  switch (muki)
-					  {
-					  case 0:
-						  target_camera.x -= options->revolve_speed;
-						  player_camera.x += options->revolve_speed;
-						  target_camera.z -= options->revolve_speed;
-						  player_camera.z += options->revolve_speed;
-						  if (time >= 50)
-						  {
-							  target_camera.x += time - 50;
-							  player_camera.x -= time - 50;
-							  target_camera.z += time - 50;
-							  player_camera.z -= time - 50;
-							  muki = 3;
-						  }
-						  break;
-					  case 1:
-						  target_camera.x -= options->revolve_speed;
-						  player_camera.x += options->revolve_speed;
-						  target_camera.z += options->revolve_speed;
-						  player_camera.z -= options->revolve_speed;
-						  if (time >= 50)
-						  {
-							  target_camera.x += time - 50;
-							  player_camera.x -= time - 50;
-							  target_camera.z -= time - 50;
-							  player_camera.z += time - 50;
-							  muki--;
-						  }
-						  break;
-					  case 2:
-						  target_camera.x += options->revolve_speed;
-						  player_camera.x -= options->revolve_speed;
-						  target_camera.z += options->revolve_speed;
-						  player_camera.z -= options->revolve_speed;
-						  if (time >= 50)
-						  {
-							  target_camera.x -= time - 50;
-							  player_camera.x += time - 50;
-							  target_camera.z -= time - 50;
-							  player_camera.z += time - 50;
-							  muki--;
-						  }
-						  break;
-					  case 3:
-						  target_camera.x += options->revolve_speed;
-						  player_camera.x -= options->revolve_speed;
-						  target_camera.z -= options->revolve_speed;
-						  player_camera.z += options->revolve_speed;
-						  if (time >= 50)
-						  {
-							  target_camera.x -= time - 50;
-							  player_camera.x += time - 50;
-							  target_camera.z += time - 50;
-							  player_camera.z -= time - 50;
-							  muki--;
-						  }
-						  break;
-					  default:
-						  break;
-					  }
-				  }
-				  else
-				  {
-					  time = 0;
-					  state = 0;
-				  }
-		}
-			if (!revflag)
-			{
-				revflag++;
-			}
-			break;
-
-		//Dボタン押し下時
-		case 5:
-			time += options->move_speed;
-			if (time < 100)
-			{
-				switch (muki)
-				{
-				case 0: //上向き
-					target_camera.x += options->move_speed;
-					player_camera.x += options->move_speed;
-					if (time >= 50 && !flaging) //半分で移動することにより壁の見え方がおかしくなるのを防ぐ
-					{
-						pos_x++;
-						flaging++;
+					default:
+						break;
 					}
-					break;
-				case 1:
-					target_camera.z -= options->move_speed;
-					player_camera.z -= options->move_speed;
-					if (time >= 50 && !flaging)
-					{
-						pos_z--;
-						flaging++;
-					}
-					break;
-				case 2:
-					target_camera.x -= options->move_speed;
-					player_camera.x -= options->move_speed;
-					if (time >= 50 && !flaging)
-					{
-						pos_x--;
-						flaging++;
-					}
-					break;
-				case 3:
-					target_camera.z += options->move_speed;
-					player_camera.z += options->move_speed;
-					if (time >= 50 && !flaging)
-					{
-						pos_z++;
-						flaging++;
-					}
-					break;
-				default:
-					break;
-				}
-			}
-			else
-			{
-				if (muki % 2) //右か左を向いている
-				{
-					target_camera.z = pos_z * 100 + 50;
-					player_camera.z = pos_z * 100 + 50;
 				}
 				else
 				{
-					target_camera.x = pos_x * 100 + 50;
-					player_camera.x = pos_x * 100 + 50;
+					if (muki % 2) //右か左を向いている
+					{
+						target_camera.z = pos_z * 100 + 50;
+						player_camera.z = pos_z * 100 + 50;
+					}
+					else
+					{
+						target_camera.x = pos_x * 100 + 50;
+						player_camera.x = pos_x * 100 + 50;
+					}
+					flaging = 0;
+					time = 0;
+					state = 0;
 				}
-				flaging = 0;
-				time = 0;
-				state = 0;
-			}
-			break;
+				break;
 
-		//Aボタン押し下時
-		case 6:
-			time += options->move_speed;
-			if (time < 100)
-			{
-				switch (muki)
+				//エンカウント処理
+			case 7:
+				time++;
+				if (time <= 100)
 				{
-				case 0:
-					target_camera.x -= options->move_speed;
-					player_camera.x -= options->move_speed;
-					if (time >= 50 && !flaging)
-					{
-						pos_x--;
-						flaging++;
-					}
-					break;
-
-				case 1:
-					target_camera.z += options->move_speed;
-					player_camera.z += options->move_speed;
-					if (time >= 50 && !flaging)
-					{
-						pos_z++;
-						flaging++;
-					}
-					break;
-
-				case 2:
-					target_camera.x += options->move_speed;
-					player_camera.x += options->move_speed;
-					if (time >= 50 && !flaging)
-					{
-						pos_x++;
-						flaging++;
-					}
-					break;
-
-				case 3:
-					target_camera.z -= options->move_speed;
-					player_camera.z -= options->move_speed;
-					if (time >= 50 && !flaging)
-					{
-						pos_z--;
-						flaging++;
-					}
-					break;
-
-				default:
-					break;
-				}
-			}
-			else
-			{
-				if (muki % 2) //右か左を向いている
-				{
-					target_camera.z = pos_z * 100 + 50;
-					player_camera.z = pos_z * 100 + 50;
 				}
 				else
 				{
-					target_camera.x = pos_x * 100 + 50;
-					player_camera.x = pos_x * 100 + 50;
+					state = 0;
+					time = 0;
+					Flags::battleflag++;
+					battle = new Battle;
+					revflag++;
 				}
-				flaging = 0;
-				time = 0;
-				state = 0;
-			}
-			break;
+				break;
 
-		//エンカウント処理
-		case 7:
-			time ++;
-			if (time <= 100)
+			default:
+				break;
+
+			}
+			//歩き終わった場合のチェック
+			if (!state)
 			{
+				if (!revflag)
+				{
+					state = GetRand(10) ? 0 : 7;
+				}
+				else
+				{
+					revflag = 0;
+				}
 			}
-			else
-			{
-				state = 0;
-				time = 0;
-				Flags::nowscene = 0xba771e;
-				revflag++;
-			}
-			break;
-
-		default:
-			break;
-
 		}
-		//歩き終わった場合のチェック
-		if (!state)
+	}
+	else
+	{
+		battle->Reaction();
+		if (Flags::battleflag == -1)
 		{
-			if (!revflag)
-			{
-				state = GetRand(10) ? 0 : 7;
-			}
-			else
-			{
-				revflag = 0;
-			}
+			delete battle;
+			Flags::battleflag = 0;
 		}
 	}
 	return 0;

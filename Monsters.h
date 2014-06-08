@@ -1,5 +1,5 @@
 #pragma once
-#include<stdio.h>
+//#include"studio.h"
 #include"MonsterList.h"
 #include"Status.h"
 
@@ -33,6 +33,7 @@ public:
 	MonsterList* monsterlist; //ƒtƒ@ƒCƒ‹ˆê——
 
 	int monster_information_flag;
+	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 	
 };
 

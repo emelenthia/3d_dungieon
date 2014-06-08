@@ -8,7 +8,6 @@ class Scene //ŠeƒV[ƒ“‚ğ‘JˆÚ
 public:
 	Scene();
 	~Scene();
-	Battle battle;
 	Guild guild;
 	Dungeon dungeon;
 	SceneBase* scene_now;

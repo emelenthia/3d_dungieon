@@ -11,7 +11,7 @@ class Battle :
 {
 public:
 	Battle();
-	Battle(int e1, int e2, int e3, int e4, int e5);
+	Battle(int e1, int e2, int e3, int e4, int e5){};
 	~Battle();
 	void Draw();
 	int Reaction();
@@ -39,5 +39,6 @@ public:
 	const int monsterposy = 60;
 	const int monstersizey = 300;
 	Randomer* randomer;
+	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 };
 
