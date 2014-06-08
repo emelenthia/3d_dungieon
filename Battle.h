@@ -3,12 +3,15 @@
 #include"Monsters.h"
 #include"Party.h"
 #include"Characters.h"
+#include<random>
+#include"Randomer.h"
 
 class Battle :
 	public SceneBase
 {
 public:
 	Battle();
+	Battle(int e1, int e2, int e3, int e4, int e5);
 	~Battle();
 	void Draw();
 	int Reaction();
@@ -25,5 +28,16 @@ public:
 	int minichar_size_x;
 	int minichar_size_y;
 	void ActiveSort(); //active_point‚Ì’á‚¢‡‚É•À‚Ñ‘Ö‚¦‚é
+	bool winflag = 0;
+	bool unionattackflag = 0;
+	void DrawCanActive(); //s“®‚Ì‘I‘ğˆ‚ğ•\¦‚·‚é
+	int thickfont_h;
+	int nowchoosef = 1;
+	void DrawStringsCenterToHandle(int cpos_x, int cpos_y, int color_h, int fonr_h, const char* str); //’†‰›‘µ‚¦‚Ì•¶š—ñ•`‰æ
+	void DrawMonster(); //‚Ü‚ñ‚Ü
+	const int monstersizex = 200;
+	const int monsterposy = 60;
+	const int monstersizey = 300;
+	Randomer* randomer;
 };
 

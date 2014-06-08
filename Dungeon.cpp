@@ -8,10 +8,12 @@
 #include"SaveData.h"
 #include"Party.h"
 #include"Colors.h"
+#pragma warning disable c4244
 
 #define PI    3.1415926535897932384626433832795f
 
 int Dungeon::floors = 0;
+char Dungeon::dungeon_name[50];
 
 Dungeon::Dungeon()
 {
@@ -992,13 +994,16 @@ void Dungeon::LoadDungeon() //s‚­—\’è‚ÌŠK‘w‚Ìî•ñ‚ğ“Ç‚İ‚Ş‚©‚Â‰Šú‰»
 	switch (floors)
 	{
 	case 1:
-		fp = fopen("./dungeon/map1F.cns", "r");
+		fp = fopen("./dungeon/dungeon1/floor1/map.cns", "r");
+		strcpy(dungeon_name, "dungeon1/floor1");
 		break;
 	case 2:
-		fp = fopen("./dungeon/map2F.cns", "r");
+		fp = fopen("./dungeon/dungeon1/floor2/map.cns", "r");
+		strcpy(dungeon_name, "dungeon1/floor2");
 		break;
 	case 3:
-		fp = fopen("./dungeon/map3F.cns", "r");
+		fp = fopen("./dungeon/dungeon1/floor3/map.cns", "r");
+		strcpy(dungeon_name, "dungeon1/floor3");
 		break;
 	}
 

@@ -17,13 +17,13 @@ Monsters::~Monsters()
 }
 
 
-void Monsters::Draw()
+void Monsters::Draw(int pos_x,int pos_y,int size_x,int size_y)
 {
-	DrawGraph(0, 0, graph_b, TRUE);
+	DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
 
 	if (monster_information_flag)
 	{
-		DrawFormatString(0, 0, Colors::black, Status_.name);
+		DrawFormatString(pos_x, pos_y - 20, Colors::black, Status_.name);
 	}
 }
 

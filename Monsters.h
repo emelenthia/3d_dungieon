@@ -12,7 +12,7 @@ public:
 	Monsters(){};
 	Monsters(int n);
 	~Monsters();
-	void Draw();
+	void Draw(int pos_x,int pos_y,int size_x,int size_y); //両方とも左上の座標
 
 	typedef enum strain //種族一覧
 	{
@@ -33,5 +33,6 @@ public:
 	MonsterList* monsterlist; //ファイル一覧
 
 	int monster_information_flag;
+	
 };
 
