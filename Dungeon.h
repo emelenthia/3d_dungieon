@@ -58,6 +58,10 @@ public:
 	Party *party;
 	int non_walk_flag = 0; //帰るかのメッセージの表示しないフラグ
 	int minimap_flag = 0; //0で非表示、1で通常表示、2で全体表示?
-	static char dungeon_name[50];
+	char dungeon_name[50];
 	Battle* battle;
+	void GetMonsterKind();
+	int monster_number[5];
+	int numenemy = 0;
+	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 };

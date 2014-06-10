@@ -24,50 +24,11 @@ void Battle::nfscanf_(const int line, const char* file, FILE* scan_target, const
 
 }
 
-Battle::Battle()//int e1, int e2 = 0, int e3 = 0, int e4 = 0, int e5 = 0)
+Battle::Battle(int ne,int* monster_number)
 {
 	randomer = Randomer::GetInstance();
+	numenemy = ne;
 
-	FILE* fp = nullptr;
-	int enemysetkindmax = 0;
-	char dungeon_name[50];
-	int enemysetkind = 0;
-	int monster_number[5] = { 0, 0, 0, 0, 0 };
-	char* dammy[50];
-	strcpy(dungeon_name, "./dungeon/");
-	strcat(dungeon_name, Dungeon::dungeon_name);
-	strcat(dungeon_name, "/monsterset.cns");
-	fp = fopen(dungeon_name,"r");
-	nfscanf(fp, "%d", &enemysetkindmax);
-	enemysetkind = randomer->GetRand() % enemysetkindmax;
-	{
-		for (int i = 0; i < enemysetkind; i++)
-		{
-			nfscanf(fp, "%s", dammy);
-			nfscanf(fp, "%s", dammy);
-		}
-		nfscanf(fp, "%d", &numenemy);
-		switch (numenemy)
-		{
-		case 1:
-			nfscanf(fp, "%d", &monster_number[0]);
-			break;
-		case 2:
-			nfscanf(fp, "%d,%d", &monster_number[0], &monster_number[1]);
-			break;
-		case 3:
-			nfscanf(fp, "%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2]);
-			break;
-		case 4:
-			nfscanf(fp, "%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3]);
-			break;
-		case 5:
-			nfscanf(fp, "%d,%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3],&monster_number[4]);
-			break;
-		default:
-			break;
-		}
-	}
 
 	testgraph = LoadGraph("./pics/battle/í“¬‰æ–Ê”wŒi‰æ‘œ/640~480/pipo-battlebg002.jpg");
 	for (int i = 0; i < 5; i++)

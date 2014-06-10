@@ -8,7 +8,7 @@
 #include"Events.h"
 #include"Scene.h"
 #include"Colors.h"
-
+#include"FPSer.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -30,6 +30,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	Flags flags;
 	Events *events = Events::GetInstance();
 	Colors colors; //コンストラクタ
+	FPSer fpser;
 	
 	while (1) //メインループ
 	{
@@ -40,7 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		//reaction_return = nowpointa->Reaction(); //キー入力などによる情報の更新
 		scene.Reaction(); //キー入力などによる情報の更新
 		scene.Draw(); //現在の場面の描画
-
+		fpser.CountFPS(); //デバッグ的な
 
 		ScreenFlip(); //裏と表の仲介役。描画処理よりも後に書く
 

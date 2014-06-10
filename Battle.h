@@ -10,8 +10,8 @@ class Battle :
 	public SceneBase
 {
 public:
-	Battle();
-	Battle(int e1, int e2, int e3, int e4, int e5){};
+	Battle(){};
+	Battle(int ne, int* monster_number);
 	~Battle();
 	void Draw();
 	int Reaction();

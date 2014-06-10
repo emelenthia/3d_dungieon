@@ -12,7 +12,6 @@
 #define PI    3.1415926535897932384626433832795f
 
 int Dungeon::floors = 0;
-char Dungeon::dungeon_name[50];
 
 Dungeon::Dungeon()
 {
@@ -755,7 +754,8 @@ int Dungeon::Reaction()
 					state = 0;
 					time = 0;
 					Flags::battleflag++;
-					battle = new Battle;
+					GetMonsterKind();
+					battle = new Battle(numenemy, monster_number);
 					revflag++;
 				}
 				break;
@@ -788,6 +788,70 @@ int Dungeon::Reaction()
 		}
 	}
 	return 0;
+}
+
+
+#define nfscanf(scan_target, format_text, ...) nfscanf_(__LINE__,__FILE__,scan_target, format_text,__VA_ARGS__);
+void Dungeon::nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...)
+{
+	FILE* scanf_fp;
+	int ret = 0;
+	va_list args;
+
+	scanf_fp = fopen("scanf_log.txt", "w");
+	fprintf(scanf_fp, "%s\ns:%d\n", file, line);
+	fclose(scanf_fp);
+
+	va_start(args, format_text);
+	ret = vfscanf(scan_target, format_text, args);
+	va_end(args);
+
+}
+
+void Dungeon::GetMonsterKind()
+{
+
+	Randomer* randomer = Randomer::GetInstance();
+
+	FILE* tfp = nullptr;
+	int enemysetkindmax = 0;
+	char dungeon_name_t[50];
+	int enemysetkind = 0;
+	char* dammy[50];
+	strcpy(dungeon_name_t, "./dungeon/");
+	strcat(dungeon_name_t, dungeon_name);
+	strcat(dungeon_name_t, "/monsterset.cns");
+	tfp = fopen(dungeon_name_t, "r");
+	nfscanf(tfp, "%d", &enemysetkindmax);
+	enemysetkind = randomer->GetRand() % enemysetkindmax;
+	{
+		for (int i = 0; i < enemysetkind; i++)
+		{
+			nfscanf(tfp, "%s", dammy);
+			nfscanf(tfp, "%s", dammy);
+		}
+		nfscanf(tfp, "%d", &numenemy);
+		switch (numenemy)
+		{
+		case 1:
+			nfscanf(tfp, "%d", &monster_number[0]);
+			break;
+		case 2:
+			nfscanf(tfp, "%d,%d", &monster_number[0], &monster_number[1]);
+			break;
+		case 3:
+			nfscanf(tfp, "%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2]);
+			break;
+		case 4:
+			nfscanf(tfp, "%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3]);
+			break;
+		case 5:
+			nfscanf(tfp, "%d,%d,%d,%d,%d", &monster_number[0], &monster_number[1], &monster_number[2], &monster_number[3], &monster_number[4]);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 

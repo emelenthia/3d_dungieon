@@ -22,7 +22,7 @@ void Monsters::nfscanf_(const int line, const char* file, FILE* scan_target, con
 
 Monsters::Monsters(int n)
 {
-	monster_information_flag = 0;
+	monster_information_flag = 2;
 	monsterlist = MonsterList::GetInstance();
 	MonsterSet(n);
 }
@@ -40,7 +40,13 @@ void Monsters::Draw(int pos_x,int pos_y,int size_x,int size_y)
 
 	if (monster_information_flag)
 	{
-		DrawFormatString(pos_x, pos_y - 20, Colors::black, Status_.name);
+		int posx_t = pos_x + GetDrawFormatStringWidth(Status_.name) / 2;
+		DrawFormatString(posx_t, pos_y - 20, Colors::white, Status_.name);
+		if (monster_information_flag == 2)
+		{
+			DrawFormatString(posx_t, pos_y - 40, Colors::white, "HP :%d", Status_c.hp);
+			DrawFormatString(posx_t, pos_y - 60, Colors::white, "Lv :%d", Status_.lv);
+		}
 	}
 }
 
@@ -56,6 +62,7 @@ void Monsters::MonsterSet(int n)
 	sprintf(monster_file_name, "%s/info.cns", monster_file_name_temp);
 	individuals_fp = fopen(monster_file_name, "r");
 	nfscanf(individuals_fp, "%s", Status_.name);
+	nfscanf(individuals_fp, "%d", &Status_.lv);
 	nfscanf(individuals_fp, "%d", &Status_.hpmax);
 	nfscanf(individuals_fp, "%d", &Status_.tpmax);
 	nfscanf(individuals_fp, "%d", &Status_.atk);
@@ -91,4 +98,8 @@ void Monsters::MonsterSet(int n)
 	graph_b = LoadGraph(monster_file_name);
 	sprintf(monster_file_name, "%s/pic_m.png", monster_file_name_temp);
 	graph_m = LoadGraph(monster_file_name);
+
+	//‘ã“ü
+	Status_c.hp = Status_.hpmax;
+	Status_c.tp = Status_.tpmax;
 }
