@@ -78,6 +78,11 @@ void Dungeon::Draw()
 	}
 	else
 	{
+		//í“¬’†‚Ì”wŒi
+		SetDrawBright(120, 120, 120);
+		DrawMap_c(map_data, x_max, z_max);
+		SetDrawBright(255, 255, 255);
+		//í“¬•`‰æ
 		battle->Draw();
 	}
 

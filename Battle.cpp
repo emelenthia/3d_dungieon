@@ -29,8 +29,6 @@ Battle::Battle(int ne,int* monster_number)
 	randomer = Randomer::GetInstance();
 	numenemy = ne;
 
-
-	testgraph = LoadGraph("./pics/battle/戦闘画面背景画像/640×480/pipo-battlebg002.jpg");
 	for (int i = 0; i < 5; i++)
 	{
 		monsters[i] = NULL;
@@ -70,7 +68,6 @@ Battle::~Battle()
 
 void Battle::Draw()
 {
-	DrawExtendGraph(0, 0, 640, 480, testgraph, TRUE);
 	DrawString(220, 120, "これは仮の戦闘シーンです", GetColor(0, 0, 255));
 	DrawString(220, 160, "決定キーで戻ります", GetColor(0, 0, 255));
 
@@ -95,17 +92,17 @@ int Battle::Reaction()
 			}
 		}
 	}
-	for (int i = 0; i < numenemy; i++)
+	if (Key_Input::buff_time[KEY_INPUT_UP] % 10 == 1)
 	{
-		if (!monsters[i]->Status_c.alive)
-		{
-			break;
-		}
-		if (i == numenemy - 1)
-		{
-			winflag++;
-		}
+		nowchoosef = (nowchoosef == 1 && !unionattackflag || !nowchoosef) ? 5 : --nowchoosef;
 	}
+	else if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1 && !Key_Input::buff_time[KEY_INPUT_UP])
+	{
+		nowchoosef = nowchoosef == 5 ? !unionattackflag : ++nowchoosef;
+	}
+
+	//勝敗を判定する
+	CheckResult();
 	return r;
 }
 
@@ -224,6 +221,18 @@ void Battle::DrawCanActive()
 	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 95, Colors::white, thickfont_h, "防御");
 	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 125, Colors::white, thickfont_h, "アイテム");
 	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 155, Colors::white, thickfont_h, "逃げる");
+
+	//行動の説明
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透過
+	DrawBox(0, 0, 640, 20, Colors::blue, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+	DrawFormatString(5, 1, Colors::white,   nowchoosef == 0 ? "協力攻撃をします。" :
+											nowchoosef == 1 ? "装備している武器で攻撃します。" :
+											nowchoosef == 2 ? "技や魔法を使用します。" :
+											nowchoosef == 3 ? "敵の攻撃に備えて防御の態勢をとります。" :
+											nowchoosef == 4 ? "所持しているアイテムを使用します。" :
+											nowchoosef == 5 ? "戦闘からの脱出を試みます。" :
+															  "エラーです。");
 }
 
 
@@ -310,5 +319,21 @@ void Battle::DrawMonster()
 		break;
 	default:
 		break;
+	}
+}
+
+
+void Battle::CheckResult()
+{
+	for (int i = 0; i < numenemy; i++)
+	{
+		if (!monsters[i]->Status_c.alive)
+		{
+			break;
+		}
+		if (i == numenemy - 1)
+		{
+			winflag++;
+		}
 	}
 }

@@ -15,7 +15,6 @@ public:
 	~Battle();
 	void Draw();
 	int Reaction();
-	int testgraph;
 	void DrawMiniChar(); //‰E‘¤‚ÌƒAƒŒ
 	const int enemy_max = 5; //“GƒLƒƒƒ‰‚ÌÅ‘å”
 	int numenemy;
@@ -36,9 +35,10 @@ public:
 	void DrawStringsCenterToHandle(int cpos_x, int cpos_y, int color_h, int fonr_h, const char* str); //’†‰›‘µ‚¦‚Ì•¶š—ñ•`‰æ
 	void DrawMonster(); //‚Ü‚ñ‚Ü
 	const int monstersizex = 200;
-	const int monsterposy = 60;
+	const int monsterposy = 80;
 	const int monstersizey = 300;
 	Randomer* randomer;
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
+	void CheckResult();
 };
 
