@@ -41,7 +41,7 @@ Character_Show_F::Character_Show_F()
 void Character_Show_F::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //ìßâﬂ
-	DrawBox(0, 0, 640, 20, blue, TRUE); //ê‡ñæóì
+	//DrawBox(0, 0, 640, 20, blue, TRUE); //ê‡ñæóì
 	numchar = 0;
 	if (Flags::nowscene == 0x8011d) //ÉMÉãÉhâÊñ 
 	{

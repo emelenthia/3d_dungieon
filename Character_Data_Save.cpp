@@ -50,5 +50,7 @@ void Character_Data_Save::Load_Char(char *file_pointer,int n)
 		fscanf(fp[n], "%d", &in_party[n]);
 		fscanf(fp[n], "%d", &nowhp[n]);
 		fscanf(fp[n], "%d", &nowtp[n]);
+		fscanf(fp[n], "%d", &lastchoosef[n]);
+		fscanf(fp[n], "%d", &lastchoosef_skill[n]);
 	}
 }

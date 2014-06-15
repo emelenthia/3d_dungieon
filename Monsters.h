@@ -12,7 +12,7 @@ public:
 	Monsters(){};
 	Monsters(int n);
 	~Monsters();
-	void Draw(int pos_x,int pos_y,int size_x,int size_y); //—¼•û‚Æ‚à¶ã‚ÌÀ•W
+	void Draw(int pos_x, int pos_y, int size_x, int size_y, bool brightflag); //—¼•û‚Æ‚à¶ã‚ÌÀ•W
 
 	typedef enum strain //í‘°ˆê——
 	{
@@ -34,6 +34,7 @@ public:
 
 	int monster_information_flag;
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
-	
+	int brighttime = 0;
+	double timeflo = 0;
 };
 

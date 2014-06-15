@@ -28,10 +28,12 @@ public:
 	int minichar_size_y;
 	void ActiveSort(); //active_pointの低い順に並び替える
 	bool winflag = 0;
-	bool unionattackflag = 0;
+	bool unionattackflag = 0; //協力攻撃ができるフラグ
 	void DrawCanActive(); //行動の選択肢を表示する
 	int thickfont_h;
-	int nowchoosef = 1;
+	int nowchoosef = 1; //現在選ばれている基礎行動
+	int nowchooses = 0; //現在選ばれているスキル
+	int nowchoosea = -1; //現在選んでいる攻撃対象
 	void DrawStringsCenterToHandle(int cpos_x, int cpos_y, int color_h, int fonr_h, const char* str); //中央揃えの文字列描画
 	void DrawMonster(); //まんま
 	const int monstersizex = 200;
@@ -40,5 +42,11 @@ public:
 	Randomer* randomer;
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 	void CheckResult();
+	int state = 0; //現在の状態。0…行動選択待ち、2…味方の攻撃中、3…防御している、5…逃げている
+	int checkstate = 0; //何か選択することに対して現在の状態。0…特になし、もしくは基礎行動選択待ち、1…協力攻撃選択待ち
+						//2…通常攻撃対象選択待ち、3…スキル選択待ち、4…アイテム選択待ち
+						//11…協力攻撃対象選択待ち、31…スキル対象選択待ち、41…アイテム対象選択待ち
+	void TurnStart(); //ターン開始処理
+	int nowchar = -1; //現在行動しているキャラの番号
 };
 

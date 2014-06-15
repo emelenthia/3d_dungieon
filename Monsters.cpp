@@ -2,6 +2,7 @@
 #include<string.h>
 #include<DxLib.h>
 #include"Colors.h"
+#include<math.h>
 
 #define nfscanf(scan_target, format_text, ...) nfscanf_(__LINE__,__FILE__,scan_target, format_text,__VA_ARGS__);
 void Monsters::nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...)
@@ -34,9 +35,21 @@ Monsters::~Monsters()
 }
 
 
-void Monsters::Draw(int pos_x,int pos_y,int size_x,int size_y)
+void Monsters::Draw(int pos_x,int pos_y,int size_x,int size_y,bool brightflag)
 {
-	DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
+
+	if (brightflag)
+	{
+		brighttime = 191 + 64 * (sin(timeflo += 0.1) < 0 ? -sin(timeflo) : sin(timeflo));
+		SetDrawBright(brighttime, brighttime, brighttime);
+		DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
+		SetDrawBright(255, 255, 255);
+	}
+	else
+	{
+		DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
+		brightflag = 0;
+	}
 
 	if (monster_information_flag)
 	{

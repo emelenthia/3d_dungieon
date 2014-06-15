@@ -30,10 +30,17 @@ public:
 	VECTOR target_camera;
 	VECTOR player_camera;
 	int y = 1;
-	int state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。5で右平行移動。6で左平行移動。7でエンカウント開始
+	int state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。
+			   //5で右平行移動。6で左平行移動。7でエンカウント開始。8で後退。9で一歩戻る
 	int revflag = 0; //回転しているフラグ。要するに回転時はエンカウントしないため
 	int time; //状態にかかっている時間を保持。
 	void Return_right(); //右転回
+	void GoForward(); //前進
+	void ReturnBack();
+	void ReturnLeft();
+	void GoRight();
+	void GoLeft();
+	void GoBack();
 	int down_help = 0; //下ボタン時のヘルパー
 	int flaging = 0; //便利フラッグ
 	static int floors; //現在の階層
@@ -64,4 +71,5 @@ public:
 	int monster_number[5];
 	int numenemy = 0;
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
+	int lastact = -1; //逃げた場合にやる事。state依存
 };

@@ -28,6 +28,7 @@ Battle::Battle(int ne,int* monster_number)
 {
 	randomer = Randomer::GetInstance();
 	numenemy = ne;
+	//nowchoosea = -1;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -81,7 +82,7 @@ void Battle::Draw()
 int Battle::Reaction()
 {
 	int r = 0;
-	if (Key_Input::buff_time[KEY_INPUT_Z] == 1)
+	if (Key_Input::buff_time[KEY_INPUT_X]&&Key_Input::buff_time[KEY_INPUT_Z]) //デバッグ用の戦闘から抜ける処理
 	{
 		Flags::battleflag = -1;
 		for (int i = 0; i < numenemy; i++)
@@ -92,13 +93,78 @@ int Battle::Reaction()
 			}
 		}
 	}
-	if (Key_Input::buff_time[KEY_INPUT_UP] % 10 == 1)
+
+	if (!state&&!checkstate) //基礎行動選択待ち
 	{
-		nowchoosef = (nowchoosef == 1 && !unionattackflag || !nowchoosef) ? 5 : --nowchoosef;
+		if (Key_Input::buff_time[KEY_INPUT_UP] % 10 == 1)
+		{
+			nowchoosef = (nowchoosef == 1 && !unionattackflag || !nowchoosef) ? 5 : --nowchoosef;
+		}
+		else if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1 && !Key_Input::buff_time[KEY_INPUT_UP])
+		{
+			nowchoosef = nowchoosef == 5 ? !unionattackflag : ++nowchoosef;
+		}
+		if (Key_Input::buff_time[KEY_INPUT_Z] == 1)
+		{
+			switch (nowchoosef)
+			{
+			case 0: //協力攻撃
+				checkstate = 1;
+				break;
+			case 1: //通常攻撃
+				checkstate = 2;
+				nowchoosea = 0;
+				break;
+			case 2: //スキル
+				checkstate = 3;
+				break;
+			case 3: //防御
+				state = 3;
+				break;
+			case 4: //アイテム
+				checkstate = 4;
+				break;
+			case 5: //逃げる
+				state = 5;
+				break;
+			default:
+				nowchoosef = 1; //保険
+				break;
+			}
+		}
 	}
-	else if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1 && !Key_Input::buff_time[KEY_INPUT_UP])
+	else if (checkstate == 1) //協力攻撃選択
 	{
-		nowchoosef = nowchoosef == 5 ? !unionattackflag : ++nowchoosef;
+
+	}
+	else if (checkstate == 2) //通常攻撃対象選択
+	{
+		if (Key_Input::buff_time[KEY_INPUT_LEFT] == 1)
+		{
+			nowchoosea = nowchoosea ? --nowchoosea : numenemy - 1;
+		}
+		else if (Key_Input::buff_time[KEY_INPUT_RIGHT] == 1 && !Key_Input::buff_time[KEY_INPUT_LEFT])
+		{
+			nowchoosea = nowchoosea == numenemy - 1 ? 0 : ++nowchoosea;
+		}
+		if (Key_Input::buff_time[KEY_INPUT_X] == 1) //基礎行動選択に戻る
+		{
+			checkstate = 0;
+			nowchoosea = -1;
+		}
+	}
+	else if (state==5) //逃げる処理
+	{
+		Flags::battleflag = -1;
+		for (int i = 0; i < numenemy; i++)
+		{
+			if (monsters[i] != NULL)
+			{
+				delete monsters[i];
+			}
+		}
+		r = 5; //逃げたことを伝える
+		characters->lastchoosef[party->party_info[nowchar]] = 5; //コマンドを記憶
 	}
 
 	//勝敗を判定する
@@ -163,7 +229,7 @@ void Battle::DrawMiniChar()
 void Battle::ActiveSort()
 {
 	int temp_number = 0, temp_min = 0;
-	bool finishflag = 0;
+	bool finishflag = FALSE;
 
 
 	for (int n = 0; n < 10; n++)
@@ -196,6 +262,14 @@ void Battle::ActiveSort()
 		}
 		turn_active[n] = temp_number;
 	}
+
+	//行動が次のキャラに移行する
+	if (nowchar != turn_active[0])
+	{
+		nowchar = turn_active[0];
+		TurnStart();
+
+	}
 }
 
 
@@ -206,33 +280,46 @@ void Battle::DrawCanActive()
 	const int pos_x_rd = 160 - 10;
 	int i = 0;
 
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
-
-	DrawBox(pos_x_lu + 15, pos_y_lu + nowchoosef * 30 + 5, pos_x_rd, pos_y_lu + nowchoosef * 30 + 5 + 21, Colors::yellow, TRUE); //現在選んでるの
-
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
-
-	if (unionattackflag)
+	if (nowchar < 5)
 	{
-		DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 5, Colors::white, thickfont_h, "協力攻撃");
-	}
-	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 35, Colors::white, thickfont_h, "攻撃");
-	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 65, Colors::white, thickfont_h, "スキル");
-	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 95, Colors::white, thickfont_h, "防御");
-	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 125, Colors::white, thickfont_h, "アイテム");
-	DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 155, Colors::white, thickfont_h, "逃げる");
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
 
-	//行動の説明
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透過
-	DrawBox(0, 0, 640, 20, Colors::blue, TRUE);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
-	DrawFormatString(5, 1, Colors::white,   nowchoosef == 0 ? "協力攻撃をします。" :
-											nowchoosef == 1 ? "装備している武器で攻撃します。" :
-											nowchoosef == 2 ? "技や魔法を使用します。" :
-											nowchoosef == 3 ? "敵の攻撃に備えて防御の態勢をとります。" :
-											nowchoosef == 4 ? "所持しているアイテムを使用します。" :
-											nowchoosef == 5 ? "戦闘からの脱出を試みます。" :
-															  "エラーです。");
+		DrawBox(pos_x_lu + 15, pos_y_lu + nowchoosef * 30 + 5, pos_x_rd, pos_y_lu + nowchoosef * 30 + 5 + 21, Colors::yellow, TRUE); //現在選んでるの
+
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+		if (!state&&!checkstate)
+		{
+
+			if (unionattackflag)
+			{
+				DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 5, Colors::white, thickfont_h, "協力攻撃");
+			}
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 35, Colors::white, thickfont_h, "攻撃");
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 65, Colors::white, thickfont_h, "スキル");
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 95, Colors::white, thickfont_h, "防御");
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 125, Colors::white, thickfont_h, "アイテム");
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 155, Colors::white, thickfont_h, "逃げる");
+
+			//行動の説明
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透過
+			DrawBox(0, 0, 640, 20, Colors::blue, TRUE);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+			DrawFormatString(5, 1, Colors::white, nowchoosef == 0 ? "協力攻撃をします。" :
+												  nowchoosef == 1 ? "装備している武器で攻撃します。" :
+												  nowchoosef == 2 ? "技や魔法を使用します。" :
+												  nowchoosef == 3 ? "敵の攻撃に備えて防御の態勢をとります。" :
+												  nowchoosef == 4 ? "所持しているアイテムを使用します。" :
+												  nowchoosef == 5 ? "戦闘からの脱出を試みます。" :
+																	"エラーです。");
+		}
+
+		//通常攻撃選択
+		if (checkstate == 2)
+		{
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 35, Colors::white, thickfont_h, "攻撃");
+			DrawFormatString(5, 1, Colors::white, "攻撃対象を選択してください");
+		}
+	}
 }
 
 
@@ -250,71 +337,71 @@ void Battle::DrawMonster()
 	case 1:
 		if (monsters[0]->Status_c.alive)
 		{
-			monsters[0]->Draw(640 / 2 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[0]->Draw(640 / 2 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 0 ? TRUE : FALSE);
 		}
 		break;
 	case 2:
 		if (monsters[0]->Status_c.alive)
 		{
-			monsters[0]->Draw(640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[0]->Draw(640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 0 ? TRUE : FALSE);
 		}
 		if (monsters[1]->Status_c.alive)
 		{
-			monsters[1]->Draw(640 / 2 + 640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[1]->Draw(640 / 2 + 640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 1 ? TRUE : FALSE);
 		}
 		break;
 	case 3:
 		if (monsters[0]->Status_c.alive)
 		{
-			monsters[0]->Draw(640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[0]->Draw(640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 0 ? TRUE : FALSE);
 		}
 		if (monsters[1]->Status_c.alive)
 		{
-			monsters[1]->Draw(640 / 2 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[1]->Draw(640 / 2 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 1 ? TRUE : FALSE);
 		}
 		if (monsters[2]->Status_c.alive)
 		{
-			monsters[2]->Draw(640 / 2 + 640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[2]->Draw(640 / 2 + 640 / 4 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 2 ? TRUE : FALSE);
 		}
 		break;
 	case 4:
 		if (monsters[0]->Status_c.alive)
 		{
-			monsters[0]->Draw(640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[0]->Draw(640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 0 ? TRUE : FALSE);
 		}
 		if (monsters[1]->Status_c.alive)
 		{
-			monsters[1]->Draw(640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[1]->Draw(640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 1 ? TRUE : FALSE);
 		}
 		if (monsters[2]->Status_c.alive)
 		{
-			monsters[2]->Draw(640 / 2 + 640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[2]->Draw(640 / 2 + 640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 2 ? TRUE : FALSE);
 		}
 		if (monsters[3]->Status_c.alive)
 		{
-			monsters[3]->Draw(640 / 2 + 640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[3]->Draw(640 / 2 + 640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 3 ? TRUE : FALSE);
 		}
 		break;
 	case 5:
 		if (monsters[0]->Status_c.alive)
 		{
-			monsters[0]->Draw(640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[0]->Draw(640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 0 ? TRUE : FALSE);
 		}
 		if (monsters[1]->Status_c.alive)
 		{
-			monsters[1]->Draw(640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[1]->Draw(640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 1 ? TRUE : FALSE);
 		}
 		if (monsters[2]->Status_c.alive)
 		{
-			monsters[2]->Draw(640 / 2 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[2]->Draw(640 / 2 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 2 ? TRUE : FALSE);
 		}
 		if (monsters[3]->Status_c.alive)
 		{
-			monsters[3]->Draw(640 / 2 + 640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[3]->Draw(640 / 2 + 640 / 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 3 ? TRUE : FALSE);
 		}
 		if (monsters[4]->Status_c.alive)
 		{
-			monsters[4]->Draw(640 / 2 + 640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey);
+			monsters[4]->Draw(640 / 2 + 640 / 2 * 2 / 3 - monstersizex / 2, monsterposy, monstersizex, monstersizey, nowchoosea == 4 ? TRUE : FALSE);
 		}
 		break;
 	default:
@@ -335,5 +422,18 @@ void Battle::CheckResult()
 		{
 			winflag++;
 		}
+	}
+}
+
+
+void Battle::TurnStart()
+{
+	if (nowchar < 5) //プレイヤーキャラクターの場合
+	{
+		nowchoosef = characters->lastchoosef[party->party_info[nowchar]];
+		nowchooses = characters->lastchoosef_skill[party->party_info[nowchar]];
+	}
+	else if (nowchar < 10) //敵キャラクターの場合
+	{
 	}
 }

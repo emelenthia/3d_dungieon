@@ -17,4 +17,6 @@ public:
 	int nowtp[15]; //現在の残りTP
 	char file_name[15][50]; //ファイル名を覚えておく
 	int in_party[15]; //編成に入ってるフラグ。1なら入ってます
+	int lastchoosef[15]; //戦闘に対して最後に行った行動
+	int lastchoosef_skill[15]; //最後に使用したスキル
 };
