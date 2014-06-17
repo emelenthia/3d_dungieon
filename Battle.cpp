@@ -24,11 +24,11 @@ void Battle::nfscanf_(const int line, const char* file, FILE* scan_target, const
 
 }
 
-Battle::Battle(int ne,int* monster_number)
+Battle::Battle(int ne, int* monster_number, bool escape_flag)
 {
 	randomer = Randomer::GetInstance();
 	numenemy = ne;
-	//nowchoosea = -1;
+	can_escape_flag = escape_flag;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -153,18 +153,31 @@ int Battle::Reaction()
 			nowchoosea = -1;
 		}
 	}
-	else if (state==5) //逃げる処理
+	else if (state == 5) //逃げる処理
 	{
-		Flags::battleflag = -1;
-		for (int i = 0; i < numenemy; i++)
+		if (can_escape_flag)
 		{
-			if (monsters[i] != NULL)
+			Flags::battleflag = -1;
+			for (int i = 0; i < numenemy; i++)
 			{
-				delete monsters[i];
+				if (monsters[i] != NULL)
+				{
+					delete monsters[i];
+				}
 			}
+			r = 5; //逃げたことを伝える
+			characters->lastchoosef[party->party_info[nowchar]] = 5; //コマンドを記憶
 		}
-		r = 5; //逃げたことを伝える
-		characters->lastchoosef[party->party_info[nowchar]] = 5; //コマンドを記憶
+		else //逃げられない!
+		{
+			time++;
+			if (time > 30)
+			{
+				state = 0;
+				time = 0;
+			}
+
+		}
 	}
 
 	//勝敗を判定する
@@ -280,6 +293,10 @@ void Battle::DrawCanActive()
 	const int pos_x_rd = 160 - 10;
 	int i = 0;
 
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透過
+	DrawBox(0, 0, 640, 20, Colors::blue, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+
 	if (nowchar < 5)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
@@ -298,12 +315,9 @@ void Battle::DrawCanActive()
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 65, Colors::white, thickfont_h, "スキル");
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 95, Colors::white, thickfont_h, "防御");
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 125, Colors::white, thickfont_h, "アイテム");
-			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 155, Colors::white, thickfont_h, "逃げる");
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 155, (can_escape_flag?Colors::white:Colors::black), thickfont_h, "逃げる");
 
 			//行動の説明
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透過
-			DrawBox(0, 0, 640, 20, Colors::blue, TRUE);
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
 			DrawFormatString(5, 1, Colors::white, nowchoosef == 0 ? "協力攻撃をします。" :
 												  nowchoosef == 1 ? "装備している武器で攻撃します。" :
 												  nowchoosef == 2 ? "技や魔法を使用します。" :
@@ -317,7 +331,14 @@ void Battle::DrawCanActive()
 		if (checkstate == 2)
 		{
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 35, Colors::white, thickfont_h, "攻撃");
-			DrawFormatString(5, 1, Colors::white, "攻撃対象を選択してください");
+			DrawFormatString(5, 1, Colors::white, "攻撃対象を選択してください。");
+		}
+
+		//逃げられない
+		if (state == 5 && !can_escape_flag)
+		{
+			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 155, Colors::black, thickfont_h, "逃げる");
+			DrawFormatString(15, 1, Colors::white, "退路が壁で逃げられない！");
 		}
 	}
 }
@@ -325,7 +346,7 @@ void Battle::DrawCanActive()
 
 void Battle::DrawStringsCenterToHandle(int cpos_x, int cpos_y, int color_h,int font_h, const char* str)
 {
-	DrawFormatStringToHandle(cpos_x - GetDrawStringWidthToHandle(str,strlen(str),font_h) / 2, cpos_y, Colors::white, font_h, str);
+	DrawFormatStringToHandle(cpos_x - GetDrawStringWidthToHandle(str,strlen(str),font_h) / 2, cpos_y, color_h, font_h, str);
 }
 
 

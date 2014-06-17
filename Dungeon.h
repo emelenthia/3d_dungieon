@@ -72,4 +72,5 @@ public:
 	int numenemy = 0;
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 	int lastact = -1; //“¦‚°‚½ê‡‚É‚â‚é–BstateˆË‘¶
+	bool CheckCanEscape(); //“¦‘–‰Â”\‚©’²‚×‚é
 };

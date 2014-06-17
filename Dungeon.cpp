@@ -269,7 +269,7 @@ int Dungeon::Reaction()
 					time = 0;
 					Flags::battleflag++;
 					GetMonsterKind();
-					battle = new Battle(numenemy, monster_number);
+					battle = new Battle(numenemy, monster_number, CheckCanEscape());
 					revflag++;
 				}
 				break;
@@ -1351,4 +1351,52 @@ void Dungeon::DrawMiniMap()
 
 		DrawRotaGraph(640 - (x_max - pos_x) * 20 - 10, 280 - (pos_z + 1) * 20 + 10, 20.0 / 128.0, muki * PI / 2.0, yajirushi_h, TRUE);
 	}
+}
+
+
+bool Dungeon::CheckCanEscape()
+{
+	
+	//Ç‡Ç§è≠ÇµÇ‹Ç∆ÇﬂÇƒèëÇ´ÇΩÇ¢ÇØÇ«ì«Ç›Ç…Ç≠Ç≠Ç»ÇÈï˚ñ@ÇµÇ©évÇ¢Ç¬Ç©Ç»Ç¢
+	if (lastact == 8)
+	{
+		if ((muki == 0 && map_data[pos_z][pos_x] & 4) ||
+			(muki == 1 && map_data[pos_z][pos_x] & 8) ||
+			(muki == 2 && map_data[pos_z][pos_x] & 1) ||
+			(muki == 3 && map_data[pos_z][pos_x] & 2))
+		{
+			return FALSE;
+		}
+	}
+	if (lastact == 6)
+	{
+		if ((muki == 0 && map_data[pos_z][pos_x] & 8) ||
+			(muki == 1 && map_data[pos_z][pos_x] & 1) ||
+			(muki == 2 && map_data[pos_z][pos_x] & 2) ||
+			(muki == 3 && map_data[pos_z][pos_x] & 4))
+		{
+			return FALSE;
+		}
+	}
+	if (lastact == 5)
+	{
+		if ((muki == 0 && map_data[pos_z][pos_x] & 2) ||
+			(muki == 1 && map_data[pos_z][pos_x] & 4) ||
+			(muki == 2 && map_data[pos_z][pos_x] & 8) ||
+			(muki == 3 && map_data[pos_z][pos_x] & 1))
+		{
+			return FALSE;
+		}
+	}
+	if (lastact == 1)
+	{
+		if ((muki == 0 && map_data[pos_z][pos_x] & 1) ||
+			(muki == 1 && map_data[pos_z][pos_x] & 2) ||
+			(muki == 2 && map_data[pos_z][pos_x] & 4) ||
+			(muki == 3 && map_data[pos_z][pos_x] & 8))
+		{
+			return FALSE;
+		}
+	}
+	return TRUE;
 }

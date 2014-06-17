@@ -11,7 +11,7 @@ class Battle :
 {
 public:
 	Battle(){};
-	Battle(int ne, int* monster_number);
+	Battle(int ne, int* monster_number,bool escape_flag);
 	~Battle();
 	void Draw();
 	int Reaction();
@@ -48,5 +48,7 @@ public:
 						//11…協力攻撃対象選択待ち、31…スキル対象選択待ち、41…アイテム対象選択待ち
 	void TurnStart(); //ターン開始処理
 	int nowchar = -1; //現在行動しているキャラの番号
+	bool can_escape_flag = 0; //逃げられるか否かのフラグ
+	int time = 0;
 };
 
