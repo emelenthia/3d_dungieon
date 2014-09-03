@@ -1,5 +1,6 @@
 #pragma once
 #include<stdio.h>
+#include"Status.h"
 
 class Character_Data_Save //セーブされる各キャラの可変データ
 {
@@ -13,8 +14,10 @@ public:
 	int in_team[15]; //加入フラグ。1なら加入
 	FILE *fp[15];
 	void Load_Char(char *file_pointer,int n);
-	int nowhp[15]; //現在の残りHP
-	int nowtp[15]; //現在の残りTP
+	//int nowhp[15]; //現在の残りHP
+	//int nowtp[15]; //現在の残りTP
+	status_c status_c[15]; //現在の可変ステータス
+	
 	char file_name[15][50]; //ファイル名を覚えておく
 	int in_party[15]; //編成に入ってるフラグ。1なら入ってます
 	int lastchoosef[15]; //戦闘に対して最後に行った行動

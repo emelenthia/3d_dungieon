@@ -40,6 +40,7 @@ typedef struct abnomalous_ //各状態異常のフラグ
 	bool poison;
 }abnomalous;
 
+typedef int test;
 
 typedef struct status_ //変化しない情報の構造体
 {

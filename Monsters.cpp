@@ -38,27 +38,30 @@ Monsters::~Monsters()
 void Monsters::Draw(int pos_x,int pos_y,int size_x,int size_y,bool brightflag)
 {
 
-	if (brightflag)
+	if (Status_c.alive) //Ž€‚ñ‚Å‚¢‚é‚Æ•\Ž¦‚µ‚È‚¢
 	{
-		brighttime = 191 + 64 * (sin(timeflo += 0.1) < 0 ? -sin(timeflo) : sin(timeflo));
-		SetDrawBright(brighttime, brighttime, brighttime);
-		DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
-		SetDrawBright(255, 255, 255);
-	}
-	else
-	{
-		DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
-		brightflag = 0;
-	}
-
-	if (monster_information_flag)
-	{
-		int posx_t = pos_x + GetDrawFormatStringWidth(Status_.name) / 2;
-		DrawFormatString(posx_t, pos_y - 20, Colors::white, Status_.name);
-		if (monster_information_flag == 2)
+		if (brightflag)
 		{
-			DrawFormatString(posx_t, pos_y - 40, Colors::white, "HP :%d", Status_c.hp);
-			DrawFormatString(posx_t, pos_y - 60, Colors::white, "Lv :%d", Status_.lv);
+			brighttime = 191 + 64 * (sin(timeflo += 0.1) < 0 ? -sin(timeflo) : sin(timeflo));
+			SetDrawBright(brighttime, brighttime, brighttime);
+			DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
+			SetDrawBright(255, 255, 255);
+		}
+		else
+		{
+			DrawExtendGraph(pos_x, pos_y, pos_x + size_x, pos_y + size_y, graph_b, TRUE);
+			brightflag = 0;
+		}
+
+		if (monster_information_flag)
+		{
+			int posx_t = pos_x + GetDrawFormatStringWidth(Status_.name) / 2;
+			DrawFormatString(posx_t, pos_y - 20, Colors::white, Status_.name);
+			if (monster_information_flag == 2)
+			{
+				DrawFormatString(posx_t, pos_y - 40, Colors::white, "HP :%d", Status_c.hp);
+				DrawFormatString(posx_t, pos_y - 60, Colors::white, "Lv :%d", Status_.lv);
+			}
 		}
 	}
 }

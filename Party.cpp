@@ -98,8 +98,8 @@ void Party::DrawBox_t(int front_or_back, float left_pos_number)
 		DrawExtendString(pos_x_lu + job_size / 2, pos_y_lu + size_y / 2 + 3, 1.0, 1.0, "HP", Colors::yellow);
 
 		char str_hp[9];
-		sprintf(str_hp, "%d", characters->nowhp[charnumb]); //’·‚³‚ð‘ª‚é‚½‚ß‚É•¶Žš—ñ‚É•ÏŠ·
-		DrawFormatString(pos_x_lu + size_x / 2 - GetDrawStringWidth(str_hp, strlen(str_hp)) - 5, pos_y_lu + size_y / 2 + 2, Colors::white, "%d", characters->nowhp[charnumb]);
+		sprintf(str_hp, "%d", characters->status_c[charnumb].hp); //’·‚³‚ð‘ª‚é‚½‚ß‚É•¶Žš—ñ‚É•ÏŠ·
+		DrawFormatString(pos_x_lu + size_x / 2 - GetDrawStringWidth(str_hp, strlen(str_hp)) - 5, pos_y_lu + size_y / 2 + 2, Colors::white, "%d", characters->status_c[charnumb].hp);
 
 		DrawBox(pos_x_lu + job_size / 2 - 1, pos_y_lu + size_y - 8, pos_x_lu + size_x / 2 - 7, pos_y_lu + size_y - 4, Colors::yellow, TRUE);
 
@@ -108,8 +108,8 @@ void Party::DrawBox_t(int front_or_back, float left_pos_number)
 		DrawExtendString(pos_x_lu + job_size / 2 + size_x / 2, pos_y_lu + size_y / 2 + 3, 1.0, 1.0, "TP", Colors::green);
 
 		char str_tp[9];
-		sprintf(str_tp, "%d", characters->nowtp[charnumb]);
-		DrawFormatString(pos_x_lu + size_x - GetDrawStringWidth(str_tp, strlen(str_tp)) - 5, pos_y_lu + size_y / 2 + 2, Colors::white, "%d", characters->nowtp[charnumb]);
+		sprintf(str_tp, "%d", characters->status_c[charnumb].tp);
+		DrawFormatString(pos_x_lu + size_x - GetDrawStringWidth(str_tp, strlen(str_tp)) - 5, pos_y_lu + size_y / 2 + 2, Colors::white, "%d", characters->status_c[charnumb].tp);
 
 		DrawBox(pos_x_lu + job_size / 2 - 1 + size_x / 2, pos_y_lu + size_y - 8, pos_x_lu + size_x - 7, pos_y_lu + size_y - 4, Colors::green, TRUE);
 

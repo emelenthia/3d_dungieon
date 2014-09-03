@@ -139,11 +139,11 @@ void Character_Show_F::Draw()
 					strcpy(jobname_temp, characters->GetJobName(i));
 					DrawFormatString(db_x_lu + 200 - 0.5 * GetDrawStringWidth(jobname_temp, strlen(jobname_temp)), db_y_lu + 2 - 20, white, "%s", jobname_temp);
 
-					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->nowhp[i], white);
+					DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->status_c[i].hp, white);
 					DrawString(db_x_lu + 15 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, "/", white);
 					DrawIntRight(db_x_lu + 20 + GetDrawFormatStringWidth("ATK9999") + GetDrawFormatStringWidth("/%d", 9999), db_y_lu + 2, Status_.hpmax, white);
 
-					DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 5 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->nowtp[i], white);
+					DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 5 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->status_c[i].hp, white);
 					DrawString((db_x_rd - db_x_lu)*0.5 + db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, "/", white);
 					DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 15 + GetDrawFormatStringWidth("/%d", 9999) + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, Status_.tpmax, white);
 

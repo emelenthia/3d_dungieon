@@ -48,8 +48,8 @@ void Character_Data_Save::Load_Char(char *file_pointer,int n)
 		fscanf(fp[n], "%d", &Lv[n]);
 		fscanf_s(fp[n], "%s", name[n], 20);
 		fscanf(fp[n], "%d", &in_party[n]);
-		fscanf(fp[n], "%d", &nowhp[n]);
-		fscanf(fp[n], "%d", &nowtp[n]);
+		fscanf(fp[n], "%d", &status_c[n].hp);
+		fscanf(fp[n], "%d", &status_c[n].tp);
 		fscanf(fp[n], "%d", &lastchoosef[n]);
 		fscanf(fp[n], "%d", &lastchoosef_skill[n]);
 	}
