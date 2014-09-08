@@ -101,7 +101,11 @@ void Battle::Draw()
 		else if (nowchar < 10)
 		{
 
-			DrawFormatString(20, 0, Colors::white, "%sの攻撃（属性）！", monsters[nowchar - 5]->Status_.name);
+			if (time < NORMAL_ATTACK_TIME&&time>1) //表示が上手くいかない
+			{
+				battle_effect->Draw_e(temp, time > 2 ? -1 : 0); //最初のtimeが1のせいで分かりにくい
+			}
+			DrawFormatString(20, 0, Colors::white, "%sの攻撃（属性）:%d！", monsters[nowchar - 5]->Status_.name, temp);
 		}
 	}
 	else if (issueflag == 1) //RESULT画面
@@ -114,7 +118,6 @@ void Battle::Draw()
 int Battle::Reaction()
 {
 	int r = 0;
-	bool finishflag = 0;
 	//デバッグ用の戦闘から抜ける処理
 	if (Key_Input::buff_time[KEY_INPUT_X]&&Key_Input::buff_time[KEY_INPUT_Z])
 	{
@@ -156,6 +159,7 @@ int Battle::Reaction()
 						case 1: //通常攻撃
 							checkstate = 2;
 							nowchoosea = 0;
+							finishflag = 0;
 							while (!finishflag)
 							{
 								if (monsters[nowchoosea]->Status_c.alive&&numenemy - numdiedchar > 0) //無限ループ対策
@@ -251,15 +255,34 @@ int Battle::Reaction()
 						time = 0;
 					}
 				}
-				break;
 			}
 		}
 		else if (nowchar < 10) //敵の行動
 		{
 			//ここに敵の行動を記述
 
-			if (time>50)
+			if (!time)
 			{
+				finishflag = 0;
+				while (!finishflag)
+				{
+					temp = randomer->GetRand() % party->GetNumMember();
+					temp = temp;
+					if (characters->status_c[party->party_info[temp]].alive)
+					{
+						finishflag = TRUE;
+					}
+				}
+			}
+
+			if (time == NORMAL_ATTACK_TIME / 2)
+			{
+				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - 5]->Status_.atk * 3;
+			}
+
+			if (time>NORMAL_ATTACK_TIME)
+			{
+				temp = 0;
 				time = 0;
 				active_point[nowchar] += 3;
 				turn_finish_flag = TRUE;
@@ -528,13 +551,13 @@ void Battle::DrawMonster()
 
 void Battle::CheckResult()
 {
-	for (int i = 0; i < party->party_type / 10; i++)
+	for (int i = 0; i < party->GetNumMember(); i++)
 	{
 		if (characters->status_c[party->party_info[i]].alive)
 		{
 			break;
 		}
-		if (i == party->party_type / 10)
+		if (i == party->GetNumMember())
 		{
 			issueflag--;
 		}
@@ -579,6 +602,14 @@ void Battle::TurnFinish()
 		{
 			monsters[i]->Status_c.alive = 0;
 			active_point[i + 5] = -1;
+		}
+	}
+	for (int i = 0; i < party->GetNumMember(); i++)
+	{
+		if (characters->status_c[party->party_info[i]].hp <= 0 && characters->status_c[party->party_info[i]].alive)
+		{
+			characters->status_c[party->party_info[i]].alive = 0;
+			active_point[i] = -1;
 		}
 	}
 

@@ -6,6 +6,7 @@
 #include"Options.h"
 #include"Party.h"
 #include"Battle.h"
+#include"BattleEffect.h"
 
 class Dungeon :
 	public SceneBase
@@ -73,4 +74,5 @@ public:
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 	int lastact = -1; //逃げた場合にやる事。state依存
 	bool CheckCanEscape(); //逃走可能か調べる
+	BattleEffect* battleeffect; //パーティーより後に描画するため
 };

@@ -35,6 +35,7 @@ Dungeon::Dungeon()
 	savedata = SaveData::GetInstance();
 	options = Options::GetInstance();
 	party = Party::GetInstance();
+	battleeffect = BattleEffect::GetInstance();
 }
 
 
@@ -86,9 +87,13 @@ void Dungeon::Draw()
 		battle->Draw();
 	}
 
-
 	//パーティの描画
 	party->Draw();
+	//エフェクトの描画
+	if (Flags::battleflag)
+	{
+		battleeffect->mainDraw();
+	}
 }
 
 

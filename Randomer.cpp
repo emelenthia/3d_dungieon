@@ -12,5 +12,5 @@ Randomer::Randomer()
 
 int Randomer::GetRand()
 {
-	return (*Randomer::random_mt)();
+	return abs((int)(*Randomer::random_mt)());
 }

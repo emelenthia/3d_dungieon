@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="BattleEffect.cpp" />
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="Character_Data.cpp" />
     <ClCompile Include="Character_Data_Save.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="Field_Base_Data.cpp" />
     <ClCompile Include="First_Town.cpp" />
     <ClCompile Include="Flags.cpp" />
+    <ClCompile Include="FPSer.cpp" />
     <ClCompile Include="Green_Field.cpp" />
     <ClCompile Include="Guild.cpp" />
     <ClCompile Include="Guild_Dungeon.cpp" />
@@ -50,6 +52,7 @@
     <ClCompile Include="Party.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="Players.cpp" />
+    <ClCompile Include="Randomer.cpp" />
     <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneBase.cpp" />
@@ -60,6 +63,7 @@
   <ItemGroup>
     <ClInclude Include="Balloon.h" />
     <ClInclude Include="Battle.h" />
+    <ClInclude Include="BattleEffect.h" />
     <ClInclude Include="Characters.h" />
     <ClInclude Include="Character_Data.h" />
     <ClInclude Include="Character_Data_Save.h" />
@@ -74,6 +78,7 @@
     <ClInclude Include="Field_Base_Data.h" />
     <ClInclude Include="First_Town.h" />
     <ClInclude Include="Flags.h" />
+    <ClInclude Include="FPSer.h" />
     <ClInclude Include="Green_Field.h" />
     <ClInclude Include="Guild.h" />
     <ClInclude Include="Guild_Dungeon.h" />
@@ -96,6 +101,7 @@
     <ClInclude Include="Party.h" />
     <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="Players.h" />
+    <ClInclude Include="Randomer.h" />
     <ClInclude Include="SaveData.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneBase.h" />
@@ -151,13 +157,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\en\Documents\Visual Studio 2010\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\円象\Documents\Visual Studio 2013\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\en\Documents\Visual Studio 2010\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\円象\Documents\Visual Studio 2013\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

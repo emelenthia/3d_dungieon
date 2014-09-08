@@ -59,9 +59,11 @@ public:
 	void DrawAttack(); //まんま
 	int numdiedchar; //敵と味方の!aliveのキャラ合計
 #define NORMAL_ATTACK_TIME 35 //現在通常攻撃演出にかかる時間。いずれオプション設定できるように
-#define TURN_DURING_TIME 10 //ターンとターンの間にある時間。クッション的な。いずれry
+#define TURN_DURING_TIME 10 //ターンとターンの間にある時間。クッション的な。意味あるかは知らない
 	BattleEffect* battle_effect;
 	bool turn_finish_flag=FALSE;
 	void DrawResult(); //経験値獲得などの表示
+	int temp = 0; //色々
+	bool finishflag = 0;
 };
 

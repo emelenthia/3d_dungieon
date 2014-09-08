@@ -97,22 +97,51 @@ void Party::DrawBox_t(int front_or_back, float left_pos_number)
 		//HP関連
 		DrawExtendString(pos_x_lu + job_size / 2, pos_y_lu + size_y / 2 + 3, 1.0, 1.0, "HP", Colors::yellow);
 
+		if (characters->status_c[charnumb].hp < 0)
+		{
+			characters->status_c[charnumb].hp = 0;
+		}
+
 		char str_hp[9];
 		sprintf(str_hp, "%d", characters->status_c[charnumb].hp); //長さを測るために文字列に変換
-		DrawFormatString(pos_x_lu + size_x / 2 - GetDrawStringWidth(str_hp, strlen(str_hp)) - 5, pos_y_lu + size_y / 2 + 2, Colors::white, "%d", characters->status_c[charnumb].hp);
+		DrawFormatString(pos_x_lu + size_x / 2 - GetDrawStringWidth(str_hp, strlen(str_hp)) - 5,
+			pos_y_lu + size_y / 2 + 2,
+			Colors::white, "%d", characters->status_c[charnumb].hp);
 
-		DrawBox(pos_x_lu + job_size / 2 - 1, pos_y_lu + size_y - 8, pos_x_lu + size_x / 2 - 7, pos_y_lu + size_y - 4, Colors::yellow, TRUE);
+		int hp_temp = (1.0*characters->status_c[charnumb].hp / characters->GetStatus(charnumb).hpmax) * (size_x / 2 - 7 - (job_size / 2 - 1)); //hpバーは可変
+		DrawBox(pos_x_lu + job_size / 2 - 1,
+			pos_y_lu + size_y - 8,
+			pos_x_lu + (job_size / 2 - 1) + (characters->status_c[charnumb].hp ? (hp_temp > 0 ? hp_temp : 1) : 0), //最低でも1ドットは表示。死んでいたらその通りではない
+			pos_y_lu + size_y - 4, Colors::yellow, TRUE);
 
 
 		//TP関連
 		DrawExtendString(pos_x_lu + job_size / 2 + size_x / 2, pos_y_lu + size_y / 2 + 3, 1.0, 1.0, "TP", Colors::green);
 
+		if (characters->status_c[charnumb].tp < 0)
+		{
+			characters->status_c[charnumb].tp = 0;
+		}
+
 		char str_tp[9];
 		sprintf(str_tp, "%d", characters->status_c[charnumb].tp);
-		DrawFormatString(pos_x_lu + size_x - GetDrawStringWidth(str_tp, strlen(str_tp)) - 5, pos_y_lu + size_y / 2 + 2, Colors::white, "%d", characters->status_c[charnumb].tp);
+		DrawFormatString(pos_x_lu + size_x - GetDrawStringWidth(str_tp, strlen(str_tp)) - 5,
+			pos_y_lu + size_y / 2 + 2,
+			Colors::white, "%d", characters->status_c[charnumb].tp);
 
-		DrawBox(pos_x_lu + job_size / 2 - 1 + size_x / 2, pos_y_lu + size_y - 8, pos_x_lu + size_x - 7, pos_y_lu + size_y - 4, Colors::green, TRUE);
+		int tp_temp = ((double)characters->status_c[charnumb].tp / characters->GetStatus(charnumb).tpmax) * (size_x - 7 - (job_size / 2 - 1 + size_x / 2)); //hpバーは可変
+		DrawBox(pos_x_lu + job_size / 2 - 1 + size_x / 2,
+			pos_y_lu + size_y - 8,
+			pos_x_lu + (job_size / 2 - 1 + size_x / 2) + (characters->status_c[charnumb].tp?(tp_temp > 0 ? tp_temp : 1):0),
+			pos_y_lu + size_y - 4, Colors::green, TRUE);
 
+		//!aliveなら暗く
+		if (!characters->status_c[charnumb].alive)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
+			DrawBox(pos_x_lu, pos_y_lu, pos_x_rd, pos_y_rd, Colors::black, TRUE);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+		}
 	}
 	countdbt++;
 
