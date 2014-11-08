@@ -29,10 +29,10 @@ public:
 	void DrawIntRight(int x, int y, int num, int color);
 	int number_list[13]; //各キャラが上から何番目に書かれているかのメモ。加入していないキャラの事を考慮するため。未加入は-1
 
-	int pos_x_lu = 20;
-	int pos_y_lu = 24;
-	int pos_x_rd = 120;
-	int pos_y_rd = 0;
+	int pos_x_lu;
+	int pos_y_lu;
+	int pos_x_rd;
+	int pos_y_rd;
 	Character_Show_F();
 	~Character_Show_F(){};
 	status Status_; //status構造体を受け取る

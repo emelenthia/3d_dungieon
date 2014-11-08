@@ -26,9 +26,11 @@ void Battle::nfscanf_(const int line, const char* file, FILE* scan_target, const
 
 Battle::Battle(int ne, int* monster_number, bool escape_flag)
 {
+	//初期化
 	randomer = Randomer::GetInstance();
 	numenemy = ne;
 	can_escape_flag = escape_flag;
+	gameover_h = LoadGraph("./pics/gameover.bmp");
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -45,6 +47,11 @@ Battle::Battle(int ne, int* monster_number, bool escape_flag)
 	for (int i = 0; i < 10; i++)
 	{
 		turn_active[i] = 0;
+		guardflag[i] = FALSE;
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		temp_damage[i] = -1;
 	}
 
 	//テストデータ
@@ -77,6 +84,9 @@ Battle::~Battle()
 
 void Battle::Draw()
 {
+	DebugPrintf(1);
+	
+
 	if (!issueflag)
 	{
 		DrawMonster();
@@ -96,6 +106,9 @@ void Battle::Draw()
 			case NORMAL_ATTACK:
 				DrawAttack();
 				break;
+			case GUARD:
+				DrawFormatString(20, 0, Colors::white, "%sは防御の態勢。", characters->name[party->party_info[nowchar]]);
+				break;
 			}
 		}
 		else if (nowchar < 10)
@@ -112,11 +125,18 @@ void Battle::Draw()
 	{
 		DrawResult();
 	}
+	else if (issueflag == -1) //ゲームオーバー画面
+	{
+		DrawGameOver();
+	}
 }
 
 
 int Battle::Reaction()
 {
+	DebugPrintf(2);
+	
+
 	int r = 0;
 	//デバッグ用の戦闘から抜ける処理
 	if (Key_Input::buff_time[KEY_INPUT_X]&&Key_Input::buff_time[KEY_INPUT_Z])
@@ -229,7 +249,10 @@ int Battle::Reaction()
 
 			case NORMAL_ATTACK:
 
+				break;
 
+			case GUARD:
+				ActGuard();
 				break;
 
 			case ESCAPE: //逃げる処理
@@ -277,11 +300,12 @@ int Battle::Reaction()
 
 			if (time == NORMAL_ATTACK_TIME / 2)
 			{
-				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - 5]->Status_.atk * 3;
+				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - 5]->Status_.atk * 3 * (guardflag[temp] ? 0.5 : 1);
 			}
 
 			if (time>NORMAL_ATTACK_TIME)
 			{
+
 				temp = 0;
 				time = 0;
 				active_point[nowchar] += 3;
@@ -297,19 +321,11 @@ int Battle::Reaction()
 		//行動が次のキャラに移行する
 		if (turn_finish_flag)
 		{
-			if (!time)
+			TurnFinish();
+			if (turn_finish_finish_flag)
 			{
-				TurnFinish();
 				ActiveSort();
-			}
-			if (time > TURN_DURING_TIME)
-			{
 				TurnStart();
-				time = 0;
-			}
-			else
-			{
-				time++;
 			}
 		}
 	}
@@ -337,6 +353,7 @@ int Battle::Reaction()
 
 void Battle::DrawMiniChar()
 {
+	DebugPrintf(3);
 
 	for (int i = 0; i < party->GetNumMember() + numenemy; i++)
 	{
@@ -398,6 +415,9 @@ void Battle::DrawMiniChar()
 
 void Battle::ActiveSort()
 {
+
+	DebugPrintf(4);
+
 	int temp_number = 0, temp_min = 0;
 	bool finishflag = FALSE;
 
@@ -439,6 +459,9 @@ void Battle::ActiveSort()
 
 void Battle::DrawCanActive()
 {
+
+	DebugPrintf(5);
+
 	const int pos_x_lu = 5;
 	const int pos_y_lu = 480 - 30 * 6;
 	const int pos_x_rd = 160 - 10;
@@ -500,6 +523,7 @@ void Battle::DrawStringsCenterToHandle(int cpos_x, int cpos_y, int color_h,int f
 
 void Battle::DrawMonster()
 {
+	DebugPrintf(6);
 
 	switch (numenemy)
 	{
@@ -551,13 +575,15 @@ void Battle::DrawMonster()
 
 void Battle::CheckResult()
 {
+	DebugPrintf(7);
+
 	for (int i = 0; i < party->GetNumMember(); i++)
 	{
 		if (characters->status_c[party->party_info[i]].alive)
 		{
 			break;
 		}
-		if (i == party->GetNumMember())
+		if (i == party->GetNumMember() - 1)
 		{
 			issueflag--;
 		}
@@ -595,6 +621,10 @@ void Battle::CheckResult()
 
 void Battle::TurnFinish()
 {
+	DebugPrintf(8);
+
+
+	turn_finish_finish_flag = FALSE;
 	//生死の判定
 	for (int i = 0; i < numenemy; i++)
 	{
@@ -615,11 +645,14 @@ void Battle::TurnFinish()
 
 	//勝敗を判定する
 	CheckResult();
-
+	turn_finish_finish_flag = TRUE;
 }
 
 void Battle::TurnStart()
 {
+	DebugPrintf(9);
+
+
 	if (nowchar < 5) //プレイヤーキャラクターの場合
 	{
 		nowchoosef = characters->lastchoosef[party->party_info[nowchar]];
@@ -629,27 +662,39 @@ void Battle::TurnStart()
 	{
 	}
 	turn_finish_flag = FALSE;
+	guardflag[nowchar] = FALSE;
 }
 
 
 void Battle::DrawAttack()
 {
+	DebugPrintf(10);
+
+
 	if (state == NORMAL_ATTACK)
 	{
 		DrawFormatString(20, 1, Colors::white, "%sの攻撃（属性）！", characters->name[party->party_info[nowchar]]);
+
+		//1回だけダメージ計算。とりあえず今は1体のみに対応
+		if (temp_damage[0] == -1)
+		{
+			temp_damage[0] = characters->GetStatus(party->party_info[nowchar]).atk * 7 * (guardflag[temp_nowchoosea + 5] ? 0.5 : 1);
+		}
 		if (time < NORMAL_ATTACK_TIME)
 		{
 			//ここにエフェクト処理
-			battle_effect->Draw(numenemy * 10 + temp_nowchoosea,time ? -1 : 0);
+			battle_effect->Draw(numenemy * 10 + temp_nowchoosea,time ? -1 : 0,temp_damage);
+			
 		}
 		if (time == NORMAL_ATTACK_TIME)
 		{
 			//ここはダメージ処理。現状のだと1Fずらす必要がある
-			monsters[temp_nowchoosea]->Status_c.hp -= characters->GetStatus(party->party_info[nowchar]).atk * 7;
+			monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[0];
 		}
 		if (time > NORMAL_ATTACK_TIME)
 		{
 			//行動終了処理
+			temp_damage[0] = -1;
 			temp_nowchoosea = -1;
 			time = 0;
 			state = 0;
@@ -670,5 +715,63 @@ void Battle::DrawAttack()
 
 void Battle::DrawResult()
 {
+	DebugPrintf(11);
+
+
 	DrawExtendFormatString(20, 20, 2, 2, Colors::white, "RESULT");
+}
+
+
+void Battle::ActGuard()
+{
+	DebugPrintf(12);
+
+
+	if (state == GUARD)
+	{
+		if (time < GUARD_TIME)
+		{
+		}
+		else if (time == GUARD_TIME)
+		{
+			guardflag[nowchar] = TRUE;
+		}
+		if (time > GUARD_TIME)
+		{
+			//行動終了処理
+			time = 0;
+			state = 0;
+			active_point[nowchar] += 2;
+			turn_finish_flag = TRUE;
+			characters->lastchoosef[party->party_info[nowchar]] = GUARD; //コマンドを記憶
+		}
+		else
+		{
+			time++;
+		}
+	}
+	else
+	{
+
+	}
+}
+
+
+void Battle::DrawGameOver()
+{
+	DebugPrintf(13);
+
+
+	DrawRotaGraph(60, 80,2.0,0.0, gameover_h, TRUE);
+}
+
+void Battle::DebugPrintf(int number)
+{
+	if (debugflag)
+	{
+		debug_fp = fopen("./log/debug_log_battle.cns", "w");
+		fprintf(debug_fp, "%d", number);
+		fclose(debug_fp);
+		debug_fp = nullptr;
+	}
 }

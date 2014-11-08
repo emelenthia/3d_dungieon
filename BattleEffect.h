@@ -38,11 +38,12 @@ public:
 	void LoadEffect(); //エフェクトのロード
 	void LoadEffectFrame(){}; //エフェクトの表示フレームのロード
 	void LoadEffectPos(){}; //エフェクトの表示位置のロード
-	void DrawEffect(int monster_pos, int number); //選択されたエフェクトの描画
+	void DrawEffect(int monster_pos, int number,int* damage); //選択されたエフェクトの描画。ダメージも表示。int*なのは全体攻撃のため
 	void DrawEffect_e(int target_pos, int number); //選択されたエフェクトの描画。敵用
-	void Draw(int monster_pos, int number); //DrawEffectとの仲介役
+	void Draw(int monster_pos, int number,int* damage); //DrawEffectとの仲介役
 	void Draw_e(int target_pos, int number); //DrawEffectとの仲介役。敵用。targetposは左上から数えて1ずつ0から増えていく
 	void mainDraw(); //大元のDraw()
+	void DrawIntCenter(int x,int y,int value); //(x,y)を中心としてvalueを表示
 
 	//敵のみ使用
 	Party* party;
@@ -53,6 +54,9 @@ public:
 	int nownumber; //現在表示しているエフェクトの番号
 	int nowtargetpos; //仕方ないので記憶させるように
 	bool playerflag = 0; //現在表示したいエフェクトがプレイヤーのものか敵のものかのフラグ
+	//味方だけが使用
+	int* nowdamage=nullptr;
+	int alltime = 0; //1つのanimの累計time
 
 private:
 	BattleEffect();

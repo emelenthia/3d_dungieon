@@ -22,6 +22,11 @@ Character_Show_F::Character_Show_F()
 	red = GetColor(255, 0, 0);
 	fp = fopen("./scn/char/char_show.cns", "r");
 
+	pos_x_lu = 20;
+	pos_y_lu = 24;
+	pos_x_rd = 120;
+	pos_y_rd = 0;
+
 	if (fp == NULL)
 	{
 		DrawString(0, 0, "Error. I can not open file.", yellow);

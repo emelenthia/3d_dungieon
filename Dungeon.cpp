@@ -74,7 +74,9 @@ void Dungeon::Draw()
 	//エンカウント表示
 	if (state == 7)
 	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 120); //透過
 		DrawBox(0, 0, (int)(time*6.4), 480, Colors::black, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 	}
 	else

@@ -1,4 +1,5 @@
 #include "BattleEffect.h"
+#include"Colors.h"
 
 BattleEffect* BattleEffect::instance;
 
@@ -47,7 +48,7 @@ void BattleEffect::LoadEffect()
 }
 
 
-void BattleEffect::DrawEffect(int monsterpos, int number)
+void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 {
 	switch (monsterpos / 10)
 	{
@@ -58,6 +59,7 @@ void BattleEffect::DrawEffect(int monsterpos, int number)
 	case 1: //“G‚ª1‘Ì‚Ì‚Ý
 		DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
 			player.effect_h[number][elem], TRUE);
+		DrawIntCenter(640 / 2, 480 / 2, *damage);
 		break;
 	case 2: //“G‚ª2‘Ì‚¢‚é
 		switch (monsterpos - 10 * (monsterpos / 10))
@@ -65,10 +67,12 @@ void BattleEffect::DrawEffect(int monsterpos, int number)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left - 640 / 4, player.effect_p[number].top, player.effect_p[number].right - 640 / 4, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 4, 480 / 2, *damage);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left + 640 / 4, player.effect_p[number].top, player.effect_p[number].right + 640 / 4, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, *damage);
 			break;
 		default:
 			break;
@@ -80,14 +84,17 @@ void BattleEffect::DrawEffect(int monsterpos, int number)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left - 640 / 4, player.effect_p[number].top, player.effect_p[number].right - 640 / 4, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 4, 480 / 2, *damage);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2, 480 / 2, *damage);
 			break;
 		case 2:
 			DrawExtendGraph(player.effect_p[number].left + 640 / 4, player.effect_p[number].top, player.effect_p[number].right + 640 / 4, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, *damage);
 			break;
 		default:
 			break;
@@ -99,18 +106,22 @@ void BattleEffect::DrawEffect(int monsterpos, int number)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 2 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 2 / 3), player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, *damage);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 3), player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 2:
 			DrawExtendGraph(player.effect_p[number].left + 640 / 2 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 2 / 3, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 + 640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 3:
 			DrawExtendGraph(player.effect_p[number].left + 640 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 3, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 + 640 / 3, 480 / 2, *damage);
 			break;
 		default:
 			break;
@@ -122,22 +133,27 @@ void BattleEffect::DrawEffect(int monsterpos, int number)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 2 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 2 / 3), player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, *damage);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 3), player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 2:
 			DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2, 480 / 2, *damage);
 			break;
 		case 3:
 			DrawExtendGraph(player.effect_p[number].left + 640 / 2 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 2 / 3, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2+640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 4:
 			DrawExtendGraph(player.effect_p[number].left + 640 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 3, player.effect_p[number].bottom,
 				player.effect_h[number][elem], TRUE);
+			DrawIntCenter(640 / 2+640 / 3, 480 / 2, *damage);
 			break;
 		default:
 			break;
@@ -146,6 +162,7 @@ void BattleEffect::DrawEffect(int monsterpos, int number)
 		break;
 	}
 	time++;
+	alltime+=2;
 	if (time == player.effect_f[number][elem])
 	{
 		elem++;
@@ -154,12 +171,13 @@ void BattleEffect::DrawEffect(int monsterpos, int number)
 }
 
 
-void BattleEffect::Draw(int monsterpos=-1,int number = -1)
+void BattleEffect::Draw(int monsterpos = -1, int number = -1, int* damage=nullptr)
 {
 	if (nownumber == -1 && number != -1)
 	{
 		nownumber = number;
 		nowtargetpos = monsterpos;
+		nowdamage = damage;
 		playerflag = TRUE;
 	}
 	if (nownumber >= 0)
@@ -169,6 +187,7 @@ void BattleEffect::Draw(int monsterpos=-1,int number = -1)
 			elem = 0;
 			nownumber = -1;
 			nowtargetpos = -1;
+			nowdamage = nullptr;
 		}
 	}
 }
@@ -394,6 +413,7 @@ void BattleEffect::Draw_e(int targetpos = -1, int number = -1)
 			elem = 0;
 			nownumber = -1;
 			nowtargetpos = -1;
+			alltime = 0;
 		}
 	}
 }
@@ -405,11 +425,19 @@ void BattleEffect::mainDraw()
 	{
 		if (playerflag)
 		{
-			DrawEffect(nowtargetpos, nownumber);
+			DrawEffect(nowtargetpos, nownumber,nowdamage);
 		}
 		else
 		{
 			DrawEffect_e(nowtargetpos, nownumber);
 		}
 	}
+}
+
+
+void BattleEffect::DrawIntCenter(int x, int y, int value)
+{
+	char tempp[16];
+	sprintf(tempp, "%d", value);
+	DrawExtendFormatString(x - GetDrawStringWidth(tempp, strlen(tempp)), y - GetFontSize()-alltime, 2.0,2.0,Colors::white, "%d", value);
 }

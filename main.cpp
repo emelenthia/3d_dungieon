@@ -41,7 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		//reaction_return = nowpointa->Reaction(); //キー入力などによる情報の更新
 		scene.Reaction(); //キー入力などによる情報の更新
 		scene.Draw(); //現在の場面の描画
-		fpser.CountFPS(); //デバッグ的な
+		//fpser.CountFPS(); //デバッグ的な
 
 		ScreenFlip(); //裏と表の仲介役。描画処理よりも後に書く
 

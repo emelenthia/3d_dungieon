@@ -46,6 +46,7 @@ public:
 	int state = 0; //現在の状態。0…行動選択待ち、2…味方の攻撃中、3…防御している、5…逃げている
 #define CHOOSE_ACT 0
 #define NORMAL_ATTACK 2
+#define GUARD 3
 #define ESCAPE 5
 	int checkstate = 0; //何か選択することに対して現在の状態。0…特になし、もしくは基礎行動選択待ち、1…協力攻撃選択待ち
 						//2…通常攻撃対象選択待ち、3…スキル選択待ち、4…アイテム選択待ち
@@ -60,10 +61,20 @@ public:
 	int numdiedchar; //敵と味方の!aliveのキャラ合計
 #define NORMAL_ATTACK_TIME 35 //現在通常攻撃演出にかかる時間。いずれオプション設定できるように
 #define TURN_DURING_TIME 10 //ターンとターンの間にある時間。クッション的な。意味あるかは知らない
+#define GUARD_TIME 35 //防御処理に使う時間
 	BattleEffect* battle_effect;
 	bool turn_finish_flag=FALSE;
 	void DrawResult(); //経験値獲得などの表示
 	int temp = 0; //色々
-	bool finishflag = 0;
+	bool finishflag = 0; 
+	void ActGuard();
+	bool guardflag[10]; //各キャラのガードフラグ
+	bool turn_finish_finish_flag=0; //エンドフェイズが終わったフラグ
+	int temp_damage[5]; //一時的に表示するためのダメージを記憶
+	int gameover_h; //ゲームオーバー画像のハンドル
+	void DrawGameOver(); //ゲームオーバー画面の表示
+	const bool debugflag = 1;
+	FILE* debug_fp;
+	void DebugPrintf(int number);
 };
 
