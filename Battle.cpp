@@ -182,7 +182,7 @@ int Battle::Reaction()
 							finishflag = 0;
 							while (!finishflag)
 							{
-								if (monsters[nowchoosea]->Status_c.alive&&numenemy - numdiedchar > 0) //無限ループ対策
+								if (monsters[nowchoosea]->Status_c.alive&&numenemy - numdiedchar > 0) //無限ループ対策 //右側の条件で無限ループ発生(15/10/07)
 								{
 									finishflag = TRUE;
 								}
@@ -769,9 +769,15 @@ void Battle::DebugPrintf(int number)
 {
 	if (debugflag)
 	{
-		debug_fp = fopen("./log/debug_log_battle.cns", "w");
-		fprintf(debug_fp, "%d", number);
-		fclose(debug_fp);
-		debug_fp = nullptr;
+		if ((debug_fp = fopen("./log/debug_log_battle.cns", "w")) != NULL)
+		{
+			fprintf(debug_fp, "%d", number);
+			fclose(debug_fp);
+			debug_fp = nullptr;
+		}
+		else
+		{
+			DrawFormatString(0, 50, Colors::white, "Error in Battle::DebugPrintf");
+		}
 	}
 }

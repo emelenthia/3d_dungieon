@@ -1,127 +1,18 @@
-﻿2014/09/09 2:19:01 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\円象\Documents\Visual Studio 2013\Projects\3d_dungieon\dx_test_2.vcxproj" (Build ターゲット)。
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (dx_test_2.vcxproj, rpg_test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿2015/10/07 23:52:43 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "G:\vs2015\Projects\3d_dungieon\dx_test_2.vcxproj" (Build ターゲット)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (dx_test_2.vcxproj, rpg_test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\円象\Documents\Visual Studio 2013\DxLib_VC\プロジェクトに追加すべきファイル_VC用" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Battle.cpp BattleEffect.cpp Dungeon.cpp Guild.cpp Scene.cpp main.cpp
-         Dungeon.cpp
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(335): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 'fopen' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(355): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 'strcpy' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(356): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 'strcat' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(357): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 'strcat' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(358): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 'fopen' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(420): warning C4244: '引数' : 'double' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(424): warning C4244: '引数' : 'double' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(450): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(451): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(471): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(486): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(501): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(516): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(663): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(664): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(667): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(668): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(671): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(672): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(675): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(676): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(734): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(735): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(740): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(741): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(750): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(751): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(756): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(757): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(778): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(779): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(784): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(785): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(794): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(795): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(800): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(801): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(822): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(823): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(828): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(829): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(838): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(839): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(844): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(845): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(866): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(867): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(872): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(873): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(882): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(883): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(888): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(889): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1042): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1043): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1047): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1048): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1112): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1113): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1117): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1118): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1163): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1164): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1168): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1169): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1173): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1174): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1178): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1179): warning C4244: '=' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1198): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 'fopen' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1199): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 'strcpy' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1202): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 'fopen' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1203): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 'strcpy' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1206): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 'fopen' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1207): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 'strcpy' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1219): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 'fscanf' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1224): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 'fscanf' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1228): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 'fscanf' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1229): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 'fscanf' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1230): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 'fscanf' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1231): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 'fscanf' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1232): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 'fscanf' の宣言を確認してください。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1271): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\dungeon.cpp(1272): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-         BattleEffect.cpp
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\battleeffect.cpp(367): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\battleeffect.cpp(368): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\battleeffect.cpp(369): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\battleeffect.cpp(370): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
-         コードを生成中...
-         コンパイル中...
-         main.cpp
-         Scene.cpp
-         Guild.cpp
+         G:\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"G:\vs2015\DxLib_VC\プロジェクトに追加すべきファイル_VC用" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Battle.cpp
          Battle.cpp
-     1>c:\users\円象\documents\visual studio 2013\projects\3d_dungieon\battle.cpp(17): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 'fopen' の宣言を確認してください。
-         コードを生成中...
+     1>g:\vs2015\projects\3d_dungieon\monsters.h(20): warning C4091: 'typedef ': 変数が何も宣言されていないときは、'Monsters::strain' の左辺を無視します。
+     1>g:\vs2015\projects\3d_dungieon\battle.cpp(17): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(205): note: 'fopen' の宣言を確認してください
+     1>g:\vs2015\projects\3d_dungieon\battle.cpp(303): warning C4244: '-=': 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>g:\vs2015\projects\3d_dungieon\battle.cpp(681): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>g:\vs2015\projects\3d_dungieon\battle.cpp(772): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(205): note: 'fopen' の宣言を確認してください
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\円象\Documents\Visual Studio 2013\Projects\3d_dungieon\Debug\3d_dungeon.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\円象\Documents\Visual Studio 2013\DxLib_VC\プロジェクトに追加すべきファイル_VC用" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\円象\Documents\Visual Studio 2013\Projects\3d_dungieon\Debug\3d_dungeon.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\円象\Documents\Visual Studio 2013\Projects\3d_dungieon\Debug\3d_dungeon.lib" /MACHINE:X86 Debug\Balloon.obj
+         G:\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\vs2015\Projects\3d_dungieon\Debug\3d_dungeon.exe" /INCREMENTAL /NOLOGO /LIBPATH:"G:\vs2015\DxLib_VC\プロジェクトに追加すべきファイル_VC用" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"G:\vs2015\Projects\3d_dungieon\Debug\3d_dungeon.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\vs2015\Projects\3d_dungieon\Debug\3d_dungeon.lib" /MACHINE:X86 Debug\Balloon.obj
          Debug\Battle.obj
          Debug\BattleEffect.obj
          Debug\Characters.obj
@@ -169,9 +60,9 @@
          Debug\Status.obj
          Debug\Talker.obj
          Debug\World.obj
-         dx_test_2.vcxproj -> C:\Users\円象\Documents\Visual Studio 2013\Projects\3d_dungieon\Debug\3d_dungeon.exe
-     1>プロジェクト "C:\Users\円象\Documents\Visual Studio 2013\Projects\3d_dungieon\dx_test_2.vcxproj" (Build ターゲット) のビルドが完了しました。
+         dx_test_2.vcxproj -> G:\vs2015\Projects\3d_dungieon\Debug\3d_dungeon.exe
+     1>プロジェクト "G:\vs2015\Projects\3d_dungieon\dx_test_2.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:19.84
+経過時間 00:00:02.08
