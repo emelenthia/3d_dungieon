@@ -1,4 +1,8 @@
 #pragma once
+
+static const int SKILL_MAX_PT = 8; //味方のスキルの総数
+static const int CHARA_MAX = 14; //キャラクターの最大数
+
 class Defines
 {
 public:

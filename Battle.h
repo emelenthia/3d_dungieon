@@ -59,6 +59,7 @@ public:
 	int temp_nowchoosea = -1;
 	void DrawAttack(); //まんま
 	int numdiedchar; //敵と味方の!aliveのキャラ合計
+	int m_numdiedEnemy; //敵の!aliveキャラの合計
 #define NORMAL_ATTACK_TIME 35 //現在通常攻撃演出にかかる時間。いずれオプション設定できるように
 #define TURN_DURING_TIME 10 //ターンとターンの間にある時間。クッション的な。意味あるかは知らない
 #define GUARD_TIME 35 //防御処理に使う時間

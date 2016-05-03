@@ -40,6 +40,7 @@ void Character_Data_Save::Load_Char(char *file_pointer,int n)
 		exit(1);
 	}
 
+	//FX“Ç‚İ‚Ş
 	fscanf(fp[n], "%d", &in_team[n]);
 	if (in_team)
 	{
@@ -52,5 +53,10 @@ void Character_Data_Save::Load_Char(char *file_pointer,int n)
 		fscanf(fp[n], "%d", &status_c[n].tp);
 		fscanf(fp[n], "%d", &lastchoosef[n]);
 		fscanf(fp[n], "%d", &lastchoosef_skill[n]);
+		fgetc(fp[n]); //‰üs•¶š‚ğÌ‚Ä‚é
+		for (int i = 0; i < SKILL_MAX_PT; i++)
+		{
+			m_canSkillLevel[n][i] = fgetc(fp[n]);
+		}
 	}
 }

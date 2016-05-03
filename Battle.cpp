@@ -182,7 +182,7 @@ int Battle::Reaction()
 							finishflag = 0;
 							while (!finishflag)
 							{
-								if (monsters[nowchoosea]->Status_c.alive&&numenemy - numdiedchar > 0) //無限ループ対策 //右側の条件で無限ループ発生(15/10/07)
+								if (monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0) //無限ループ対策 //TODO:右側の条件は要るのかどうか。
 								{
 									finishflag = TRUE;
 								}
@@ -222,14 +222,14 @@ int Battle::Reaction()
 						do
 						{
 							nowchoosea = nowchoosea ? --nowchoosea : numenemy - 1;
-						} while (!monsters[nowchoosea]->Status_c.alive&&numenemy - numdiedchar > 0);
+						} while (!monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0);
 					}
 					else if (Key_Input::buff_time[KEY_INPUT_RIGHT] == 1 && !Key_Input::buff_time[KEY_INPUT_LEFT])
 					{
 						do
 						{
 							nowchoosea = nowchoosea == numenemy - 1 ? 0 : ++nowchoosea;
-						} while (!monsters[nowchoosea]->Status_c.alive&&numenemy - numdiedchar > 0);
+						} while (!monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0);
 					}
 					if (Key_Input::buff_time[KEY_INPUT_X] == 1) //基礎行動選択に戻る
 					{
@@ -505,6 +505,12 @@ void Battle::DrawCanActive()
 			DrawFormatString(5, 1, Colors::white, "攻撃対象を選択してください。");
 		}
 
+		//スキル選択
+		if (checkstate == 3)
+		{
+			
+		}
+
 		//逃げられない
 		if (state == 5 && !can_escape_flag)
 		{
@@ -602,6 +608,7 @@ void Battle::CheckResult()
 
 	//死んでいるキャラの合計
 	numdiedchar = 0;
+	m_numdiedEnemy = 0;
 	for (int i = 0; i < party->GetNumMember(); i++)
 	{
 		if (active_point[i] == -1)
@@ -614,6 +621,7 @@ void Battle::CheckResult()
 		if (active_point[i + 5] == -1) //死んでいるキャラの合計
 		{
 			numdiedchar++;
+			m_numdiedEnemy++;
 		}
 	}
 }

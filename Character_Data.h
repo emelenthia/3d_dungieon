@@ -15,13 +15,13 @@ public:
 
 	status GetStatus(int n); //n番目のキャラのstatus構造体を返す
 
-	FILE *fp_n_s[15];
+	FILE *fp_n_s[CHARA_MAX];
 	void Load_Char_n_s(char *file_pointer, char *file_pointer_save,int n);
-	char file_name_n_s[15][50]; //ファイル名を覚えておく
-	int job_system[15]; //このキャラの職業の系統
-	int char_h[15][10]; //0から順に、(0+1)の職業の画像
-	int char_h_i[15][10]; //0から順に、(0+1)の職業の画像アイコン(普段表示される小さい画像)
-	char char_h_name[15][10][100]; //0から順に、(0+1)の職業の画像のファイル名
-	char char_h_i_name[15][10][50]; //0から順に、(0+1)の職業の画像アイコンのファイル名
+	char file_name_n_s[CHARA_MAX][50]; //ファイル名を覚えておく
+	int job_system[CHARA_MAX]; //このキャラの職業の系統
+	int char_h[CHARA_MAX][10]; //0から順に、(0+1)の職業の画像
+	int char_h_i[CHARA_MAX][10]; //0から順に、(0+1)の職業の画像アイコン(普段表示される小さい画像)
+	char char_h_name[CHARA_MAX][10][100]; //0から順に、(0+1)の職業の画像のファイル名
+	char char_h_i_name[CHARA_MAX][10][50]; //0から順に、(0+1)の職業の画像アイコンのファイル名
 };
 
