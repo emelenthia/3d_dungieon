@@ -193,7 +193,10 @@ int Battle::Reaction()
 							}
 							break;
 						case 2: //スキル
-							checkstate = 3;
+							if (characters->GetCanSkillNum(party->party_info[nowchar], Defines::BATTLE) > 0) //使用可能スキルがある場合のみ選択可能
+							{
+								checkstate = 3;
+							}
 							break;
 						case 3: //防御
 							state = 3;
@@ -470,11 +473,14 @@ void Battle::DrawCanActive()
 
 	if (nowchar < 5)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
+		if (checkstate != 3 && checkstate != 4) //スキルやアイテムの選択時でない
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
 
-		DrawBox(pos_x_lu + 15, pos_y_lu + nowchoosef * 30 + 5, pos_x_rd, pos_y_lu + nowchoosef * 30 + 5 + 21, Colors::yellow, TRUE); //現在選んでるの
+			DrawBox(pos_x_lu + 15, pos_y_lu + nowchoosef * 30 + 5, pos_x_rd, pos_y_lu + nowchoosef * 30 + 5 + 21, Colors::yellow, TRUE); //現在選んでるの
 
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+		}
 		if (!state&&!checkstate)
 		{
 
@@ -483,7 +489,14 @@ void Battle::DrawCanActive()
 				DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 5, Colors::white, thickfont_h, "協力攻撃");
 			}
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 35, Colors::white, thickfont_h, "攻撃");
-			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 65, Colors::white, thickfont_h, "スキル");
+			if (characters->GetCanSkillNum(party->party_info[nowchar], Defines::BATTLE) > 0)
+			{
+				DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 65, Colors::white, thickfont_h, "スキル");
+			}
+			else
+			{
+				DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 65, Colors::black, thickfont_h, "スキル");
+			}
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 95, Colors::white, thickfont_h, "防御");
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 125, Colors::white, thickfont_h, "アイテム");
 			DrawStringsCenterToHandle(pos_x_lu + 75, pos_y_lu + 155, (can_escape_flag?Colors::white:Colors::black), thickfont_h, "逃げる");
@@ -508,7 +521,7 @@ void Battle::DrawCanActive()
 		//スキル選択
 		if (checkstate == 3)
 		{
-			
+			characters->DrawSkill(party->party_info[nowchar], Defines::BATTLE, 0, 300, 0);
 		}
 
 		//逃げられない

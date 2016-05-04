@@ -2,7 +2,8 @@
 #include<stdio.h>
 #include"Status.h"
 #include"Defines.h"
-
+#include"Colors.h"
+#include"Skill.h"
 
 class Character_Data_Save //セーブされる各キャラの可変データ
 {
@@ -25,4 +26,12 @@ public:
 	int lastchoosef[CHARA_MAX]; //戦闘に対して最後に行った行動
 	int lastchoosef_skill[CHARA_MAX]; //最後に使用したスキル
 	char m_canSkillLevel[CHARA_MAX][SKILL_MAX_PT]; //各キャラのスキル取得レベル。0なら取得していない
+
+	void DrawSkill(int chara, int mode, int pos_x, int pos_y, int choose); //指定されたキャラのスキル一覧を表示します。charaはキャラ番号を指定。modeは使用場面によって選択、上のdefineを参照pos_xとpos_yは左上の座標。chooseは今選ばれているスキル
+	char GetCanSkillNum(int chara,int mode = -1); //現在使用できるスキルの総数を取得して返す。modeも指定可能。指定しない場合は全てのスキル対象
+
+
+private:
+	Skill* m_skill;
+	char m_canSkillNum[CHARA_MAX]; //各キャラの取得スキル数
 };
