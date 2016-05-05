@@ -14,7 +14,34 @@ int Skill::LoadSkillList_PT()
 	fp = fopen("./scn/skill/skillList_PT.txt", "r");
 	for (int i = 0; i < SKILL_MAX_PT; i++)
 	{
-		fscanf(fp, "%s%d", m_skill_PT[i].m_skillList_PT, &(m_skill_PT[i].m_skillType));
+		char temp[1024]; //この辺雑
+		char keep[1024];
+		fscanf(fp, "%[^\n]s", temp); //読み込んで
+		fscanf(fp, "%*c"); //改行を捨てる
+		int c = 0, j = 0;
+		//スキル名を取得
+		while (temp[c] != ',') //分解する
+		{
+			keep[c] = temp[c];
+			 c++;
+		}
+		keep[c] = '\0';
+		strcpy(m_skill_PT[i].m_skillList_PT, keep);
+		//スキルタイプを取得
+		m_skill_PT[i].m_skillType = temp[++c] - '0';
+		c += 2;
+		//スキルの説明の習得
+		while (temp[c] != '\0') //分解する
+		{
+			keep[j] = temp[c];
+			c++;
+			j++;
+		}
+		keep[j] = '\0';
+		strcpy(m_skill_PT[i].m_skillText, keep);
+
+		//こっちのが楽といえば楽
+		//fscanf(fp, "%s%d%s", m_skill_PT[i].m_skillList_PT, &(m_skill_PT[i].m_skillType), m_skill_PT[i].m_skillText);
 	}
 	fclose(fp);
 

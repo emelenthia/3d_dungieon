@@ -77,5 +77,8 @@ public:
 	const bool debugflag = 1;
 	FILE* debug_fp;
 	void DebugPrintf(int number);
+
+private:
+	int m_chooseSkill; //Œ»İ‘I‘ğ‚µ‚Ä‚¢‚éƒXƒLƒ‹‚ªã‚©‚ç‰½ŒÂ–Ú‚©
 };
 

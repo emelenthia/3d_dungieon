@@ -30,7 +30,8 @@ Battle::Battle(int ne, int* monster_number, bool escape_flag)
 	randomer = Randomer::GetInstance();
 	numenemy = ne;
 	can_escape_flag = escape_flag;
-	gameover_h = LoadGraph("./pics/gameover.bmp");
+	gameover_h = LoadGraph("./pics/gameover.bmp"); 
+	m_chooseSkill = 0;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -109,6 +110,9 @@ void Battle::Draw()
 			case GUARD:
 				DrawFormatString(20, 0, Colors::white, "%sは防御の態勢。", characters->name[party->party_info[nowchar]]);
 				break;
+			case ESCAPE: //これを書いていないことにしばらく気が付かなかった
+				DrawCanActive();
+				break;
 			}
 		}
 		else if (nowchar < 10)
@@ -154,7 +158,7 @@ int Battle::Reaction()
 
 	if (!issueflag)
 	{
-		if (nowchar < 5)
+		if (nowchar < 5) //現在行動中のキャラが味方キャラだった場合
 		{
 			switch (state) //主な処理
 			{
@@ -246,6 +250,22 @@ int Battle::Reaction()
 						temp_nowchoosea = nowchoosea;
 						nowchoosea = -1; //点滅を防ぐため
 						characters->lastchoosef[party->party_info[nowchar]] = 1; //コマンドを記憶
+					}
+				}
+				else if (checkstate == 3) //スキル選択
+				{
+					if (Key_Input::buff_time[KEY_INPUT_UP] % 10 == 1)
+					{
+						m_chooseSkill = (!m_chooseSkill ? characters->GetCanSkillNum(party->party_info[nowchar],Defines::BATTLE) - 1 : --m_chooseSkill); //現在選択中のスキルが一番上なら一番下に。それ以外ならひとつ上に
+					}
+					else if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1 && !Key_Input::buff_time[KEY_INPUT_UP])
+					{
+						m_chooseSkill = (m_chooseSkill == characters->GetCanSkillNum(party->party_info[nowchar], Defines::BATTLE) - 1 ? 0 : ++m_chooseSkill); //現在選択中のスキルが一番下なら一番上に、それ以外なら一つ下に
+					}
+					else if (Key_Input::buff_time[KEY_INPUT_X] == 1) //基礎行動選択に戻る
+					{
+						checkstate = 0;
+						nowchoosea = -1;
 					}
 				}
 				break;
@@ -521,7 +541,7 @@ void Battle::DrawCanActive()
 		//スキル選択
 		if (checkstate == 3)
 		{
-			characters->DrawSkill(party->party_info[nowchar], Defines::BATTLE, 0, 300, 0);
+			characters->DrawSkill(party->party_info[nowchar], Defines::BATTLE, 0, 300, m_chooseSkill); 
 		}
 
 		//逃げられない

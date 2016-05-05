@@ -17,6 +17,7 @@ public:
 	{
 		char m_skillList_PT[32]; //味方が使用するスキルの名前のリスト
 		char m_skillType; //各スキルの使用属性。0ならパッシブ、1なら攻撃系、2なら回復系、3なら補助系。enum skillType参照
+		char m_skillText[128]; //スキルの説明文。TODO:変数名からm_skillを抜いても良いかも
 	}t_skills;
 	t_skills m_skill_PT[SKILL_MAX_PT];
 	int LoadSkillList_PT(); //味方が使用するスキルの名前のリストをロードする

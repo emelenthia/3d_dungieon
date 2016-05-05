@@ -73,6 +73,7 @@ void Character_Data_Save::DrawSkill(int chara, int mode, int pos_x, int pos_y,in
 			{
 				DrawBox(pos_x, pos_y + count * 20 - 3, pos_x + 200, pos_y + count * 20 + 20 - 3, Colors::yellow, TRUE);
 				DrawFormatString(pos_x + 20, pos_y + count * 20, Colors::black, "%s", m_skill->m_skill_PT[i].m_skillList_PT);
+				DrawFormatString(5, 1, Colors::white, "%s", m_skill->m_skill_PT[i].m_skillText); //スキルの説明の表示
 			}
 			else
 			{
@@ -81,7 +82,10 @@ void Character_Data_Save::DrawSkill(int chara, int mode, int pos_x, int pos_y,in
 			count++;
 		}
 	}
-	if (!count) //表示すべきスキルがない場合
+	if (!count) //表示すべきスキルがない場合…まあ無いだろうけど
+	{
+	}
+	else
 	{
 
 	}
