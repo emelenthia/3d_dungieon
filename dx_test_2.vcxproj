@@ -29,6 +29,7 @@
     <ClCompile Include="First_Town.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="FPSer.cpp" />
+    <ClCompile Include="Functions_3DD.cpp" />
     <ClCompile Include="Green_Field.cpp" />
     <ClCompile Include="Guild.cpp" />
     <ClCompile Include="Guild_Dungeon.cpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="Talker.cpp" />
     <ClCompile Include="World.cpp" />
@@ -79,6 +81,7 @@
     <ClInclude Include="First_Town.h" />
     <ClInclude Include="Flags.h" />
     <ClInclude Include="FPSer.h" />
+    <ClInclude Include="Functions_3DD.h" />
     <ClInclude Include="Green_Field.h" />
     <ClInclude Include="Guild.h" />
     <ClInclude Include="Guild_Dungeon.h" />
@@ -105,6 +108,7 @@
     <ClInclude Include="SaveData.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="Talker.h" />
     <ClInclude Include="World.h" />
