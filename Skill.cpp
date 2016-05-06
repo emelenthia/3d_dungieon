@@ -30,8 +30,8 @@ int Skill::LoadSkillList_PT()
 		//スキルタイプを取得
 		m_skill_PT[i].m_skillType = temp[++c] - '0';
 		c += 2;
-		//スキルの説明の習得
-		while (temp[c] != '\0') //分解する
+		//スキルの説明の取得
+		while (temp[c] != ',') //分解する
 		{
 			keep[j] = temp[c];
 			c++;
@@ -39,6 +39,12 @@ int Skill::LoadSkillList_PT()
 		}
 		keep[j] = '\0';
 		strcpy(m_skill_PT[i].m_skillText, keep);
+		//スキル種別の取得
+		m_skill_PT[i].type_kind = temp[++c] - '0'; //TODO:この方法だと2桁以上とかは取得できないので修正する必要がある。whileループを使え
+		c += 2; //,の隣にずらす
+		//スキルの最大レベルの取得
+		m_skill_PT[i].maxlevel = temp[c] - '0';
+
 
 		//こっちのが楽といえば楽
 		//fscanf(fp, "%s%d%s", m_skill_PT[i].m_skillList_PT, &(m_skill_PT[i].m_skillType), m_skill_PT[i].m_skillText);

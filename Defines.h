@@ -15,5 +15,6 @@ public:
 	static const int GUILD = 0;
 	static const int FIELD = 1;
 	static const int BATTLE = 2;
+	static const int SKILL_MAX_LEVEL = 10; //味方スキルの最大レベル。
 };
 
