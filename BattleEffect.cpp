@@ -16,11 +16,20 @@ BattleEffect::BattleEffect()
 	player[0].effect_p.bottom = 340;
 	player[0].effect_p.right = 440;
 	player[0].effect_p.top = 100;
+	player[1].effect_p.left = 200;
+	player[1].effect_p.bottom = 340;
+	player[1].effect_p.right = 440;
+	player[1].effect_p.top = 100;
 	for (int i = 0; i < 9; i++)
 	{
 		player[0].effect_f[i] = 2;
 	}
 	player[0].effect_f[9] = -1;
+	for (int i = 0; i < 9; i++)
+	{
+		player[1].effect_f[i] = 2;
+	}
+	player[1].effect_f[9] = -1;
 
 
 	enemy[0].effect_p.left = 0;

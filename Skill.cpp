@@ -11,11 +11,14 @@ Skill::Skill()
 int Skill::LoadSkillList_PT()
 {
 	FILE* fp = nullptr;
+	FILE* fp2 = nullptr;
 	fp = fopen("./scn/skill/skillList_PT.txt", "r");
+	fp2 = fopen("./scn/skill/skillvalue.txt", "r");
 	for (int i = 0; i < SKILL_MAX_PT; i++)
 	{
 		char temp[1024]; //この辺雑。TODO:可変長の引数を持つ、文字列を','で分解する関数を作る。文字列と数値の判断はどうするのか?
 		char keep[1024];
+		char dammy[1024];
 		fscanf(fp, "%[^\n]s", temp); //読み込んで
 		fscanf(fp, "%*c"); //改行を捨てる
 		int c = 0, j = 0;
@@ -106,8 +109,72 @@ int Skill::LoadSkillList_PT()
 		fscanf(fp, "%[\n]c");
 		fflush(stdin);*/
 
+
+		//次はskillvalue.txtの読み込み
+		fscanf(fp2, "%s", dammy); //一行読み飛ばす
+		if (m_skill_PT[i].m_skillType) //パッシブじゃなければ
+		{
+			//TPを取得
+			fscanf(fp2, "%s", keep);
+			c = 0;
+			int i2 = 0;
+			for (; keep[c] != '\0' && i2 < m_skill_PT[i].maxlevel; c++)
+			{
+				j = 0;
+				while (keep[c] != ',' && keep[c] != '\0')
+				{
+					temp[j] = keep[c];
+					c++;
+					j++;
+				}
+				temp[j] = '\0';
+				m_skill_PT[i].need_TP[i2++] = atoi(temp);
+				if (keep[c] == '\0') //これがないと、c++を2回読んでるため、\0を飛ばしてしまう
+				{
+					break;
+				}
+			}
+			while (i2 < m_skill_PT[i].maxlevel) //省略してあった場合は補完する
+			{
+				m_skill_PT[i].need_TP[i2] = m_skill_PT[i].need_TP[0];
+				i2++;
+			}
+
+			//スキル威力を取得…もうこの辺、別関数にしようよ
+			fscanf(fp2, "%s", keep);
+			c = 0;
+			i2 = 0;
+			for (; keep[c] != '\0' && i2 < m_skill_PT[i].maxlevel; c++)
+			{
+				j = 0;
+				while (keep[c] != ',' && keep[c] != '\0')
+				{
+					temp[j] = keep[c];
+					c++;
+					j++;
+				}
+				temp[j] = '\0';
+				m_skill_PT[i].value[i2++] = atoi(temp);
+				if (keep[c] == '\0') //これがないと、c++を2回読んでるため、\0を飛ばしてしまう
+				{
+					break;
+				}
+			}
+			while (i2 < m_skill_PT[i].maxlevel) //省略してあった場合は補完する
+			{
+				m_skill_PT[i].value[i2] = m_skill_PT[i].value[0];
+				i2++;
+			}
+
+
+			//行動後速度修正を取得
+			fscanf(fp2, "%s", dammy); //
+		}
+
+		
 	}
 	fclose(fp);
+	fclose(fp2);
 
 	return 0;
 }

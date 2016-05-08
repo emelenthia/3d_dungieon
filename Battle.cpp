@@ -57,8 +57,8 @@ Battle::Battle(int ne, int* monster_number, bool escape_flag)
 	}
 
 	//テストデータ
-	active_point[0] = 2;
-	active_point[1] = 7;
+	active_point[0] = 7;
+	active_point[1] = 2;
 	active_point[2] = -1;
 	active_point[3] = -1;
 	active_point[4] = -1;
@@ -107,6 +107,9 @@ void Battle::Draw()
 				break;
 			case NORMAL_ATTACK:
 				DrawAttack();
+				break;
+			case SKILL:
+				DrawSkill();
 				break;
 			case GUARD:
 				DrawFormatString(20, 0, Colors::white, "%sは防御の態勢。", characters->name[party->party_info[nowchar]]);
@@ -247,7 +250,7 @@ int Battle::Reaction()
 					else if (Key_Input::buff_time[KEY_INPUT_Z] == 1) //攻撃に移行
 					{
 						checkstate = 0;
-						state = 2;
+						state = NORMAL_ATTACK;
 						temp_nowchoosea = nowchoosea;
 						nowchoosea = -1; //点滅を防ぐため
 						characters->lastchoosef[party->party_info[nowchar]] = 1; //コマンドを記憶
@@ -275,8 +278,53 @@ int Battle::Reaction()
 							m_skill->m_skill_PT[skillnumber].type_kind == 10 ||
 							m_skill->m_skill_PT[skillnumber].type_kind == 17) //そのスキルが敵1体を選択するスキルなら
 						{
+							//初期選択対象の設定
+							finishflag = 0;
+							nowchoosea = 0;
+							while (!finishflag)
+							{
+								if (monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0) //無限ループ対策 //TODO:右側の条件は要るのかどうか。
+								{
+									finishflag = TRUE;
+								}
+								else
+								{
+									nowchoosea = nowchoosea == numenemy - 1 ? 0 : ++nowchoosea;
+								}
+							}
 							checkstate = 31; //敵1体を選択する状態へ
 						}
+					}
+				}
+				else if (checkstate == 31)
+				{
+					if (Key_Input::buff_time[KEY_INPUT_LEFT] == 1)
+					{
+						//初期目標が死んでいたら右にずらしていく
+						do
+						{
+							nowchoosea = nowchoosea ? --nowchoosea : numenemy - 1;
+						} while (!monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0);
+					}
+					else if (Key_Input::buff_time[KEY_INPUT_RIGHT] == 1 && !Key_Input::buff_time[KEY_INPUT_LEFT])
+					{
+						do
+						{
+							nowchoosea = nowchoosea == numenemy - 1 ? 0 : ++nowchoosea;
+						} while (!monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0);
+					}
+					if (Key_Input::buff_time[KEY_INPUT_X] == 1) //基礎行動選択に戻る
+					{
+						checkstate = 0;
+						nowchoosea = -1;
+					}
+					else if (Key_Input::buff_time[KEY_INPUT_Z] == 1) //攻撃に移行
+					{
+						checkstate = 0;
+						state = SKILL;
+						temp_nowchoosea = nowchoosea;
+						nowchoosea = -1; //点滅を防ぐため
+						characters->lastchoosef[party->party_info[nowchar]] = 1; //コマンドを記憶
 					}
 				}
 				break;
@@ -284,7 +332,9 @@ int Battle::Reaction()
 			case NORMAL_ATTACK:
 
 				break;
+			case SKILL:
 
+				break;
 			case GUARD:
 				ActGuard();
 				break;
@@ -504,7 +554,7 @@ void Battle::DrawCanActive()
 
 	if (nowchar < 5)
 	{
-		if (checkstate != 3 && checkstate != 4) //スキルやアイテムの選択時でない
+		if (checkstate != 3 && checkstate != 4 && checkstate != 31) //スキルやアイテムの選択時でない
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
 
@@ -550,7 +600,7 @@ void Battle::DrawCanActive()
 		}
 
 		//スキル選択
-		if (checkstate == 3)
+		if (checkstate == 3 || checkstate == 31)
 		{
 			characters->DrawSkill(party->party_info[nowchar], Defines::BATTLE, 0, 300, m_chooseSkill); 
 		}
@@ -730,7 +780,7 @@ void Battle::DrawAttack()
 		//1回だけダメージ計算。とりあえず今は1体のみに対応
 		if (temp_damage[0] == -1)
 		{
-			temp_damage[0] = characters->GetStatus(party->party_info[nowchar]).atk * 7 * (guardflag[temp_nowchoosea + 5] ? 0.5 : 1);
+			temp_damage[0] = characters->GetStatus(party->party_info[nowchar]).atk * 100 * (guardflag[temp_nowchoosea + 5] ? 0.5 : 1) / 14;
 		}
 		if (time < NORMAL_ATTACK_TIME)
 		{
@@ -757,10 +807,6 @@ void Battle::DrawAttack()
 		{
 			time++;
 		}
-	}
-	else
-	{
-
 	}
 }
 
@@ -830,6 +876,53 @@ void Battle::DebugPrintf(int number)
 		else
 		{
 			DrawFormatString(0, 50, Colors::white, "Error in Battle::DebugPrintf");
+		}
+	}
+}
+
+
+void Battle::DrawSkill()
+{
+	DebugPrintf(14);
+
+
+	if (state == SKILL)
+	{
+		//ややこしいので記憶
+		int skillNumber = characters->GetSkillNumber(party->party_info[nowchar], m_chooseSkill, Defines::BATTLE);
+		DrawFormatString(20, 1, Colors::white, "%sの%s！", characters->name[party->party_info[nowchar]], m_skill->m_skill_PT[skillNumber].m_skillList_PT);
+
+		//1回だけダメージ計算。とりあえず今は1体のみに対応
+		if (temp_damage[0] == -1)
+		{
+			temp_damage[0] = characters->GetStatus(party->party_info[nowchar]).atk * 
+				m_skill->m_skill_PT[skillNumber].value[characters->m_canSkillLevel[party->party_info[nowchar]][skillNumber]] *
+				(guardflag[temp_nowchoosea + 5] ? 0.5 : 1) / 14;
+		}
+		if (time < NORMAL_ATTACK_TIME)
+		{
+			//ここにエフェクト処理
+			battle_effect->Draw(numenemy * 10 + temp_nowchoosea, time ? -1 : m_skill->m_skill_PT[skillNumber].effect_number, temp_damage);
+
+		}
+		if (time == NORMAL_ATTACK_TIME)
+		{
+			//ここはダメージ処理。現状のだと1Fずらす必要がある
+			monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[0];
+		}
+		if (time > NORMAL_ATTACK_TIME)
+		{
+			//行動終了処理
+			temp_damage[0] = -1;
+			temp_nowchoosea = -1;
+			time = 0;
+			state = 0;
+			active_point[nowchar] += 2;
+			turn_finish_flag = TRUE;
+		}
+		else
+		{
+			time++;
 		}
 	}
 }

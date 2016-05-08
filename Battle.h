@@ -44,10 +44,11 @@ public:
 	Randomer* randomer;
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 	void CheckResult();
-	int state = 0; //現在の状態。0…行動選択待ち、2…味方の攻撃中、3…防御している、5…逃げている
+	int state = 0; //現在の状態。0…行動選択待ち、2…味方の攻撃中、3…防御している、4…スキル演出中、5…逃げている
 #define CHOOSE_ACT 0
 #define NORMAL_ATTACK 2
 #define GUARD 3
+#define SKILL 4
 #define ESCAPE 5
 	int checkstate = 0; //何か選択することに対して現在の状態。0…特になし、もしくは基礎行動選択待ち、1…協力攻撃選択待ち
 						//2…通常攻撃対象選択待ち、3…スキル選択待ち、4…アイテム選択待ち
@@ -59,6 +60,7 @@ public:
 	int time = 0;
 	int temp_nowchoosea = -1;
 	void DrawAttack(); //まんま
+	void DrawSkill(); //スキル演出
 	int numdiedchar; //敵と味方の!aliveのキャラ合計
 	int m_numdiedEnemy; //敵の!aliveキャラの合計
 #define NORMAL_ATTACK_TIME 35 //現在通常攻撃演出にかかる時間。いずれオプション設定できるように
