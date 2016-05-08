@@ -62,7 +62,7 @@ int Skill::LoadSkillList_PT()
 		c++; //,の隣にずらす
 		j = 0;
 		//スキルの最大レベルの取得
-		while (temp[c] != '\0')
+		while (temp[c] != ',')
 		{
 			keep[j] = temp[c];
 			c++;
@@ -70,6 +70,17 @@ int Skill::LoadSkillList_PT()
 		}
 		keep[j] = '\0';
 		m_skill_PT[i].maxlevel = atoi(keep);
+		c++; //,の隣にずらす
+		j = 0;
+		//エフェクト番号の取得
+		while (temp[c] != '\0')
+		{
+			keep[j] = temp[c];
+			c++;
+			j++;
+		}
+		keep[j] = '\0';
+		m_skill_PT[i].effect_number = atoi(keep);
 
 
 		//こっちのが楽といえば楽…のはずだけどなんか上手く行かないので上のやり方でいく

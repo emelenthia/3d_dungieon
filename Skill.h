@@ -21,6 +21,7 @@ public:
 		int type_kind; //スキルの種別。詳しくは"スキル種別.txt"参照
 		int value[Defines:: SKILL_MAX_LEVEL]; //スキルのレベル毎の攻撃力、魔法攻撃力、回復力などの情報
 		int maxlevel; //スキルの最大レベル
+		int effect_number; //エフェクトの配列上の番号。0から始まる
 	}t_skills;
 	t_skills m_skill_PT[SKILL_MAX_PT];
 	int LoadSkillList_PT(); //味方が使用するスキルの名前のリストをロードする

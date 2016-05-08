@@ -45,6 +45,7 @@ Battle::Battle(int ne, int* monster_number, bool escape_flag)
 	party = Party::GetInstance();
 	characters = Characters::GetInstance();
 	battle_effect = BattleEffect::GetInstance();
+	m_skill = Skill::GetInstance();
 	for (int i = 0; i < 10; i++)
 	{
 		turn_active[i] = 0;
@@ -265,7 +266,17 @@ int Battle::Reaction()
 					else if (Key_Input::buff_time[KEY_INPUT_X] == 1) //基礎行動選択に戻る
 					{
 						checkstate = 0;
-						nowchoosea = -1;
+					}
+					else if (Key_Input::buff_time[KEY_INPUT_Z] == 1) //スキル実行、もしくはスキル対象選択に移行
+					{
+						int skillnumber = characters->GetSkillNumber(party->party_info[nowchar], m_chooseSkill, Defines::BATTLE); //スキル番号を取得して
+						if (m_skill->m_skill_PT[skillnumber].type_kind == 0 ||
+							m_skill->m_skill_PT[skillnumber].type_kind == 5 ||
+							m_skill->m_skill_PT[skillnumber].type_kind == 10 ||
+							m_skill->m_skill_PT[skillnumber].type_kind == 17) //そのスキルが敵1体を選択するスキルなら
+						{
+							checkstate = 31; //敵1体を選択する状態へ
+						}
 					}
 				}
 				break;
@@ -401,7 +412,7 @@ void Battle::DrawMiniChar()
 						360 - (i + 1) * minichar_size_y - 4 * i + minichar_size_y,
 						characters->char_h_i[party->party_info[turn_active[i]]][characters->job[party->party_info[turn_active[i]]]], TRUE);
 					//デバッグ的な
-					DrawFormatString(640 - minichar_size_x - 15, 360 - (i + 1) * minichar_size_y - 4 * i, Colors::purple, "%d", active_point[turn_active[i]]);
+					DrawFormatString(640 - minichar_size_x - 15, 360 - (i + 1) * minichar_size_y - 4 * i, Colors::black, "%d", active_point[turn_active[i]]);
 				}
 			}
 			else //!isplayer
@@ -423,7 +434,7 @@ void Battle::DrawMiniChar()
 						360 - (i + 1) * minichar_size_y - 4 * i + minichar_size_y,
 						monsters[turn_active[i] - 5]->graph_m, TRUE);
 					//デバッグ的な
-					DrawFormatString(640 - minichar_size_x - 15, 360 - (i + 1) * minichar_size_y - 4 * i, Colors::purple, "%d", active_point[turn_active[i]]);
+					DrawFormatString(640 - minichar_size_x - 15, 360 - (i + 1) * minichar_size_y - 4 * i, Colors::black, "%d", active_point[turn_active[i]]);
 				}
 			}
 		}

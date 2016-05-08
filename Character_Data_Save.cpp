@@ -113,3 +113,23 @@ char Character_Data_Save::GetCanSkillNum(int chara, int mode)
 	}
 	return count;
 }
+
+int Character_Data_Save::GetSkillNumber(int chara, int number, int mode)
+{
+	int count = -1; //numberは0の可能性もあるので、-1からスタートする
+	for (int i = 0; i < SKILL_MAX_PT; i++)
+	{
+		if (m_canSkillLevel[chara][i] >= 1) //i番目のスキルを覚えていて
+		{
+			if (m_skill->GetSkillCanUse_PT(i, mode)) //それが指定されたmodeで使用可能ならば
+			{
+				count++; //それは上からcount個目にあるスキル
+				if (count == number) //上からnumber個目に来たら
+				{
+					return i; //そのスキルの番号を返す
+				}
+			}
+		}
+	}
+	return -1; //なんにも見当たらなかった場合は一応エラーとするs
+}

@@ -29,6 +29,7 @@ public:
 
 	void DrawSkill(int chara, int mode, int pos_x, int pos_y, int choose); //指定されたキャラのスキル一覧を表示します。charaはキャラ番号を指定。modeは使用場面によって選択、上のdefineを参照pos_xとpos_yは左上の座標。chooseは今選ばれているスキル
 	char GetCanSkillNum(int chara,int mode = -1); //現在使用できるスキルの総数を取得して返す。modeも指定可能。指定しない場合は全てのスキル対象
+	int GetSkillNumber(int chara, int number, int mode = -1); //指定されたcharaの指定されたmodeで上からnumber個目のスキル番号を取得
 	
 private:
 	Skill* m_skill;

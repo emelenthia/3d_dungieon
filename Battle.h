@@ -6,6 +6,7 @@
 #include<random>
 #include"Randomer.h"
 #include"BattleEffect.h"
+#include"Skill.h"
 
 class Battle :
 	public SceneBase
@@ -50,7 +51,7 @@ public:
 #define ESCAPE 5
 	int checkstate = 0; //何か選択することに対して現在の状態。0…特になし、もしくは基礎行動選択待ち、1…協力攻撃選択待ち
 						//2…通常攻撃対象選択待ち、3…スキル選択待ち、4…アイテム選択待ち
-						//11…協力攻撃対象選択待ち、31…スキル対象選択待ち、41…アイテム対象選択待ち
+						//11…協力攻撃対象選択待ち、31…スキル対象(敵1体)選択待ち、41…アイテム対象選択待ち
 	void TurnStart(); //ターン開始処理
 	void TurnFinish(); //ターン終了処理
 	int nowchar = -1; //現在行動しているキャラの番号
@@ -80,5 +81,6 @@ public:
 
 private:
 	int m_chooseSkill; //現在選択しているスキルが上から何個目か
+	Skill* m_skill;
 };
 
