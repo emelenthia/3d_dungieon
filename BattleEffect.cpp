@@ -12,26 +12,26 @@ BattleEffect::BattleEffect()
 	party = Party::GetInstance();
 
 	//テストデータ
-	player.effect_p[0].left = 200;
-	player.effect_p[0].bottom = 340;
-	player.effect_p[0].right=440;
-	player.effect_p[0].top = 100;
+	player[0].effect_p.left = 200;
+	player[0].effect_p.bottom = 340;
+	player[0].effect_p.right = 440;
+	player[0].effect_p.top = 100;
 	for (int i = 0; i < 9; i++)
 	{
-		player.effect_f[0][i] = 2;
+		player[0].effect_f[i] = 2;
 	}
-	player.effect_f[0][9] = -1;
+	player[0].effect_f[9] = -1;
 
 
-	enemy.effect_p[0].left = 0;
-	enemy.effect_p[0].top = 0;
-	enemy.effect_p[0].bottom = party->size_y;
-	enemy.effect_p[0].right = party->size_x;
+	enemy[0].effect_p.left = 0;
+	enemy[0].effect_p.top = 0;
+	enemy[0].effect_p.bottom = party->size_y;
+	enemy[0].effect_p.right = party->size_x;
 	for (int i = 0; i < 9; i++)
 	{
-		enemy.effect_f[0][i] = 2;
+		enemy[0].effect_f[i] = 2;
 	}
-	enemy.effect_f[0][9] = -1;
+	enemy[0].effect_f[9] = -1;
 }
 
 
@@ -43,8 +43,9 @@ BattleEffect::~BattleEffect()
 void BattleEffect::LoadEffect()
 {
 	//effect_h[0][0]=LoadGraph("./pics/戦闘エフェクトアニメ13/640×480/pipo-btleffect084b.png");
-	LoadDivGraph("./pics/戦闘エフェクトアニメ13/640×480/pipo-btleffect084b.png", 9, 9, 1, 240, 240, player.effect_h[0]);
-	LoadDivGraph("./pics/戦闘エフェクトアニメ13/640×480/pipo-btleffect084b.png", 9, 9, 1, 240, 240, enemy.effect_h[0]);
+	LoadDivGraph("./pics/戦闘エフェクトアニメ13/640×480/pipo-btleffect084b.png", 9, 9, 1, 240, 240, player[0].effect_h);
+	LoadDivGraph("./pics/戦闘エフェクトアニメ13/640×480/pipo-btleffect087b.png", 9, 9, 1, 240, 240, player[1].effect_h);
+	LoadDivGraph("./pics/戦闘エフェクトアニメ13/640×480/pipo-btleffect084b.png", 9, 9, 1, 240, 240, enemy[0].effect_h);
 }
 
 
@@ -53,25 +54,25 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 	switch (monsterpos / 10)
 	{
 	case 0: //全体攻撃
-		DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
-			player.effect_h[number][elem], TRUE);
+		DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
+			player[number].effect_h[elem], TRUE);
 		break;
 	case 1: //敵が1体のみ
-		DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
-			player.effect_h[number][elem], TRUE);
+		DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
+			player[number].effect_h[elem], TRUE);
 		DrawIntCenter(640 / 2, 480 / 2, *damage);
 		break;
 	case 2: //敵が2体いる
 		switch (monsterpos - 10 * (monsterpos / 10))
 		{
 		case 0: //左から数えて1体目
-			DrawExtendGraph(player.effect_p[number].left - 640 / 4, player.effect_p[number].top, player.effect_p[number].right - 640 / 4, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left - 640 / 4, player[number].effect_p.top, player[number].effect_p.right - 640 / 4, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 4, 480 / 2, *damage);
 			break;
 		case 1: //左から数えて2体目
-			DrawExtendGraph(player.effect_p[number].left + 640 / 4, player.effect_p[number].top, player.effect_p[number].right + 640 / 4, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left + 640 / 4, player[number].effect_p.top, player[number].effect_p.right + 640 / 4, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, *damage);
 			break;
 		default:
@@ -82,18 +83,18 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 		switch (monsterpos - 10 * (monsterpos / 10))
 		{
 		case 0: //左から数えて1体目
-			DrawExtendGraph(player.effect_p[number].left - 640 / 4, player.effect_p[number].top, player.effect_p[number].right - 640 / 4, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left - 640 / 4, player[number].effect_p.top, player[number].effect_p.right - 640 / 4, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 4, 480 / 2, *damage);
 			break;
 		case 1: //左から数えて2体目
-			DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2, 480 / 2, *damage);
 			break;
 		case 2:
-			DrawExtendGraph(player.effect_p[number].left + 640 / 4, player.effect_p[number].top, player.effect_p[number].right + 640 / 4, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left + 640 / 4, player[number].effect_p.top, player[number].effect_p.right + 640 / 4, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, *damage);
 			break;
 		default:
@@ -104,23 +105,23 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 		switch (monsterpos - 10 * (monsterpos / 10))
 		{
 		case 0: //左から数えて1体目
-			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 2 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 2 / 3), player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 2 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 2 / 3), player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, *damage);
 			break;
 		case 1: //左から数えて2体目
-			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 3), player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 3), player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 2:
-			DrawExtendGraph(player.effect_p[number].left + 640 / 2 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 2 / 3, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left + 640 / 2 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 2 / 3, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 + 640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 3:
-			DrawExtendGraph(player.effect_p[number].left + 640 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 3, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left + 640 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 3, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 + 640 / 3, 480 / 2, *damage);
 			break;
 		default:
@@ -131,28 +132,28 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 		switch (monsterpos - 10 * (monsterpos / 10))
 		{
 		case 0: //左から数えて1体目
-			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 2 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 2 / 3), player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 2 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 2 / 3), player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, *damage);
 			break;
 		case 1: //左から数えて2体目
-			DrawExtendGraph(player.effect_p[number].left - (320 - 640 / 3), player.effect_p[number].top, player.effect_p[number].right - (320 - 640 / 3), player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 3), player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 2:
-			DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2, 480 / 2, *damage);
 			break;
 		case 3:
-			DrawExtendGraph(player.effect_p[number].left + 640 / 2 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 2 / 3, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left + 640 / 2 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 2 / 3, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2+640 / 2 / 3, 480 / 2, *damage);
 			break;
 		case 4:
-			DrawExtendGraph(player.effect_p[number].left + 640 / 3, player.effect_p[number].top, player.effect_p[number].right + 640 / 3, player.effect_p[number].bottom,
-				player.effect_h[number][elem], TRUE);
+			DrawExtendGraph(player[number].effect_p.left + 640 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 3, player[number].effect_p.bottom,
+				player[number].effect_h[elem], TRUE);
 			DrawIntCenter(640 / 2+640 / 3, 480 / 2, *damage);
 			break;
 		default:
@@ -163,7 +164,7 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 	}
 	time++;
 	alltime+=2;
-	if (time == player.effect_f[number][elem])
+	if (time == player[number].effect_f[elem])
 	{
 		elem++;
 		time = 0;
@@ -182,7 +183,7 @@ void BattleEffect::Draw(int monsterpos = -1, int number = -1, int* damage=nullpt
 	}
 	if (nownumber >= 0)
 	{
-		if (player.effect_f[nownumber][elem] <= 0) //エフェクトの終了
+		if (player[nownumber].effect_f[elem] <= 0) //エフェクトの終了
 		{
 			elem = 0;
 			nownumber = -1;
@@ -199,8 +200,8 @@ void BattleEffect::DrawEffect_e(int targetpos, int number)
 	switch (party->GetNumMember())
 	{
 	case 0: //全体攻撃
-		DrawExtendGraph(player.effect_p[number].left, player.effect_p[number].top, player.effect_p[number].right, player.effect_p[number].bottom,
-			player.effect_h[number][elem], TRUE);
+		DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
+			player[number].effect_h[elem], TRUE);
 		break;
 	case 1: //味方が1体のみ
 		target_number = 3;
@@ -383,14 +384,14 @@ void BattleEffect::DrawEffect_e(int targetpos, int number)
 
 	//対象の左上を0,0としてエフェクト位置に依存して描画
 	point point_t;
-	point_t.left = enemy.effect_p[number].left + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) * 0.5 + 0.5 * party->crevice_x;
-	point_t.top = enemy.effect_p[number].top + party->pos_y_lu_territory + party->size_y * (target_number > 5) + 0.5 * party->crevice_y;
-	point_t.right = enemy.effect_p[number].right + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) * 0.5 + 0.5 * party->crevice_x;
-	point_t.bottom = enemy.effect_p[number].bottom + party->pos_y_lu_territory + party->size_y * (target_number > 5) + 0.5 * party->crevice_y;
-	DrawExtendGraph(point_t.left, point_t.top, point_t.right, point_t.bottom, enemy.effect_h[number][elem], TRUE);
+	point_t.left = enemy[number].effect_p.left + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) * 0.5 + 0.5 * party->crevice_x;
+	point_t.top = enemy[number].effect_p.top + party->pos_y_lu_territory + party->size_y * (target_number > 5) + 0.5 * party->crevice_y;
+	point_t.right = enemy[number].effect_p.right + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) * 0.5 + 0.5 * party->crevice_x;
+	point_t.bottom = enemy[number].effect_p.bottom + party->pos_y_lu_territory + party->size_y * (target_number > 5) + 0.5 * party->crevice_y;
+	DrawExtendGraph(point_t.left, point_t.top, point_t.right, point_t.bottom, enemy[number].effect_h[elem], TRUE);
 
 	time++;
-	if (time == enemy.effect_f[number][elem])
+	if (time == enemy[number].effect_f[elem])
 	{
 		elem++;
 		time = 0;
@@ -408,7 +409,7 @@ void BattleEffect::Draw_e(int targetpos = -1, int number = -1)
 	}
 	if (nownumber >= 0)
 	{
-		if (enemy.effect_f[nownumber][elem] <= 0) //エフェクトの終了
+		if (enemy[nownumber].effect_f[elem] <= 0) //エフェクトの終了
 		{
 			elem = 0;
 			nownumber = -1;

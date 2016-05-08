@@ -2,6 +2,8 @@
 #include<stdio.h>
 #include"DxLib.h"
 #include"Party.h"
+#define EFFECT_MAX_PT 2 //味方が使用するエフェクトの総数
+#define EFFECT_MAX_ENEMY 2
 
 //戦闘用エフェクトを描画するためのクラス
 class BattleEffect
@@ -28,13 +30,13 @@ public:
 
 	typedef struct effect_
 	{
-		int effect_h[10][10]; //各エフェクトのハンドル(1枚毎に
-		char effect_f[10][10]; //各エフェクトの表示フレーム数
-		point effect_p[10]; //各エフェクトの表示位置(1セット毎に
+		int effect_h[10]; //各エフェクトのハンドル
+		char effect_f[10]; //各エフェクトの表示フレーム数
+		point effect_p; //各エフェクトの表示位置
 	}effect;
 
-	effect player; //敵用のとプレイヤー用の2つを用意
-	effect enemy;
+	effect player[EFFECT_MAX_PT]; //敵用のとプレイヤー用の2つを用意
+	effect enemy[EFFECT_MAX_ENEMY];
 	void LoadEffect(); //エフェクトのロード
 	void LoadEffectFrame(){}; //エフェクトの表示フレームのロード
 	void LoadEffectPos(){}; //エフェクトの表示位置のロード
