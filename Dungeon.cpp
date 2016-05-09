@@ -1350,7 +1350,7 @@ void Dungeon::DrawMiniMap()
 						}
 					}
 					SetDrawBlendMode(DX_BLENDMODE_ALPHA, 72); //ìßâﬂ
-					DrawBox(640 - (x_max - x + 1) * 20, 280 - z * 20, 640 - (x_max - x) * 20, 280 - (z + 1) * 20, blue, TRUE); //ê¬Ç≠Ç∑ÇÈ
+					DrawBox(640 - (x_max - x + 1) * 20, 280 - z * 20, 640 - (x_max - x) * 20, 280 - (z + 1) * 20, Colors::aqua, TRUE); //ê¬Ç≠Ç∑ÇÈ
 					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //å≥Ç…ñﬂÇ∑
 				}
 			}

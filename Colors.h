@@ -13,5 +13,8 @@ public:
 	static int dark_aqua;
 	static int green;
 	static int purple;
+	static int gray;
+	static int dark_yellow;
+	static int fh_half; //デフォルトの半分程度の大きさのフォント。別にクラスを作る?
 };
 
