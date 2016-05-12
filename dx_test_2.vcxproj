@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ailment.cpp" />
     <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="BattleEffect.cpp" />
@@ -63,6 +64,7 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ailment.h" />
     <ClInclude Include="Balloon.h" />
     <ClInclude Include="Battle.h" />
     <ClInclude Include="BattleEffect.h" />

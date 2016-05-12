@@ -69,7 +69,7 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 	case 1: //“G‚ª1‘Ì‚Ì‚İ
 		DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
 			player[number].effect_h[elem], TRUE);
-		DrawIntCenter(640 / 2, 480 / 2, *damage);
+		DrawIntCenter(640 / 2, 480 / 2, damage[5]);
 		break;
 	case 2: //“G‚ª2‘Ì‚¢‚é
 		switch (monsterpos - 10 * (monsterpos / 10))
@@ -77,12 +77,12 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left - 640 / 4, player[number].effect_p.top, player[number].effect_p.right - 640 / 4, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 4, 480 / 2, *damage);
+			DrawIntCenter(640 / 4, 480 / 2, damage[5]);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left + 640 / 4, player[number].effect_p.top, player[number].effect_p.right + 640 / 4, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, damage[6]);
 			break;
 		default:
 			break;
@@ -94,17 +94,17 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left - 640 / 4, player[number].effect_p.top, player[number].effect_p.right - 640 / 4, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 4, 480 / 2, *damage);
+			DrawIntCenter(640 / 4, 480 / 2, damage[5]);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2, 480 / 2, *damage);
+			DrawIntCenter(640 / 2, 480 / 2, damage[6]);
 			break;
 		case 2:
 			DrawExtendGraph(player[number].effect_p.left + 640 / 4, player[number].effect_p.top, player[number].effect_p.right + 640 / 4, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 + 640 / 4, 480 / 2, damage[7]);
 			break;
 		default:
 			break;
@@ -116,22 +116,22 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 2 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 2 / 3), player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, damage[5]);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 3), player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, damage[6]);
 			break;
 		case 2:
 			DrawExtendGraph(player[number].effect_p.left + 640 / 2 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 2 / 3, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 + 640 / 2 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 + 640 / 2 / 3, 480 / 2, damage[7]);
 			break;
 		case 3:
 			DrawExtendGraph(player[number].effect_p.left + 640 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 3, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 + 640 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 + 640 / 3, 480 / 2, damage[8]);
 			break;
 		default:
 			break;
@@ -143,27 +143,27 @@ void BattleEffect::DrawEffect(int monsterpos, int number,int* damage)
 		case 0: //¶‚©‚ç”‚¦‚Ä1‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 2 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 2 / 3), player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 - 640 / 3, 480 / 2, damage[5]);
 			break;
 		case 1: //¶‚©‚ç”‚¦‚Ä2‘Ì–Ú
 			DrawExtendGraph(player[number].effect_p.left - (320 - 640 / 3), player[number].effect_p.top, player[number].effect_p.right - (320 - 640 / 3), player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2 - 640 / 2 / 3, 480 / 2, damage[6]);
 			break;
 		case 2:
 			DrawExtendGraph(player[number].effect_p.left, player[number].effect_p.top, player[number].effect_p.right, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2, 480 / 2, *damage);
+			DrawIntCenter(640 / 2, 480 / 2, damage[7]);
 			break;
 		case 3:
 			DrawExtendGraph(player[number].effect_p.left + 640 / 2 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 2 / 3, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2+640 / 2 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2+640 / 2 / 3, 480 / 2, damage[8]);
 			break;
 		case 4:
 			DrawExtendGraph(player[number].effect_p.left + 640 / 3, player[number].effect_p.top, player[number].effect_p.right + 640 / 3, player[number].effect_p.bottom,
 				player[number].effect_h[elem], TRUE);
-			DrawIntCenter(640 / 2+640 / 3, 480 / 2, *damage);
+			DrawIntCenter(640 / 2+640 / 3, 480 / 2, damage[9]);
 			break;
 		default:
 			break;

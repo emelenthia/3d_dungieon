@@ -74,12 +74,13 @@ public:
 	void ActGuard();
 	bool guardflag[10]; //各キャラのガードフラグ
 	bool turn_finish_finish_flag=0; //エンドフェイズが終わったフラグ
-	int temp_damage[5]; //一時的に表示するためのダメージを記憶
+	int temp_damage[10]; //一時的に表示するためのダメージを記憶。配列の要素はキャラの位置と連動
 	int gameover_h; //ゲームオーバー画像のハンドル
 	void DrawGameOver(); //ゲームオーバー画面の表示
 	const bool debugflag = 1;
 	FILE* debug_fp;
 	void DebugPrintf(int number);
+	void DamageCalculat(int char_numb, int act_numb, int* damage, int target_numb); //ダメージ計算用の関数。act_numbは通常攻撃の場合は-1
 
 private:
 	int m_chooseSkill; //現在選択しているスキルが上から何個目か

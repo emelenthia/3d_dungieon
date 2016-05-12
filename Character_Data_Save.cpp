@@ -65,40 +65,41 @@ void Character_Data_Save::Load_Char(char *file_pointer,int n)
 void Character_Data_Save::DrawSkill(int chara, int mode, int pos_x, int pos_y,int choose)
 {
 	int count = 0;
+	const int SIZE_X = 280; //枠の背景の大きさを基準にする
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
 
 	//DrawBox(pos_x, pos_y - 5, pos_x + 303, pos_y + GetCanSkillNum(chara, mode) * 20 , Colors::dark_yellow, TRUE); //周りの枠を表示
-	DrawBox(pos_x , pos_y, pos_x + 280, pos_y + GetCanSkillNum(chara, mode) * 20, Colors::gray, TRUE); //枠の背景を表示
+	DrawBox(pos_x , pos_y, pos_x + SIZE_X, pos_y + GetCanSkillNum(chara, mode) * 20, Colors::gray, TRUE); //枠の背景を表示
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
 
 	//上に文字表示
 	DrawStringToHandle(pos_x + 20, pos_y - 14, "SKILL", Colors::yellow, Colors::fh_half);
-	DrawStringToHandle(pos_x + 260, pos_y - 14, "TP", Colors::yellow, Colors::fh_half);
+	DrawStringToHandle(pos_x + SIZE_X - 20, pos_y - 14, "TP", Colors::yellow, Colors::fh_half);
 	for (int i = 0; i < SKILL_MAX_PT; i++)
 	{
 		if (m_canSkillLevel[chara][i] >= 1 && m_skill->m_skill_PT[i].m_skillType >= 1) //そのスキルのレベルが1以上で、そのスキルがパッシブじゃない場合
 		{
 			if (count == choose) //左側にiを使わないのは、右側の数字の最大は使用できるスキル数なため
 			{
-				DrawBox(pos_x + 2, pos_y + count * 20, pos_x + 280, pos_y + count * 20 + 20, Colors::yellow, TRUE); //約15文字分の幅
+				DrawBox(pos_x + 2, pos_y + count * 20, pos_x + SIZE_X, pos_y + count * 20 + 20, Colors::yellow, TRUE); //約15文字分の幅
 				DrawFormatString(5, 1, Colors::white, "%s", m_skill->m_skill_PT[i].m_skillText); //スキルの説明の表示
 				DrawFormatString(pos_x + 20, pos_y + count * 20 + 2, Colors::black, "%s", m_skill->m_skill_PT[i].m_skillList_PT);
-				DrawFormatString(pos_x + 260, pos_y + count * 20 + 2, Colors::black, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i]]); //必要TPの表示
+				DrawFormatString(pos_x + SIZE_X - 20, pos_y + count * 20 + 2, Colors::black, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i]]); //必要TPの表示
 			}
 			else //現在選択されているスキル以外は白色で表示する
 			{
 				DrawFormatString(pos_x + 20, pos_y + count * 20, Colors::white, "%s", m_skill->m_skill_PT[i].m_skillList_PT);
-				DrawFormatString(pos_x + 260, pos_y + count * 20, Colors::white, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i]]); //必要TPの表示
+				DrawFormatString(pos_x + SIZE_X - 20, pos_y + count * 20, Colors::white, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i]]); //必要TPの表示
 			}
 			count++;
 		}
 	}
 
-	DrawBox(pos_x + 280, pos_y, pos_x + 282, pos_y + count * 20 + 2, Colors::dark_yellow, TRUE); //台詞欄の周り右
+	DrawBox(pos_x + SIZE_X, pos_y, pos_x + SIZE_X + 2, pos_y + count * 20 + 2, Colors::dark_yellow, TRUE); //台詞欄の周り右
 	DrawBox(pos_x, pos_y, pos_x + 2, pos_y + count * 20 + 2, Colors::dark_yellow, TRUE); //台詞欄の周り左
-	DrawBox(pos_x, pos_y - 2, pos_x + 282, pos_y, Colors::dark_yellow, TRUE); //台詞欄の周り上
-	DrawBox(pos_x, pos_y + count * 20, pos_x + 282, pos_y + count * 20 + 2, Colors::dark_yellow, TRUE); //台詞欄の周り下
+	DrawBox(pos_x, pos_y - 2, pos_x + SIZE_X + 2, pos_y, Colors::dark_yellow, TRUE); //台詞欄の周り上
+	DrawBox(pos_x, pos_y + count * 20, pos_x + SIZE_X + 2, pos_y + count * 20 + 2, Colors::dark_yellow, TRUE); //台詞欄の周り下
 
 	if (!count) //表示すべきスキルがない場合…まあ無いだろうけど
 	{

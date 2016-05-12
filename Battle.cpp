@@ -51,7 +51,7 @@ Battle::Battle(int ne, int* monster_number, bool escape_flag)
 		turn_active[i] = 0;
 		guardflag[i] = FALSE;
 	}
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		temp_damage[i] = -1;
 	}
@@ -374,7 +374,7 @@ int Battle::Reaction()
 				while (!finishflag)
 				{
 					temp = randomer->GetRand() % party->GetNumMember();
-					temp = temp;
+					//temp = temp; TODO:このコードに意味はあるのか?
 					if (characters->status_c[party->party_info[temp]].alive)
 					{
 						finishflag = TRUE;
@@ -382,17 +382,16 @@ int Battle::Reaction()
 				}
 			}
 
-			if (time == NORMAL_ATTACK_TIME / 2)
+			if (time == NORMAL_ATTACK_TIME / 2) //TODO:体力を減らすタイミングを統一する
 			{
 				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - 5]->Status_.atk * 3 * (guardflag[temp] ? 0.5 : 1);
 			}
 
 			if (time>NORMAL_ATTACK_TIME)
 			{
-
 				temp = 0;
 				time = 0;
-				active_point[nowchar] += 3;
+				active_point[nowchar] += 10;
 				turn_finish_flag = TRUE;
 			}
 			else
@@ -780,27 +779,30 @@ void Battle::DrawAttack()
 		//1回だけダメージ計算。とりあえず今は1体のみに対応
 		if (temp_damage[0] == -1)
 		{
-			temp_damage[0] = characters->GetStatus(party->party_info[nowchar]).atk * 100 * (guardflag[temp_nowchoosea + 5] ? 0.5 : 1) / 14;
+			DamageCalculat(nowchar, -1, temp_damage, temp_nowchoosea + Defines::PT_MAX);
 		}
 		if (time < NORMAL_ATTACK_TIME)
 		{
 			//ここにエフェクト処理
-			battle_effect->Draw(numenemy * 10 + temp_nowchoosea,time ? -1 : 0,temp_damage);
+			battle_effect->Draw(numenemy * 10 + temp_nowchoosea, time ? -1 : 0, temp_damage);
 			
 		}
 		if (time == NORMAL_ATTACK_TIME)
 		{
 			//ここはダメージ処理。現状のだと1Fずらす必要がある
-			monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[0];
+			monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[temp_nowchoosea + Defines::PT_MAX];
 		}
 		if (time > NORMAL_ATTACK_TIME)
 		{
 			//行動終了処理
-			temp_damage[0] = -1;
+			for (int i = 0; i < 10; i++)
+			{
+				temp_damage[i] = -1;
+			}
 			temp_nowchoosea = -1;
 			time = 0;
 			state = 0;
-			active_point[nowchar] += 2;
+			active_point[nowchar] += 9;
 			turn_finish_flag = TRUE;
 		}
 		else
@@ -839,7 +841,7 @@ void Battle::ActGuard()
 			//行動終了処理
 			time = 0;
 			state = 0;
-			active_point[nowchar] += 2;
+			active_point[nowchar] += 7;
 			turn_finish_flag = TRUE;
 			characters->lastchoosef[party->party_info[nowchar]] = GUARD; //コマンドを記憶
 		}
@@ -893,11 +895,9 @@ void Battle::DrawSkill()
 		DrawFormatString(20, 1, Colors::white, "%sの%s！", characters->name[party->party_info[nowchar]], m_skill->m_skill_PT[skillNumber].m_skillList_PT);
 
 		//1回だけダメージ計算。とりあえず今は1体のみに対応
-		if (temp_damage[0] == -1)
+		if (temp_damage[temp_nowchoosea + Defines::PT_MAX] == -1)
 		{
-			temp_damage[0] = characters->GetStatus(party->party_info[nowchar]).atk * 
-				m_skill->m_skill_PT[skillNumber].value[characters->m_canSkillLevel[party->party_info[nowchar]][skillNumber]] *
-				(guardflag[temp_nowchoosea + 5] ? 0.5 : 1) / 14;
+			DamageCalculat(nowchar, skillNumber, temp_damage, temp_nowchoosea + Defines::PT_MAX);
 		}
 		if (time < NORMAL_ATTACK_TIME)
 		{
@@ -908,12 +908,15 @@ void Battle::DrawSkill()
 		if (time == NORMAL_ATTACK_TIME)
 		{
 			//ここはダメージ処理。現状のだと1Fずらす必要がある
-			monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[0];
+			monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[temp_nowchoosea + Defines::PT_MAX];
 		}
 		if (time > NORMAL_ATTACK_TIME)
 		{
 			//行動終了処理
-			temp_damage[0] = -1;
+			for (int i = 0; i < 10; i++)
+			{
+				temp_damage[i] = -1;
+			}
 			temp_nowchoosea = -1;
 			time = 0;
 			state = 0;
@@ -924,5 +927,42 @@ void Battle::DrawSkill()
 		{
 			time++;
 		}
+	}
+}
+
+
+void Battle::DamageCalculat(int char_numb, int act_numb, int * damage, int target_numb)
+{
+	DebugPrintf(15);
+
+	if (act_numb >= 0) //通常攻撃じゃないなら
+	{
+		if (char_numb < Defines::PT_MAX) //味方キャラなら。MEMO:分けたくはないがスキルが敵味方別なので…次から作るときは共有にしよう。
+		{
+			damage[target_numb] = characters->GetStatus(party->party_info[char_numb]).atk *
+				m_skill->m_skill_PT[act_numb].value[characters->m_canSkillLevel[party->party_info[char_numb]][act_numb]] *
+				(guardflag[target_numb] ? 0.5 : 1) / 14;
+		}
+		else //敵キャラなら
+		{
+
+		}
+	}
+	else if (act_numb == -1)//通常攻撃なら
+	{
+		if (char_numb < Defines::PT_MAX) //一応分けとく
+		{
+			temp_damage[target_numb] = characters->GetStatus(party->party_info[char_numb]).atk *
+				100 * (guardflag[target_numb] ? 0.5 : 1) / 14 +
+				(characters->ailment_turn[party->party_info[char_numb]][10] ? 20 : 0); //この行はウォークライのテスト用。//TODO;全状態異常を#defineしてコードを書きやすくする
+		}
+		else //敵キャラなら
+		{
+
+		}
+	}
+	else //TODO:デバック用
+	{
+		DrawString(100, 100, "Error in DamageCalculat()", Colors::purple);
 	}
 }
