@@ -1,4 +1,5 @@
 #include "Skill.h"
+#include"Functions_3DD.h"
 
 Skill* Skill::instance;
 
@@ -110,62 +111,28 @@ int Skill::LoadSkillList_PT()
 		fflush(stdin);*/
 
 
-		//次はskillvalue.txtの読み込み
+		//次はskillvalue.txtの読み込み。この辺は数値のみなので関数で纏められる
 		fscanf(fp2, "%s", dammy); //一行読み飛ばす
 		if (m_skill_PT[i].m_skillType) //パッシブじゃなければ
 		{
 			//TPを取得
-			fscanf(fp2, "%s", keep);
-			c = 0;
-			int i2 = 0;
-			for (; keep[c] != '\0' && i2 < m_skill_PT[i].maxlevel; c++)
-			{
-				j = 0;
-				while (keep[c] != ',' && keep[c] != '\0')
+			{ //初期化するよりスコープのほうが楽…
+				int temp_int[Defines::SKILL_MAX_LEVEL];
+				LoadInts(fp2, temp_int, Defines::SKILL_MAX_LEVEL); //取得して
+				for (int count = 0; count < Defines::SKILL_MAX_LEVEL; count++)
 				{
-					temp[j] = keep[c];
-					c++;
-					j++;
-				}
-				temp[j] = '\0';
-				m_skill_PT[i].need_TP[i2++] = atoi(temp);
-				if (keep[c] == '\0') //これがないと、c++を2回読んでるため、\0を飛ばしてしまう
-				{
-					break;
+					m_skill_PT[i].need_TP[count] = temp_int[count]; //代入
 				}
 			}
-			while (i2 < m_skill_PT[i].maxlevel) //省略してあった場合は補完する
+			//スキル威力を取得
 			{
-				m_skill_PT[i].need_TP[i2] = m_skill_PT[i].need_TP[0];
-				i2++;
-			}
-
-			//スキル威力を取得…もうこの辺、別関数にしようよ
-			fscanf(fp2, "%s", keep);
-			c = 0;
-			i2 = 0;
-			for (; keep[c] != '\0' && i2 < m_skill_PT[i].maxlevel; c++)
-			{
-				j = 0;
-				while (keep[c] != ',' && keep[c] != '\0')
+				int temp_int[Defines::SKILL_MAX_LEVEL];
+				LoadInts(fp2, temp_int, Defines::SKILL_MAX_LEVEL); //取得して
+				for (int count = 0; count < Defines::SKILL_MAX_LEVEL; count++)
 				{
-					temp[j] = keep[c];
-					c++;
-					j++;
-				}
-				temp[j] = '\0';
-				m_skill_PT[i].value[i2++] = atoi(temp);
-				if (keep[c] == '\0') //これがないと、c++を2回読んでるため、\0を飛ばしてしまう
-				{
-					break;
+					m_skill_PT[i].value[count] = temp_int[count]; //代入
 				}
 			}
-			while (i2 < m_skill_PT[i].maxlevel) //省略してあった場合は補完する
-			{
-				m_skill_PT[i].value[i2] = m_skill_PT[i].value[0];
-				i2++;
-			}
-
 
 			//行動後速度修正を取得
 			fscanf(fp2, "%s", dammy); //

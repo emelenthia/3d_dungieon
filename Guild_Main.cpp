@@ -34,7 +34,8 @@ void Guild_Main::Draw()
 		DrawExtendGraph(0, 0, 640, 480, background_h1, TRUE); //背景
 		if (char_flag)
 		{
-			DrawRotaGraph(480, 240, 0.7, 0, char_pt->char_h[char_ran][char_pt->job[char_ran] - 1], TRUE);
+			//TODO:キャラの画像表をここで弄る
+			DrawRotaGraph(480, 300, 0.5, 0, char_pt->char_h[char_ran][char_pt->job[char_ran] - 1], TRUE);
 		}
 
 		if (!(options->optionflag || Flags::character_show_flag || guild_pt->guild_pt_flag)) //オプション等表示中でない

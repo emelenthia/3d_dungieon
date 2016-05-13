@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include"Characters.h"
 #include"Status.h"
+#include"Defines.h"
 
 class Character_Show_F //キャラクターのステータスを見る画面
 {
@@ -27,7 +28,7 @@ public:
 	//つづき。11=斬耐性,12=突耐性,13=欧耐性,14=火耐性,15=水耐性,16=風耐性,17=土耐性,18=雷耐性
 	int namemax;
 	void DrawIntRight(int x, int y, int num, int color);
-	int number_list[13]; //各キャラが上から何番目に書かれているかのメモ。加入していないキャラの事を考慮するため。未加入は-1
+	int number_list[CHARA_MAX]; //各キャラが上から何番目に書かれているかのメモ。加入していないキャラの事を考慮するため。未加入は-1
 
 	int pos_x_lu;
 	int pos_y_lu;

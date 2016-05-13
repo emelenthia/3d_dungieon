@@ -10,6 +10,7 @@ Character_Show_F::Character_Show_F()
 {
 	characters = Characters::GetInstance();
 
+	//TODO:‚±‚Ì•Ó‚ðColors.h‚ÉˆÚ‚·
 	black = GetColor(0, 0, 0);
 	yellow = GetColor(255, 255, 0);
 	darkyellow = GetColor(255, 205, 0);
@@ -22,7 +23,7 @@ Character_Show_F::Character_Show_F()
 	red = GetColor(255, 0, 0);
 	fp = fopen("./scn/char/char_show.cns", "r");
 
-	pos_x_lu = 20;
+	pos_x_lu = 15;
 	pos_y_lu = 24;
 	pos_x_rd = 120;
 	pos_y_rd = 0;
@@ -190,7 +191,7 @@ int Character_Show_F::Reaction()
 }
 
 
-void Character_Show_F::DrawIntRight(int x, int y, int num, int color)
+void Character_Show_F::DrawIntRight(int x, int y, int num, int color) //TODO:Functions_3DD‚É“ü‚ê‚é
 {
 	DrawFormatString(x - GetDrawFormatStringWidth("%d", num), y, color, "%d", num);
 }
