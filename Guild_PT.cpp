@@ -135,7 +135,7 @@ int Guild_PT::Reaction()
 	if (already_flag)
 	{
 		keep_party_type = temp_party_type = party->party_type;
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < Defines::PT_MAX; i++)
 		{
 			keep_party_info[i] =  party->party_info[i];
 			temp_party_info[i] = -1;
@@ -146,14 +146,14 @@ int Guild_PT::Reaction()
 
 	//èÓïÒÇÃçXêV
 	party->party_type = temp_party_type;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < Defines::PT_MAX; i++)
 	{
 		party->party_info[i] = temp_party_info[i];
 	}
 
 	//ï“ê¨èIÇÌÇË
 	int nump = 0;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < Defines::PT_MAX; i++)
 	{
 		if (temp_party_info[i] != -1)nump++;
 	}

@@ -294,9 +294,14 @@ int Battle::Reaction()
 							}
 							checkstate = 31; //敵1体を選択する状態へ
 						}
+						else //それ以外、つまり選んだ瞬間発動するものなら
+						{
+							checkstate = 0;
+							state = SKILL; //スキルを実際に実行する状態へ
+						}
 					}
 				}
-				else if (checkstate == 31)
+				else if (checkstate == 31) //TODO:後でswitchに直す。
 				{
 					if (Key_Input::buff_time[KEY_INPUT_LEFT] == 1)
 					{
@@ -333,6 +338,29 @@ int Battle::Reaction()
 
 				break;
 			case SKILL:
+				//TODO:time++を統一する。この辺に
+				if (m_t_skillNumber != -1)
+				{
+
+				}
+				else
+				{
+					m_t_skillNumber = characters->GetSkillNumber(party->party_info[nowchar], m_chooseSkill, Defines::BATTLE);
+				}
+				switch (m_t_skillNumber) //各スキルの処理
+				{
+				case 1: //ウォークライ。この辺も#defineしよう
+					if (time == 27) //#defineで、スキル発動タイムとか設定しよう
+					{
+						for (int i = 0; i < party->GetNumMember(); i++)
+						{
+							characters->ailment_turn[party->party_info[i]][11] = 3; //ターン数はファイルから取得?
+						}
+					}
+					break;
+				default:
+					break;
+				}
 
 				break;
 			case GUARD:
@@ -894,21 +922,28 @@ void Battle::DrawSkill()
 		int skillNumber = characters->GetSkillNumber(party->party_info[nowchar], m_chooseSkill, Defines::BATTLE);
 		DrawFormatString(20, 1, Colors::white, "%sの%s！", characters->name[party->party_info[nowchar]], m_skill->m_skill_PT[skillNumber].m_skillList_PT);
 
-		//1回だけダメージ計算。とりあえず今は1体のみに対応
-		if (temp_damage[temp_nowchoosea + Defines::PT_MAX] == -1)
+		if (m_skill->m_skill_PT[skillNumber].m_skillType == 1) //攻撃系のスキルなら
 		{
-			DamageCalculat(nowchar, skillNumber, temp_damage, temp_nowchoosea + Defines::PT_MAX);
-		}
-		if (time < NORMAL_ATTACK_TIME)
-		{
-			//ここにエフェクト処理
-			battle_effect->Draw(numenemy * 10 + temp_nowchoosea, time ? -1 : m_skill->m_skill_PT[skillNumber].effect_number, temp_damage);
+			//1回だけダメージ計算。とりあえず今は1体のみに対応
+			if (temp_damage[temp_nowchoosea + Defines::PT_MAX] == -1)
+			{
+				DamageCalculat(nowchar, skillNumber, temp_damage, temp_nowchoosea + Defines::PT_MAX);
+			}
+			if (time < NORMAL_ATTACK_TIME)
+			{
+				//ここにエフェクト処理
+				battle_effect->Draw(numenemy * 10 + temp_nowchoosea, time ? -1 : m_skill->m_skill_PT[skillNumber].effect_number, temp_damage);
 
+			}
+			if (time == NORMAL_ATTACK_TIME)
+			{
+				//ここはダメージ処理。現状のだと1Fずらす必要がある
+				monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[temp_nowchoosea + Defines::PT_MAX];
+			}
 		}
-		if (time == NORMAL_ATTACK_TIME)
+		else //それ以外
 		{
-			//ここはダメージ処理。現状のだと1Fずらす必要がある
-			monsters[temp_nowchoosea]->Status_c.hp -= temp_damage[temp_nowchoosea + Defines::PT_MAX];
+			//ここにエフェクト処理を書く。battle_effectに渡すtemp_damageが-1なら…みたいに
 		}
 		if (time > NORMAL_ATTACK_TIME)
 		{

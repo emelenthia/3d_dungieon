@@ -201,7 +201,7 @@ int Character_Show_F::GetCharNow()
 {
 	int number = -1;
 
-	for (int i = 0; i < 13; i++)
+	for (int i = 0; i < Defines::char_max; i++)
 	{
 		//Œ»Ý‘I‘ð‚µ‚Ä‚¢‚éƒLƒƒƒ‰‚ªŒ©‚Â‚©‚Á‚½ê‡
 		if (choosenow == number_list[i])

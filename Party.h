@@ -1,6 +1,7 @@
 #pragma once
 #include<stdio.h>
 #include"Characters.h"
+#include"Defines.h"
 
 class Party
 {
@@ -25,7 +26,7 @@ public:
 					//			43でキャラ4体。かつ前列一人、後列三人。
 					//			51でキャラ5体。かつ前列三人、後列二人。
 					//			52でキャラ5体。かつ前列二人、後列三人。
-	int party_info[5]; //左上から順に0番目にいるキャラの番号
+	int party_info[Defines::PT_MAX]; //左上から順に0番目にいるキャラの番号
 	FILE* fp;
 	int pos_x_lu_territory; //パーティの描写に使える範囲の左上のx座標
 	int pos_y_lu_territory; //パーティの描写に使える範囲の左上のy座標
