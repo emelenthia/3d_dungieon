@@ -10,6 +10,7 @@ Character_Data_Save::Character_Data_Save()
 		strcpy(file_name[i], "null");
 	}
 	m_skill = Skill::GetInstance();
+	m_ailment = Ailment::GetInstance();
 }
 
 

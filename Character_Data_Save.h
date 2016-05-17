@@ -4,6 +4,7 @@
 #include"Defines.h"
 #include"Colors.h"
 #include"Skill.h"
+#include"Ailment.h"
 
 class Character_Data_Save //セーブされる各キャラの可変データ
 {
@@ -36,5 +37,6 @@ public:
 	
 private:
 	Skill* m_skill;
+	Ailment* m_ailment;
 	char m_canSkillNum[CHARA_MAX]; //各キャラの取得スキル数
 };

@@ -16,7 +16,8 @@ public:
 	static const int FIELD = 1;
 	static const int BATTLE = 2;
 	static const int SKILL_MAX_LEVEL = 10; //味方スキルの最大レベル。
-	static const int AILMENT_MAX = 11; //状態異常の総数
+	static const int AILMENT_MAX = 12; //状態異常の総数
 	static const int PT_MAX = 5; //味方PTメンバーの最大数
+	static const int AILMENT_MAX_LEVEL = 10; //状態異常の最大レベル
 };
 
