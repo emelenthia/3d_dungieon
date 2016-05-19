@@ -7,6 +7,7 @@
 #include"Randomer.h"
 #include"BattleEffect.h"
 #include"Skill.h"
+#include"Ailment.h"
 
 class Battle :
 	public SceneBase
@@ -86,5 +87,6 @@ private:
 	int m_chooseSkill; //現在選択しているスキルが上から何個目か
 	Skill* m_skill;
 	int m_t_skillNumber; //現在選択しているスキルが何のスキルか。毎回計算するのもあれだし記憶する
+	Ailment* m_ailment;
 };
 

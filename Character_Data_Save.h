@@ -34,9 +34,12 @@ public:
 	//状態異常関係
 	int ailment_turn[CHARA_MAX][Defines::AILMENT_MAX]; //各状態異常の残りターン。原理的に残りターンが1以上の状態異常にかかっていることになる
 	int ailment_walks[CHARA_MAX][Defines::AILMENT_MAX]; //各状態異常の残り歩数。歩いて治らないものは-1で示す
-	
+	int GetAilNumber(int chara, int number); //指定されたcharaのnumber目個の状態異常番号を取得。ない場合は-1を返す。上から1個目はnumber=1で
+	int GetAilNum(int chara); //指定されたcharaの状態異常の個数を取得。ない場合は0を返す
+
 private:
 	Skill* m_skill;
 	Ailment* m_ailment;
 	char m_canSkillNum[CHARA_MAX]; //各キャラの取得スキル数
+	
 };

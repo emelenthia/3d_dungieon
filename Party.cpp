@@ -36,6 +36,8 @@ Party::Party()
 	crevice_x = 4;
 	crevice_y = 3;
 	characters = Characters::GetInstance();
+	m_ailment = Ailment::GetInstance();
+	m_ailment_count = m_ailment_time = 0;
 
 }
 
@@ -53,6 +55,15 @@ void Party::Draw()
 {
 	countdbt = 0;
 	DrawPartyType();
+	m_ailment_time++;
+	if (m_ailment_time%c_ailment_count_time == 0)
+	{
+		m_ailment_count++;
+	}
+	if (m_ailment_time > 0xfffffff0) //保険
+	{
+		m_ailment_time = m_ailment_count = 0;
+	}
 }
 
 
@@ -84,9 +95,42 @@ void Party::DrawBox_t(int front_or_back, float left_pos_number)
 		DrawExtendGraph(pos_x_lu + 2, pos_y_lu + 2, pos_x_lu + 2 + size_x / 2, pos_y_lu + 2 + size_y / 2, characters->char_h_i[charnumb][characters->job[charnumb]], TRUE);
 
 		//名前の表示
-		char c_name[21];
-		strcpy(c_name, characters->name[charnumb]);
-		DrawFormatString(pos_x_lu + 3 * size_x / 4 - GetDrawStringWidth(c_name, strlen(c_name)) / 2, pos_y_lu + 5, Colors::white, "%s", c_name);
+		char c_name[21], temp_name[64];
+		int ailnum = characters->GetAilNum(charnumb), colornum = Colors::white;
+		if (ailnum > 0) //状態異常がある場合
+		{
+			if (m_ailment_count % (ailnum + 1) != 0) //現在は状態異常を指している
+			{
+				int ailnumber = characters->GetAilNumber(charnumb, m_ailment_count % (ailnum + 1));
+				strcpy(temp_name, m_ailment->m_ailment[ailnumber].name);
+				if (m_ailment->m_ailment[ailnumber].de_buff == 1) //デバフなら
+				{
+					colornum = Colors::red;//赤色
+				}
+				else //バフなら
+				{
+					colornum = Colors::aqua;//水色
+				}
+				if (strlen(temp_name) > 7) //5文字以上なら
+				{
+					//…を付けて省略する
+					temp_name[8] = "…"[0];
+					temp_name[9] = "…"[1];
+					temp_name[10] = '\0';
+				}
+				strcpy(c_name, temp_name); //どちらにせよコピーはする
+				
+			}
+			else //現在はキャラネームを指している
+			{
+				strcpy(c_name, characters->name[charnumb]);
+			}
+		}
+		else //ない場合
+		{
+			strcpy(c_name, characters->name[charnumb]);
+		}
+		DrawFormatString(pos_x_lu + 3 * size_x / 4 - GetDrawStringWidth(c_name, strlen(c_name)) / 2 - 5, pos_y_lu + 7, colornum, "%s", c_name);
 
 		char j_name[5];
 		strcpy(j_name, characters->GetJobNameabb(charnumb));

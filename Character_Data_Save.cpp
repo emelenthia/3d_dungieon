@@ -60,6 +60,19 @@ void Character_Data_Save::Load_Char(char *file_pointer,int n)
 		{
 			m_canSkillLevel[n][i] = fgetc(fp[n]) - '0'; //文字を数字に変換する
 		}
+		//状態異常の残りターン数を取得
+		int ail_temp[Defines::AILMENT_MAX];
+		LoadInts(fp[n], ail_temp);
+		for (int i = 0; i < Defines::AILMENT_MAX; i++)
+		{
+			ailment_turn[n][i] = ail_temp[i];
+		}
+		//状態異常の残り歩数を取得
+		LoadInts(fp[n], ail_temp);
+		for (int i = 0; i < Defines::AILMENT_MAX; i++)
+		{
+			ailment_walks[n][i] = ail_temp[i];
+		}
 	}
 }
 
@@ -152,4 +165,41 @@ int Character_Data_Save::GetSkillNumber(int chara, int number, int mode)
 		}
 	}
 	return -1; //なんにも見当たらなかった場合は一応エラーとするs
+}
+
+
+int Character_Data_Save::GetAilNumber(int chara, int number)
+{
+	int count = 0, i = 0;
+
+	if (number <= 0)
+	{
+		return -1; //保険
+	}
+	for (; i < Defines::AILMENT_MAX; i++)
+	{
+		if (ailment_turn[chara][i])
+		{
+			count++;
+			if (count == number)
+			{
+				return i;
+			}
+		}
+	}
+	return -1; //見つからなかったらここに来る
+}
+
+
+int Character_Data_Save::GetAilNum(int chara)
+{
+	int count = 0;
+	for (int i = 0; i < Defines::AILMENT_MAX; i++)
+	{
+		if (ailment_turn[chara][i]) //よく考えたら-1もある…?
+		{
+			count++;
+		}
+	}
+	return count;
 }

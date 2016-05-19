@@ -32,6 +32,7 @@ Battle::Battle(int ne, int* monster_number, bool escape_flag)
 	can_escape_flag = escape_flag;
 	gameover_h = LoadGraph("./pics/gameover.bmp"); 
 	m_chooseSkill = 0;
+	m_t_skillNumber = -1;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -46,6 +47,7 @@ Battle::Battle(int ne, int* monster_number, bool escape_flag)
 	characters = Characters::GetInstance();
 	battle_effect = BattleEffect::GetInstance();
 	m_skill = Skill::GetInstance();
+	m_ailment = Ailment::GetInstance();
 	for (int i = 0; i < 10; i++)
 	{
 		turn_active[i] = 0;
@@ -354,7 +356,8 @@ int Battle::Reaction()
 					{
 						for (int i = 0; i < party->GetNumMember(); i++)
 						{
-							characters->ailment_turn[party->party_info[i]][11] = 3; //ターン数はファイルから取得?
+							characters->ailment_turn[party->party_info[i]][11] = m_ailment->m_ailment[AIL_WARCRY].turns[characters->m_canSkillLevel[party->party_info[nowchar]][1]]; //ターン数を設定
+							characters->ailment_walks[party->party_info[i]][11] = m_ailment->m_ailment[AIL_WARCRY].walks[characters->m_canSkillLevel[party->party_info[nowchar]][1]]; //歩数を設定
 						}
 					}
 					break;
@@ -754,23 +757,55 @@ void Battle::TurnFinish()
 
 
 	turn_finish_finish_flag = FALSE;
-	//生死の判定
 	for (int i = 0; i < numenemy; i++)
 	{
+		//生死の判定
 		if (monsters[i]->Status_c.hp <= 0 && monsters[i]->Status_c.alive)
 		{
 			monsters[i]->Status_c.alive = 0;
 			active_point[i + 5] = -1;
+			//状態異常をリセット
+
 		}
+		//状態異常を1ターン進める
 	}
 	for (int i = 0; i < party->GetNumMember(); i++)
 	{
+		//生死の判定
 		if (characters->status_c[party->party_info[i]].hp <= 0 && characters->status_c[party->party_info[i]].alive)
 		{
 			characters->status_c[party->party_info[i]].alive = 0;
 			active_point[i] = -1;
+			//状態異常をリセット
+			for (int ail_count = 0; ail_count < Defines::AILMENT_MAX; ail_count++)
+			{
+				characters->ailment_turn[party->party_info[i]][ail_count] = 0;
+				characters->ailment_walks[party->party_info[i]][ail_count] = 0;
+			}
 		}
 	}
+
+	//こういうのはループ外でやらないとね
+	if (nowchar < Defines::PT_MAX) //自分のキャラのターンの場合の処理
+	{
+		//状態異常を1ターン進める
+		int temp_nowchar = party->party_info[nowchar];
+		for (int ail_count = 0; ail_count < Defines::AILMENT_MAX; ail_count++)
+		{
+			if (characters->ailment_turn[temp_nowchar][ail_count] > 0)
+			{
+				characters->ailment_turn[temp_nowchar][ail_count]--;
+				characters->ailment_walks[temp_nowchar][ail_count] -= 10;
+				//10未満だったら0にする
+				if (characters->ailment_walks[temp_nowchar][ail_count] < 0)
+				{
+					characters->ailment_walks[temp_nowchar][ail_count] = 0;
+				}
+			}
+		}
+	}
+	//初期化
+	m_t_skillNumber = -1;
 
 	//勝敗を判定する
 	CheckResult();

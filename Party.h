@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include"Characters.h"
 #include"Defines.h"
+#include"Ailment.h"
 
 class Party
 {
@@ -49,5 +50,10 @@ private:
 	~Party();
 	Party(const Party& rhs);
 	Party& operator=(const Party& rhs);
+
+	unsigned int m_ailment_time; //状態異常の表示間隔
+	unsigned int m_ailment_count; //n番目の状態異常の表示
+	static const int c_ailment_count_time = 50; //状態異常更新の間隔
+	Ailment* m_ailment;
 };
 
