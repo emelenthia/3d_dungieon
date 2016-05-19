@@ -351,13 +351,14 @@ int Battle::Reaction()
 				}
 				switch (m_t_skillNumber) //各スキルの処理
 				{
-				case 1: //ウォークライ。この辺も#defineしよう
+				case SKILL_WARCRY: //ウォークライ。
 					if (time == 27) //#defineで、スキル発動タイムとか設定しよう
 					{
 						for (int i = 0; i < party->GetNumMember(); i++)
 						{
-							characters->ailment_turn[party->party_info[i]][11] = m_ailment->m_ailment[AIL_WARCRY].turns[characters->m_canSkillLevel[party->party_info[nowchar]][1]]; //ターン数を設定
-							characters->ailment_walks[party->party_info[i]][11] = m_ailment->m_ailment[AIL_WARCRY].walks[characters->m_canSkillLevel[party->party_info[nowchar]][1]]; //歩数を設定
+							characters->ailment_turn[party->party_info[i]][AIL_WARCRY] = m_ailment->m_ailment[AIL_WARCRY].turns[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY]]; //ターン数を設定
+							characters->ailment_walks[party->party_info[i]][AIL_WARCRY] = m_ailment->m_ailment[AIL_WARCRY].walks[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY]]; //歩数を設定
+							characters->ailment_level[party->party_info[i]][AIL_WARCRY] = characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY]; //レベルを設定
 						}
 					}
 					break;
@@ -415,7 +416,7 @@ int Battle::Reaction()
 
 			if (time == NORMAL_ATTACK_TIME / 2) //TODO:体力を減らすタイミングを統一する
 			{
-				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - 5]->Status_.atk * 3 * (guardflag[temp] ? 0.5 : 1);
+				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - 5]->Status_.atk * 3 / (guardflag[temp] ? 2 : 1);
 			}
 
 			if (time>NORMAL_ATTACK_TIME)
@@ -1010,8 +1011,8 @@ void Battle::DamageCalculat(int char_numb, int act_numb, int * damage, int targe
 		if (char_numb < Defines::PT_MAX) //味方キャラなら。MEMO:分けたくはないがスキルが敵味方別なので…次から作るときは共有にしよう。
 		{
 			damage[target_numb] = characters->GetStatus(party->party_info[char_numb]).atk *
-				m_skill->m_skill_PT[act_numb].value[characters->m_canSkillLevel[party->party_info[char_numb]][act_numb]] *
-				(guardflag[target_numb] ? 0.5 : 1) / 14;
+				m_skill->m_skill_PT[act_numb].value[characters->m_canSkillLevel[party->party_info[char_numb]][act_numb]] /
+				(guardflag[target_numb] ? 2 : 1) / 14;
 		}
 		else //敵キャラなら
 		{
@@ -1023,8 +1024,8 @@ void Battle::DamageCalculat(int char_numb, int act_numb, int * damage, int targe
 		if (char_numb < Defines::PT_MAX) //一応分けとく
 		{
 			temp_damage[target_numb] = characters->GetStatus(party->party_info[char_numb]).atk *
-				100 * (guardflag[target_numb] ? 0.5 : 1) / 14 +
-				(characters->ailment_turn[party->party_info[char_numb]][10] ? 20 : 0); //この行はウォークライのテスト用。//TODO;全状態異常を#defineしてコードを書きやすくする
+				100 / (guardflag[target_numb] ? 2 : 1) / 14 +
+				(characters->ailment_turn[party->party_info[char_numb]][AIL_WARCRY] ? 10 * characters->ailment_level[party->party_info[char_numb]][AIL_WARCRY] : 0); //この行はウォークライのテスト用。
 		}
 		else //敵キャラなら
 		{

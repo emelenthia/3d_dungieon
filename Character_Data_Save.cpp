@@ -73,6 +73,12 @@ void Character_Data_Save::Load_Char(char *file_pointer,int n)
 		{
 			ailment_walks[n][i] = ail_temp[i];
 		}
+		//ó‘ÔˆÙí‚ÌƒŒƒxƒ‹‚ğæ“¾
+		LoadInts(fp[n], ail_temp);
+		for (int i = 0; i < Defines::AILMENT_MAX; i++)
+		{
+			ailment_level[n][i] = ail_temp[i];
+		}
 	}
 }
 

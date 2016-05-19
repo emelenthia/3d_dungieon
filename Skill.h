@@ -2,6 +2,10 @@
 #include"DxLib.h"
 #include"Defines.h"
 
+#define SKILL_PROVOKE 0
+#define SKILL_WARCRY 1
+#define SKILL_RSMASH 2
+
 class Skill //スキル関連を纏めるクラス
 {
 public:

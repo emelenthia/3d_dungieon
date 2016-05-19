@@ -393,10 +393,10 @@ void BattleEffect::DrawEffect_e(int targetpos, int number)
 
 	//対象の左上を0,0としてエフェクト位置に依存して描画
 	point point_t;
-	point_t.left = enemy[number].effect_p.left + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) * 0.5 + 0.5 * party->crevice_x;
-	point_t.top = enemy[number].effect_p.top + party->pos_y_lu_territory + party->size_y * (target_number > 5) + 0.5 * party->crevice_y;
-	point_t.right = enemy[number].effect_p.right + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) * 0.5 + 0.5 * party->crevice_x;
-	point_t.bottom = enemy[number].effect_p.bottom + party->pos_y_lu_territory + party->size_y * (target_number > 5) + 0.5 * party->crevice_y;
+	point_t.left = enemy[number].effect_p.left + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) / 2 + party->crevice_x / 2;
+	point_t.top = enemy[number].effect_p.top + party->pos_y_lu_territory + party->size_y * (target_number > 5) + party->crevice_y / 2;
+	point_t.right = enemy[number].effect_p.right + party->pos_x_lu_territory + party->size_x * ((target_number - 1) % 5) / 2 + party->crevice_x / 2;
+	point_t.bottom = enemy[number].effect_p.bottom + party->pos_y_lu_territory + party->size_y * (target_number > 5) + party->crevice_y / 2;
 	DrawExtendGraph(point_t.left, point_t.top, point_t.right, point_t.bottom, enemy[number].effect_h[elem], TRUE);
 
 	time++;
