@@ -2,6 +2,8 @@
 //#include"studio.h"
 #include"MonsterList.h"
 #include"Status.h"
+#include"Ailment.h"
+#include"Defines.h"
 
 //モンスターオブジェクト
 //ファイルから情報を読み込み、オブジェクト1つにつきモンスター1体分の挙動をする
@@ -36,5 +38,10 @@ public:
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
 	int brighttime = 0;
 	double timeflo = 0;
+	int m_ailment_turns[Defines::AILMENT_MAX]; //各状態異常の残りターン
+	int m_ailment_level[Defines::AILMENT_MAX]; //各状態異常のレベル
+
+private:
+	Ailment* m_ailment;
 };
 

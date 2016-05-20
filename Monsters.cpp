@@ -23,9 +23,21 @@ void Monsters::nfscanf_(const int line, const char* file, FILE* scan_target, con
 
 Monsters::Monsters(int n)
 {
+	//初期化
 	monster_information_flag = 2;
 	monsterlist = MonsterList::GetInstance();
 	MonsterSet(n);
+	m_ailment = Ailment::GetInstance();
+	for (int i = 0; i < Defines::AILMENT_MAX; i++)
+	{
+		m_ailment_turns[i] = 0;
+		m_ailment_level[i] = 0;
+	}
+	//状態異常表示のテスト
+	m_ailment_turns[AIL_FREEZE] = 2;
+	m_ailment_level[AIL_FREEZE] = 1;
+	m_ailment_turns[AIL_WARCRY] = 4;
+	m_ailment_level[AIL_WARCRY] = 3;
 }
 
 
@@ -61,6 +73,17 @@ void Monsters::Draw(int pos_x,int pos_y,int size_x,int size_y,bool brightflag)
 			{
 				DrawFormatString(posx_t, pos_y - 40, Colors::white, "HP :%d", Status_c.hp);
 				DrawFormatString(posx_t, pos_y - 60, Colors::white, "Lv :%d", Status_.lv);
+			}
+			//名前の下に状態異常を表示する
+			for (int i = 0, count = 0; i < Defines::AILMENT_MAX; i++)
+			{
+				if (m_ailment_turns[i] > 0) //状態異常にかかっていれば
+				{
+					DrawFormatString(posx_t - GetDrawFormatStringWidth("%s", m_ailment->m_ailment[i].name) / 2 + 50, pos_y + count * 20,
+						(m_ailment->m_ailment[i].de_buff == 1 ? Colors::red : Colors::aqua) //バフとデバフで色を分ける
+						, "%s", m_ailment->m_ailment[i].name);
+					count++;
+				}
 			}
 		}
 	}

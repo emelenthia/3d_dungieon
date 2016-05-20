@@ -105,12 +105,18 @@ void Character_Data_Save::DrawSkill(int chara, int mode, int pos_x, int pos_y,in
 				DrawBox(pos_x + 2, pos_y + count * 20, pos_x + SIZE_X, pos_y + count * 20 + 20, Colors::yellow, TRUE); //約15文字分の幅
 				DrawFormatString(5, 1, Colors::white, "%s", m_skill->m_skill_PT[i].m_skillText); //スキルの説明の表示
 				DrawFormatString(pos_x + 20, pos_y + count * 20 + 2, Colors::black, "%s", m_skill->m_skill_PT[i].m_skillList_PT);
-				DrawFormatString(pos_x + SIZE_X - 20, pos_y + count * 20 + 2, Colors::black, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i]]); //必要TPの表示
+				DrawFormatString(pos_x + SIZE_X - 20, pos_y + count * 20 + 2, Colors::black, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i] - 1]); //必要TPの表示
 			}
 			else //現在選択されているスキル以外は白色で表示する
 			{
 				DrawFormatString(pos_x + 20, pos_y + count * 20, Colors::white, "%s", m_skill->m_skill_PT[i].m_skillList_PT);
-				DrawFormatString(pos_x + SIZE_X - 20, pos_y + count * 20, Colors::white, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i]]); //必要TPの表示
+				DrawFormatString(pos_x + SIZE_X - 20, pos_y + count * 20, Colors::white, "%d", m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i] - 1]); //必要TPの表示
+			}
+			if (status_c[chara].tp < m_skill->m_skill_PT[i].need_TP[m_canSkillLevel[chara][i] - 1]) //TPが足りない場合
+			{
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透化
+				DrawBox(pos_x + 2, pos_y + count * 20, pos_x + SIZE_X, pos_y + count * 20 + 20, Colors::black, TRUE); //灰色で覆う
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
 			}
 			count++;
 		}

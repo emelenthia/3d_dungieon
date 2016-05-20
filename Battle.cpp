@@ -271,35 +271,43 @@ int Battle::Reaction()
 					else if (Key_Input::buff_time[KEY_INPUT_X] == 1) //基礎行動選択に戻る
 					{
 						checkstate = 0;
+						m_t_skillNumber = -1;
 					}
 					else if (Key_Input::buff_time[KEY_INPUT_Z] == 1) //スキル実行、もしくはスキル対象選択に移行
 					{
-						int skillnumber = characters->GetSkillNumber(party->party_info[nowchar], m_chooseSkill, Defines::BATTLE); //スキル番号を取得して
-						if (m_skill->m_skill_PT[skillnumber].type_kind == 0 ||
-							m_skill->m_skill_PT[skillnumber].type_kind == 5 ||
-							m_skill->m_skill_PT[skillnumber].type_kind == 10 ||
-							m_skill->m_skill_PT[skillnumber].type_kind == 17) //そのスキルが敵1体を選択するスキルなら
+						m_t_skillNumber = characters->GetSkillNumber(party->party_info[nowchar], m_chooseSkill, Defines::BATTLE); //スキル番号を取得して
+						if (m_skill->m_skill_PT[m_t_skillNumber].need_TP[characters->m_canSkillLevel[party->party_info[nowchar]][m_t_skillNumber] - 1] <= characters->status_c[party->party_info[nowchar]].tp) //TPが足りているかどうか
 						{
-							//初期選択対象の設定
-							finishflag = 0;
-							nowchoosea = 0;
-							while (!finishflag)
+							if (m_skill->m_skill_PT[m_t_skillNumber].type_kind == 0 ||
+								m_skill->m_skill_PT[m_t_skillNumber].type_kind == 5 ||
+								m_skill->m_skill_PT[m_t_skillNumber].type_kind == 10 ||
+								m_skill->m_skill_PT[m_t_skillNumber].type_kind == 17) //そのスキルが敵1体を選択するスキルなら
 							{
-								if (monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0) //無限ループ対策 //TODO:右側の条件は要るのかどうか。
+								//初期選択対象の設定
+								finishflag = 0;
+								nowchoosea = 0;
+								while (!finishflag)
 								{
-									finishflag = TRUE;
+									if (monsters[nowchoosea]->Status_c.alive&&numenemy - m_numdiedEnemy > 0) //無限ループ対策 //TODO:右側の条件は要るのかどうか。
+									{
+										finishflag = TRUE;
+									}
+									else
+									{
+										nowchoosea = nowchoosea == numenemy - 1 ? 0 : ++nowchoosea;
+									}
 								}
-								else
-								{
-									nowchoosea = nowchoosea == numenemy - 1 ? 0 : ++nowchoosea;
-								}
+								checkstate = 31; //敵1体を選択する状態へ
 							}
-							checkstate = 31; //敵1体を選択する状態へ
+							else //それ以外、つまり選んだ瞬間発動するものなら
+							{
+								checkstate = 0;
+								state = SKILL; //スキルを実際に実行する状態へ
+							}
 						}
-						else //それ以外、つまり選んだ瞬間発動するものなら
+						else //足りてない場合はメッセージを表示する?
 						{
-							checkstate = 0;
-							state = SKILL; //スキルを実際に実行する状態へ
+
 						}
 					}
 				}
@@ -341,13 +349,9 @@ int Battle::Reaction()
 				break;
 			case SKILL:
 				//TODO:time++を統一する。この辺に
-				if (m_t_skillNumber != -1)
+				if (time == 7) //#defineでry
 				{
-
-				}
-				else
-				{
-					m_t_skillNumber = characters->GetSkillNumber(party->party_info[nowchar], m_chooseSkill, Defines::BATTLE);
+					characters->status_c[party->party_info[nowchar]].tp -= m_skill->m_skill_PT[m_t_skillNumber].need_TP[characters->m_canSkillLevel[party->party_info[nowchar]][m_t_skillNumber] - 1];
 				}
 				switch (m_t_skillNumber) //各スキルの処理
 				{
@@ -356,8 +360,8 @@ int Battle::Reaction()
 					{
 						for (int i = 0; i < party->GetNumMember(); i++)
 						{
-							characters->ailment_turn[party->party_info[i]][AIL_WARCRY] = m_ailment->m_ailment[AIL_WARCRY].turns[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY]]; //ターン数を設定
-							characters->ailment_walks[party->party_info[i]][AIL_WARCRY] = m_ailment->m_ailment[AIL_WARCRY].walks[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY]]; //歩数を設定
+							characters->ailment_turn[party->party_info[i]][AIL_WARCRY] = m_ailment->m_ailment[AIL_WARCRY].turns[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY] - 1]; //ターン数を設定
+							characters->ailment_walks[party->party_info[i]][AIL_WARCRY] = m_ailment->m_ailment[AIL_WARCRY].walks[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY] - 1]; //歩数を設定
 							characters->ailment_level[party->party_info[i]][AIL_WARCRY] = characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY]; //レベルを設定
 						}
 					}
@@ -1011,7 +1015,7 @@ void Battle::DamageCalculat(int char_numb, int act_numb, int * damage, int targe
 		if (char_numb < Defines::PT_MAX) //味方キャラなら。MEMO:分けたくはないがスキルが敵味方別なので…次から作るときは共有にしよう。
 		{
 			damage[target_numb] = characters->GetStatus(party->party_info[char_numb]).atk *
-				m_skill->m_skill_PT[act_numb].value[characters->m_canSkillLevel[party->party_info[char_numb]][act_numb]] /
+				m_skill->m_skill_PT[act_numb].value[characters->m_canSkillLevel[party->party_info[char_numb]][act_numb] - 1] /
 				(guardflag[target_numb] ? 2 : 1) / 14;
 		}
 		else //敵キャラなら
