@@ -356,7 +356,7 @@ int Battle::Reaction()
 				switch (m_t_skillNumber) //各スキルの処理
 				{
 				case SKILL_WARCRY: //ウォークライ。
-					if (time == 27) //#defineで、スキル発動タイムとか設定しよう
+					if (time == SKILL_TIME)
 					{
 						for (int i = 0; i < party->GetNumMember(); i++)
 						{
@@ -366,6 +366,12 @@ int Battle::Reaction()
 						}
 					}
 					break;
+				case SKILL_PROVOKE: //挑発
+					if (time == SKILL_TIME)
+					{
+						monsters[temp_nowchoosea]->m_ailment_turns[AIL_PROVOKE]= m_ailment->m_ailment[AIL_PROVOKE].turns[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_PROVOKE] - 1];
+						monsters[temp_nowchoosea]->m_ailment_level[AIL_PROVOKE] = characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY];
+					}
 				default:
 					break;
 				}
@@ -410,7 +416,6 @@ int Battle::Reaction()
 				while (!finishflag)
 				{
 					temp = randomer->GetRand() % party->GetNumMember();
-					//temp = temp; TODO:このコードに意味はあるのか?
 					if (characters->status_c[party->party_info[temp]].alive)
 					{
 						finishflag = TRUE;
@@ -420,14 +425,14 @@ int Battle::Reaction()
 
 			if (time == NORMAL_ATTACK_TIME / 2) //TODO:体力を減らすタイミングを統一する
 			{
-				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - 5]->Status_.atk * 3 / (guardflag[temp] ? 2 : 1);
+				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - Defines::PT_MAX]->Status_.atk / (guardflag[temp] ? 2 : 1);
 			}
 
 			if (time>NORMAL_ATTACK_TIME)
 			{
 				temp = 0;
 				time = 0;
-				active_point[nowchar] += 10;
+				active_point[nowchar] += 3;
 				turn_finish_flag = TRUE;
 			}
 			else
@@ -806,6 +811,17 @@ void Battle::TurnFinish()
 				{
 					characters->ailment_walks[temp_nowchar][ail_count] = 0;
 				}
+			}
+		}
+	}
+	else
+	{
+		//状態異常を1ターン進める
+		for (int ail_count = 0; ail_count < Defines::AILMENT_MAX; ail_count++)
+		{
+			if (monsters[nowchar-Defines::PT_MAX]->m_ailment_turns[ail_count] > 0)
+			{
+				monsters[nowchar - Defines::PT_MAX]->m_ailment_turns[ail_count]--;
 			}
 		}
 	}

@@ -33,11 +33,7 @@ Monsters::Monsters(int n)
 		m_ailment_turns[i] = 0;
 		m_ailment_level[i] = 0;
 	}
-	//状態異常表示のテスト
-	m_ailment_turns[AIL_FREEZE] = 2;
-	m_ailment_level[AIL_FREEZE] = 1;
-	m_ailment_turns[AIL_WARCRY] = 4;
-	m_ailment_level[AIL_WARCRY] = 3;
+
 }
 
 

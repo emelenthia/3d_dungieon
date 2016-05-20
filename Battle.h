@@ -88,5 +88,6 @@ private:
 	Skill* m_skill;
 	int m_t_skillNumber; //現在選択しているスキルが何のスキルか。毎回計算するのもあれだし記憶する
 	Ailment* m_ailment;
+#define SKILL_TIME 27 //スキルの処理をするtime
 };
 
