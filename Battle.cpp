@@ -369,8 +369,10 @@ int Battle::Reaction()
 				case SKILL_PROVOKE: //挑発
 					if (time == SKILL_TIME)
 					{
-						monsters[temp_nowchoosea]->m_ailment_turns[AIL_PROVOKE]= m_ailment->m_ailment[AIL_PROVOKE].turns[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_PROVOKE] - 1];
+						monsters[temp_nowchoosea]->m_ailment_turns[AIL_PROVOKE] = m_ailment->m_ailment[AIL_PROVOKE].turns[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_PROVOKE] - 1];
 						monsters[temp_nowchoosea]->m_ailment_level[AIL_PROVOKE] = characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY];
+						monsters[temp_nowchoosea]->m_hate[nowchar] = 200; //ヘイトテスト用
+						monsters[temp_nowchoosea]->m_hate[0] = 0;
 					}
 				default:
 					break;

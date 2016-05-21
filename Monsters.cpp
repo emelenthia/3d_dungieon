@@ -28,10 +28,27 @@ Monsters::Monsters(int n)
 	monsterlist = MonsterList::GetInstance();
 	MonsterSet(n);
 	m_ailment = Ailment::GetInstance();
+	m_party = Party::GetInstance();
+	m_randomer = Randomer::GetInstance();
 	for (int i = 0; i < Defines::AILMENT_MAX; i++)
 	{
 		m_ailment_turns[i] = 0;
 		m_ailment_level[i] = 0;
+	}
+	//ヘイト初期化
+	int hate_count = 0;
+	while (hate_count < m_party->GetNumMember())
+	{
+		m_hate[hate_count] = 100;
+		//ここに装備の影響とかを書く
+
+		hate_count++;
+	}
+	//居ないところは-1で埋める
+	while (hate_count < Defines::PT_MAX)
+	{
+		m_hate[hate_count] = -1;
+		hate_count++;
 	}
 
 }
@@ -137,4 +154,35 @@ void Monsters::MonsterSet(int n)
 	//代入
 	Status_c.hp = Status_.hpmax;
 	Status_c.tp = Status_.tpmax;
+}
+
+
+int Monsters::TargetSet()
+{
+	int target = 0, hate_sum = 0, hate_ran = 0;
+	//前提として、死んだりして居ない所のヘイトは-1になっている
+	for (int i = 0; i < Defines::PT_MAX; i++) //ここはパーティーメンバーの数だけ回すのが速いか?でも場所によって居ない可能性を考えると…
+	{
+		if (m_hate[i] > 0)
+		{
+			hate_sum += m_hate[i]; //まず合計を求めて
+		}
+	}
+	hate_ran = (m_randomer->GetRand()) % hate_sum; //合計未満の数値を求め
+	hate_sum = 0;
+	for (int i = 0; i < Defines::PT_MAX; i++)
+	{
+		if (m_hate[i] > 0) //ほんとは等号も付いているべきだけど、まあ意味ないし等号は付けない
+		{
+			//キャラ毎のヘイトを足していき、乱数が合計より小さくなった時点のキャラを攻撃する
+			hate_sum += m_hate[i];
+			if (hate_ran < hate_sum) //ここに等号がついてると、原理的には1体目のヘイトが0でも攻撃してしまう可能性があるから
+			{
+				//攻撃対象を設定
+				target = i;
+			}
+		}
+	}
+
+	return target;
 }

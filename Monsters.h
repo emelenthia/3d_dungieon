@@ -4,6 +4,8 @@
 #include"Status.h"
 #include"Ailment.h"
 #include"Defines.h"
+#include"Party.h"
+#include"Randomer.h"
 
 //モンスターオブジェクト
 //ファイルから情報を読み込み、オブジェクト1つにつきモンスター1体分の挙動をする
@@ -40,8 +42,12 @@ public:
 	double timeflo = 0;
 	int m_ailment_turns[Defines::AILMENT_MAX]; //各状態異常の残りターン
 	int m_ailment_level[Defines::AILMENT_MAX]; //各状態異常のレベル
+	int m_hate[Defines::PT_MAX]; //各キャラに対するヘイト。デフォルトは100で、挑発などで増減。0未満にはならないように工夫する
+	int TargetSet(); //ヘイトから敵1体の攻撃対象を決めて返す。番号はパーティー上の位置
 
 private:
 	Ailment* m_ailment;
+	Party* m_party;
+	Randomer* m_randomer;
 };
 
