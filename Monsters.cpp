@@ -33,7 +33,8 @@ Monsters::Monsters(int n)
 	for (int i = 0; i < Defines::AILMENT_MAX; i++)
 	{
 		m_ailment_turns[i] = 0;
-		m_ailment_level[i] = 0;
+		m_ailment_level[i] = 0; 
+		m_ailment_target[i] = 0;
 	}
 	//ƒwƒCƒg‰Šú‰»
 	int hate_count = 0;
@@ -180,6 +181,7 @@ int Monsters::TargetSet()
 			{
 				//UŒ‚‘ÎÛ‚ğİ’è
 				target = i;
+				break; //UŒ‚‘ÎÛ‚ğİ’è‚µ‚½‚ç”²‚¯‚È‚«‚á‚¢‚¯‚È‚©‚Á‚½
 			}
 		}
 	}

@@ -126,7 +126,7 @@ void Battle::Draw()
 
 			if (time < NORMAL_ATTACK_TIME&&time>1) //表示が上手くいかない
 			{
-				battle_effect->Draw_e(temp, time > 2 ? -1 : 0); //最初のtimeが1のせいで分かりにくい
+				battle_effect->Draw_e(m_monster_target, time > 2 ? -1 : 0); //最初のtimeが1のせいで分かりにくい
 			}
 			DrawFormatString(20, 0, Colors::white, "%sの攻撃（属性）:%d！", monsters[nowchar - 5]->Status_.name, temp);
 		}
@@ -370,9 +370,9 @@ int Battle::Reaction()
 					if (time == SKILL_TIME)
 					{
 						monsters[temp_nowchoosea]->m_ailment_turns[AIL_PROVOKE] = m_ailment->m_ailment[AIL_PROVOKE].turns[characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_PROVOKE] - 1];
-						monsters[temp_nowchoosea]->m_ailment_level[AIL_PROVOKE] = characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_WARCRY];
-						monsters[temp_nowchoosea]->m_hate[nowchar] = 200; //ヘイトテスト用
-						monsters[temp_nowchoosea]->m_hate[0] = 0;
+						monsters[temp_nowchoosea]->m_ailment_level[AIL_PROVOKE] = characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_PROVOKE];
+						monsters[temp_nowchoosea]->m_hate[nowchar] += 100 * characters->m_canSkillLevel[party->party_info[nowchar]][SKILL_PROVOKE]; //TODO:ヘイト増加量は暫定
+						monsters[temp_nowchoosea]->m_ailment_target[AIL_PROVOKE] = nowchar; //誰がかけたかを覚えておくことで、挑発が切れた時にヘイトを戻せるようにする
 					}
 				default:
 					break;
@@ -410,29 +410,31 @@ int Battle::Reaction()
 		}
 		else if (nowchar < 10) //敵の行動
 		{
-			//ここに敵の行動を記述
+			//ここに敵の行動を記述。もっと整地したい
 
 			if (!time)
 			{
+				m_monster_target = monsters[nowchar - Defines::PT_MAX]->TargetSet();
+				/*
 				finishflag = 0;
 				while (!finishflag)
 				{
-					temp = randomer->GetRand() % party->GetNumMember();
+					temp = monsters[nowchar - Defines::PT_MAX]->TargetSet();
 					if (characters->status_c[party->party_info[temp]].alive)
 					{
 						finishflag = TRUE;
 					}
-				}
+				}*/
 			}
 
 			if (time == NORMAL_ATTACK_TIME / 2) //TODO:体力を減らすタイミングを統一する
 			{
-				characters->status_c[party->party_info[temp]].hp -= monsters[nowchar - Defines::PT_MAX]->Status_.atk / (guardflag[temp] ? 2 : 1);
+				characters->status_c[party->party_info[m_monster_target]].hp -= monsters[nowchar - Defines::PT_MAX]->Status_.atk / (guardflag[m_monster_target] ? 2 : 1);
 			}
 
 			if (time>NORMAL_ATTACK_TIME)
 			{
-				temp = 0;
+				m_monster_target = 0;
 				time = 0;
 				active_point[nowchar] += 3;
 				turn_finish_flag = TRUE;
@@ -818,12 +820,19 @@ void Battle::TurnFinish()
 	}
 	else
 	{
+		//読みやすくするだけ
+		Monsters* temp_monster = monsters[nowchar - Defines::PT_MAX];
 		//状態異常を1ターン進める
 		for (int ail_count = 0; ail_count < Defines::AILMENT_MAX; ail_count++)
 		{
-			if (monsters[nowchar-Defines::PT_MAX]->m_ailment_turns[ail_count] > 0)
+			if (temp_monster->m_ailment_turns[ail_count] > 0)
 			{
-				monsters[nowchar - Defines::PT_MAX]->m_ailment_turns[ail_count]--;
+				temp_monster->m_ailment_turns[ail_count]--;
+				if (ail_count == AIL_PROVOKE && temp_monster->m_ailment_turns[ail_count] == 0) //挑発が解除された場合
+				{
+					temp_monster->m_hate[temp_monster->m_ailment_target[AIL_PROVOKE]] -=
+						100 * characters->m_canSkillLevel[party->party_info[temp_monster->m_ailment_target[AIL_PROVOKE]]][SKILL_PROVOKE]; //TODO:ヘイト増加量は暫定
+				}
 			}
 		}
 	}

@@ -88,6 +88,7 @@ private:
 	Skill* m_skill;
 	int m_t_skillNumber; //現在選択しているスキルが何のスキルか。毎回計算するのもあれだし記憶する
 	Ailment* m_ailment;
+	int m_monster_target; //敵モンスターの攻撃のターゲット記憶用。-1だと全体攻撃?
 #define SKILL_TIME 27 //スキルの処理をするtime
 };
 
