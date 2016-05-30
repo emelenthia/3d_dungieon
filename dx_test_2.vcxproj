@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ailment.cpp" />
-    <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="BattleEffect.cpp" />
     <ClCompile Include="Characters.cpp" />
@@ -24,14 +23,9 @@
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="Defines.cpp" />
     <ClCompile Include="Dungeon.cpp" />
-    <ClCompile Include="Events.cpp" />
-    <ClCompile Include="Field.cpp" />
-    <ClCompile Include="Field_Base_Data.cpp" />
-    <ClCompile Include="First_Town.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="FPSer.cpp" />
     <ClCompile Include="Functions_3DD.cpp" />
-    <ClCompile Include="Green_Field.cpp" />
     <ClCompile Include="Guild.cpp" />
     <ClCompile Include="Guild_Dungeon.cpp" />
     <ClCompile Include="Guild_Entrance.cpp" />
@@ -40,32 +34,22 @@
     <ClCompile Include="Guild_PT.cpp" />
     <ClCompile Include="Guild_Scene_Base.cpp" />
     <ClCompile Include="Guild_Warehouse.cpp" />
-    <ClCompile Include="G_F_Object.cpp" />
-    <ClCompile Include="G_F_O_Exit.cpp" />
-    <ClCompile Include="Ice_Field.cpp" />
-    <ClCompile Include="In_Battle.cpp" />
     <ClCompile Include="Key_Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MonsterList.cpp" />
     <ClCompile Include="Monsters.cpp" />
-    <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Party.cpp" />
-    <ClCompile Include="PlayerBase.cpp" />
-    <ClCompile Include="Players.cpp" />
     <ClCompile Include="Randomer.cpp" />
     <ClCompile Include="SaveData.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Status.cpp" />
-    <ClCompile Include="Talker.cpp" />
-    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ailment.h" />
-    <ClInclude Include="Balloon.h" />
     <ClInclude Include="Battle.h" />
     <ClInclude Include="BattleEffect.h" />
     <ClInclude Include="Characters.h" />
@@ -77,14 +61,9 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Dungeon.h" />
-    <ClInclude Include="Events.h" />
-    <ClInclude Include="Field.h" />
-    <ClInclude Include="Field_Base_Data.h" />
-    <ClInclude Include="First_Town.h" />
     <ClInclude Include="Flags.h" />
     <ClInclude Include="FPSer.h" />
     <ClInclude Include="Functions_3DD.h" />
-    <ClInclude Include="Green_Field.h" />
     <ClInclude Include="Guild.h" />
     <ClInclude Include="Guild_Dungeon.h" />
     <ClInclude Include="Guild_Entrance.h" />
@@ -93,27 +72,18 @@
     <ClInclude Include="Guild_PT.h" />
     <ClInclude Include="Guild_Scene_Base.h" />
     <ClInclude Include="Guild_Warehouse.h" />
-    <ClInclude Include="G_F_Object.h" />
-    <ClInclude Include="G_F_O_Exit.h" />
-    <ClInclude Include="Ice_Field.h" />
-    <ClInclude Include="In_Battle.h" />
     <ClInclude Include="Key_Input.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MonsterList.h" />
     <ClInclude Include="Monsters.h" />
-    <ClInclude Include="Objects.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="Party.h" />
-    <ClInclude Include="PlayerBase.h" />
-    <ClInclude Include="Players.h" />
     <ClInclude Include="Randomer.h" />
     <ClInclude Include="SaveData.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="Status.h" />
-    <ClInclude Include="Talker.h" />
-    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

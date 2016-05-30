@@ -2,10 +2,8 @@
 #include<time.h>
 #include "SceneBase.h"
 #include"Battle.h"
-#include"Field.h"
 #include"Key_Input.h"
 #include"Flags.h"
-#include"Events.h"
 #include"Scene.h"
 #include"Colors.h"
 #include"FPSer.h"
@@ -28,7 +26,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	Key_Input key_input; //キー入力用
 	//int reaction_return; //Reaction()の返り値を受け取る
 	Flags flags;
-	Events *events = Events::GetInstance();
 	Colors colors; //コンストラクタ
 	FPSer fpser;
 	
