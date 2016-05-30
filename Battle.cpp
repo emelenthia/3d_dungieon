@@ -796,6 +796,11 @@ void Battle::TurnFinish()
 				characters->ailment_turn[party->party_info[i]][ail_count] = 0;
 				characters->ailment_walks[party->party_info[i]][ail_count] = 0;
 			}
+			//ヘイトもリセット
+			for (int monster_count = 0; monster_count < numenemy; monster_count++)
+			{
+				monsters[monster_count]->m_hate[i] = -1;
+			}
 		}
 	}
 
