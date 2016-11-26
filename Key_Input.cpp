@@ -75,6 +75,8 @@ void Key_Input::KeyUpdate()
 	}
 	else
 	{
+		//TODO:この処理要るの?
+		/*
 		while (i < 256)
 		{
 			if (buff[i])
@@ -95,6 +97,7 @@ void Key_Input::KeyUpdate()
 		}
 
 		i = 0;
+		*/
 
 		//キーコンフィグによるキーの変換
 		if (buff[options->key_deside[0]]) //↑キー

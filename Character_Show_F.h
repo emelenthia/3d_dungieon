@@ -3,6 +3,7 @@
 #include"Characters.h"
 #include"Status.h"
 #include"Defines.h"
+#include"Party.h"
 
 class Character_Show_F //キャラクターのステータスを見る画面
 {
@@ -38,4 +39,6 @@ public:
 	~Character_Show_F(){};
 	status Status_; //status構造体を受け取る
 	int GetCharNow(); //現在選択しているキャラの番号を返す。番号とは固有番号である
+private:
+	Party* m_party;
 };

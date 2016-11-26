@@ -9,6 +9,7 @@
 Character_Show_F::Character_Show_F()
 {
 	characters = Characters::GetInstance();
+	m_party = Party::GetInstance();
 
 	//TODO:この辺をColors.hに移す
 	black = GetColor(0, 0, 0);
@@ -22,6 +23,7 @@ Character_Show_F::Character_Show_F()
 	brown = GetColor(153, 51, 0);
 	red = GetColor(255, 0, 0);
 	fp = fopen("./scn/char/char_show.cns", "r");
+
 
 	pos_x_lu = 15;
 	pos_y_lu = 24;
@@ -123,12 +125,12 @@ void Character_Show_F::Draw()
 	DrawBox(pos_x_lu - 2, pos_y_lu, pos_x_lu, pos_y_rd, yellow, TRUE); //キャラクター群の周り左
 	DrawBox(pos_x_lu - 2, pos_y_lu - 2, pos_x_rd + 2, pos_y_lu, yellow, TRUE); //キャラクター群の周り上
 	DrawBox(pos_x_lu - 2, pos_y_rd, pos_x_rd + 2, pos_y_rd + 2, yellow, TRUE); //キャラクター群の周り下
-	
+
 	DrawBox(pos_x_lu + 1, choosenow * 20 + pos_y_lu + 1, pos_x_rd - 1, (choosenow + 1) * 20 + pos_y_lu - 1, yellow, TRUE); //今選ばれてるのを示す
 	int already = 0; //名前を書き終わったキャラの総数
-	for (int i = 0; i < Defines::char_max; i++)
+	if (Flags::nowscene == 0x8011d)
 	{
-		if (Flags::nowscene == 0x8011d)
+		for (int i = 0; i < Defines::char_max; i++)
 		{
 			if (characters->in_team[i])
 			{
@@ -168,7 +170,44 @@ void Character_Show_F::Draw()
 			}
 		}
 	}
+	else if (Flags::nowscene == 0xf1e1d)
+	{
+		int nowchara = m_party->party_info[choosenow];
+		for (int i = 0; i < m_party->GetNumMember(); i++)
+		{
+			DrawFormatString(pos_x_lu + 2, pos_y_lu + 2 + i * 20, (choosenow == i ? black : white), "%s", characters->name[m_party->party_info[i]]);
+		}
 
+		DrawRotaGraph(480, 300, 0.5, 0, characters->char_h[nowchara][characters->job[nowchara] - 1], TRUE); //現在選ばれているキャラを表示する
+			Status_ = characters->GetStatus(nowchara);
+
+			//現在選択されているヒロインの情報を表示
+			DrawFormatString(db_x_lu + 5 + GetDrawStringWidth(names[0], strlen(names[0])) + 5, db_y_lu + 2 - 20, white, "%d", characters->Lv[nowchara]);
+			DrawFormatString(db_x_lu + 5 + GetDrawStringWidth(names[0], strlen(names[0])) + 20, db_y_lu + 2 - 20, white, "%s", characters->name[nowchara]);
+			char jobname_temp[20]; //戻り値では長さを取得できなさそうなので一時的に保存
+			strcpy(jobname_temp, characters->GetJobName(nowchara));
+			DrawFormatString(db_x_lu + 200 - 0.5 * GetDrawStringWidth(jobname_temp, strlen(jobname_temp)), db_y_lu + 2 - 20, white, "%s", jobname_temp);
+
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->status_c[nowchara].hp, white);
+			DrawString(db_x_lu + 15 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, "/", white);
+			DrawIntRight(db_x_lu + 20 + GetDrawFormatStringWidth("ATK9999") + GetDrawFormatStringWidth("/%d", 9999), db_y_lu + 2, Status_.hpmax, white);
+
+			DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 5 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, characters->status_c[nowchara].hp, white);
+			DrawString((db_x_rd - db_x_lu)*0.5 + db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, "/", white);
+			DrawIntRight((db_x_rd - db_x_lu)*0.5 + db_x_lu + 15 + GetDrawFormatStringWidth("/%d", 9999) + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 2, Status_.tpmax, white);
+
+
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 22, Status_.atk, white);
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 42, Status_.def, white);
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 62, Status_.int_s, white);
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 82, Status_.res, white);
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 102, Status_.dex, white);
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999"), db_y_lu + 122, Status_.agi, white);
+
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999/EXP  9999999"), db_y_lu + 42, characters->exp[nowchara], white);
+			DrawIntRight(db_x_lu + 10 + GetDrawFormatStringWidth("ATK9999/EXP  9999999"), db_y_lu + 62, characters->Lv[nowchara] * 10 - characters->exp[nowchara], white);
+
+	}
 }
 
 

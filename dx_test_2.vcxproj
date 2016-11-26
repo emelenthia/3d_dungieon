@@ -14,6 +14,7 @@
     <ClCompile Include="Ailment.cpp" />
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="BattleEffect.cpp" />
+    <ClCompile Include="Camp.cpp" />
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="Character_Data.cpp" />
     <ClCompile Include="Character_Data_Save.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="Guild_PT.cpp" />
     <ClCompile Include="Guild_Scene_Base.cpp" />
     <ClCompile Include="Guild_Warehouse.cpp" />
+    <ClCompile Include="ItemList.cpp" />
     <ClCompile Include="Key_Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -52,6 +54,7 @@
     <ClInclude Include="Ailment.h" />
     <ClInclude Include="Battle.h" />
     <ClInclude Include="BattleEffect.h" />
+    <ClInclude Include="Camp.h" />
     <ClInclude Include="Characters.h" />
     <ClInclude Include="Character_Data.h" />
     <ClInclude Include="Character_Data_Save.h" />
@@ -72,6 +75,7 @@
     <ClInclude Include="Guild_PT.h" />
     <ClInclude Include="Guild_Scene_Base.h" />
     <ClInclude Include="Guild_Warehouse.h" />
+    <ClInclude Include="ItemList.h" />
     <ClInclude Include="Key_Input.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MonsterList.h" />

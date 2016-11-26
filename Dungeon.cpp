@@ -23,6 +23,9 @@ Dungeon::Dungeon()
 	SetTransColor(255, 255, 255); //白を透過色に
 	yajirushi_h = LoadGraph("./dungeon/yajirushi.png");
 	SetTransColor(0, 0, 0); //一応戻す
+	lastact = NEUTRAL;
+	state = NEUTRAL;
+	m_camp = nullptr;
 
 	if (yajirushi_h == -1)
 	{
@@ -31,7 +34,7 @@ Dungeon::Dungeon()
 	}
 	SetUseZBuffer3D(TRUE); //深度ステンシルバッファ
 	SetWriteZBuffer3D(TRUE); //。今のところ必要ない…と思いきや、一方通行の壁が荒ぶることへの対処ができる。一瞬暗くなるのは仕方ない?
-	
+
 	savedata = SaveData::GetInstance();
 	options = Options::GetInstance();
 	party = Party::GetInstance();
@@ -48,36 +51,43 @@ void Dungeon::Draw()
 {
 	if (!Flags::battleflag)
 	{
-	//カメラの移動
-	//target_camera = VGet(pos_x * 100 + (muki % 2 ? (muki - 1 ? 0 : 100) : 50), y * 100 - 50, (pos_z * 100 + (muki % 2 ? 50 : (muki ? 0 : 100))));
-	//player_camera = VGet(pos_x * 100 + (muki % 2 ? (muki - 1 ? 100 : 0) : 50), y * 100 - 50, (pos_z * 100 + (muki % 2 ? 50 : (muki ? 100 : 0))));
-	SetCameraPositionAndTarget_UpVecY(player_camera, target_camera);
+		//カメラの移動
+		//target_camera = VGet(pos_x * 100 + (muki % 2 ? (muki - 1 ? 0 : 100) : 50), y * 100 - 50, (pos_z * 100 + (muki % 2 ? 50 : (muki ? 0 : 100))));
+		//player_camera = VGet(pos_x * 100 + (muki % 2 ? (muki - 1 ? 100 : 0) : 50), y * 100 - 50, (pos_z * 100 + (muki % 2 ? 50 : (muki ? 100 : 0))));
+		SetCameraPositionAndTarget_UpVecY(player_camera, target_camera);
 
-	//メイン描画
-	DrawMap_c(map_data, x_max, z_max);
-	//ミニマップ
-	DrawMiniMap();
+		//メイン描画
+		DrawMap_c(map_data, x_max, z_max);
+		//ミニマップ
+		DrawMiniMap();
 
-	//ダンジョンから出るか聞く表示
-	if (pos_x == start_x && pos_z == start_z && !non_walk_flag && !state)
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 212); //透過
-		DrawBox(0, 190, 640, 290, black, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
-		DrawBox(0, 190, 640, 195, yellow, TRUE);
-		DrawBox(0, 285, 640, 290, yellow, TRUE);
-		DrawBox(0, 240 + nowchoose * 20, 640, 260 + nowchoose * 20, yellow, TRUE);
-		DrawString(235, 200, "ダンジョンから出ますか?", white);
-		DrawString(310, 240, "はい", (nowchoose ? white : black));
-		DrawString(305, 260, "いいえ", (nowchoose ? black : white));
-	}
-	//エンカウント表示
-	if (state == 7)
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 120); //透過
-		DrawBox(0, 0, (int)(time*6.4), 480, Colors::black, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
+		//ダンジョンから出るか聞く表示
+		if (pos_x == start_x && pos_z == start_z && !non_walk_flag && !state)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 212); //透過
+			DrawBox(0, 190, 640, 290, black, TRUE);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
+			DrawBox(0, 190, 640, 195, yellow, TRUE);
+			DrawBox(0, 285, 640, 290, yellow, TRUE);
+			DrawBox(0, 240 + nowchoose * 20, 640, 260 + nowchoose * 20, yellow, TRUE);
+			DrawString(235, 200, "ダンジョンから出ますか?", white);
+			DrawString(310, 240, "はい", (nowchoose ? white : black));
+			DrawString(305, 260, "いいえ", (nowchoose ? black : white));
+		}
+		//エンカウント表示
+		if (state == ENCOUNT)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 120); //透過
+			DrawBox(0, 0, (int)(time*6.4), 480, Colors::black, TRUE);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
+		else if (state == CAMP)
+		{
+			if (m_camp != nullptr)
+			{
+				m_camp->Draw();
+			}
+		}
 	}
 	else
 	{
@@ -109,7 +119,7 @@ int Dungeon::Reaction()
 			savedata->map_open_flag[floors - 1][pos_z][pos_x] = 1;
 		}
 
-		if (!state)
+		if (state == NEUTRAL)
 		{
 
 			if (pos_x == start_x && pos_z == start_z && !non_walk_flag)
@@ -130,15 +140,15 @@ int Dungeon::Reaction()
 			}
 			else if (Key_Input::buff_time[KEY_INPUT_LEFT]) //stateで管理しているため%X==1が必要ない
 			{
-				state = 4;
+				state = TURN_LEFT;
 			}
 			else if (Key_Input::buff_time[KEY_INPUT_RIGHT])
 			{
-				state = 2;
+				state = TURN_RIGHT;
 			}
 			else if (Key_Input::buff_time[KEY_INPUT_DOWN])
 			{
-				state = 3;
+				state = TURN_BACK;
 			}
 			else if (Key_Input::buff_time[KEY_INPUT_A])
 			{
@@ -160,7 +170,7 @@ int Dungeon::Reaction()
 					{
 						break;
 					}
-					state = 6;
+					state = GO_LEFT;
 				}
 			}
 			else if (Key_Input::buff_time[KEY_INPUT_D])
@@ -183,7 +193,7 @@ int Dungeon::Reaction()
 					{
 						break;
 					}
-					state = 5;
+					state = GO_RIGHT;
 				}
 			}
 			else if (Key_Input::buff_time[KEY_INPUT_UP])
@@ -206,12 +216,18 @@ int Dungeon::Reaction()
 					{
 						break;
 					}
-					state = 1;
+					state = GO_FORWARD;
 				}
 			}
 			else if (Key_Input::buff_time[KEY_INPUT_X] == 1)
 			{
 				minimap_flag = !minimap_flag; //現状は表示/非表示のみ
+			}
+			else if (Key_Input::buff_time[KEY_INPUT_C] == 1) //TODO:この辺もswitchで分けるべき?
+			{
+				state = CAMP;
+				m_camp = new Camp;
+				
 			}
 		}
 		else if (non_walk_flag)
@@ -219,12 +235,12 @@ int Dungeon::Reaction()
 			non_walk_flag = 0;
 		}
 
-		if (state)
+		if (state != NEUTRAL)
 		{
 			switch (state)
 			{
 			case 1: //前進
-				lastact = 8;
+				lastact = GO_BACK;
 				GoForward();
 				break;
 
@@ -238,7 +254,7 @@ int Dungeon::Reaction()
 				else
 				{
 					time = 0;
-					state = 0;
+					state = NEUTRAL;
 					revflag++;
 				}
 				break;
@@ -254,13 +270,13 @@ int Dungeon::Reaction()
 
 				//Dボタン押し下時
 			case 5:
-				lastact = 6;
+				lastact = GO_LEFT;
 				GoRight();
 				break;
 
 				//Aボタン押し下時
 			case 6:
-				lastact = 5;
+				lastact = GO_RIGHT;
 				GoLeft();
 				break;
 
@@ -272,7 +288,7 @@ int Dungeon::Reaction()
 				}
 				else
 				{
-					state = 0;
+					state = NEUTRAL;
 					time = 0;
 					Flags::battleflag++;
 					GetMonsterKind();
@@ -283,7 +299,7 @@ int Dungeon::Reaction()
 
 				//後退
 			case 8:
-				lastact = 1;
+				lastact = GO_FORWARD;
 				GoBack();
 				break;
 
@@ -292,6 +308,19 @@ int Dungeon::Reaction()
 				state = lastact;
 				break;
 
+				//キャンプ
+			case 10:
+				if (m_camp->Reaction() == -1) //抜ける命令
+				{
+					state = NEUTRAL;
+					if (m_camp != nullptr)
+					{
+						delete m_camp;
+						m_camp = nullptr;
+					}
+					revflag = TRUE; //良くないけどとりあえず使いまわす
+				}
+				break;
 			default:
 				break;
 
@@ -299,9 +328,10 @@ int Dungeon::Reaction()
 			//歩き終わった場合のチェック
 			if (!state)
 			{
+				//TODO:ここでエンカウント計算をしているけど雑なので直す
 				if (!revflag)
 				{
-					state = GetRand(10) ? 0 : 7;
+					state = GetRand(10) ? NEUTRAL : ENCOUNT;
 				}
 				else
 				{
@@ -314,7 +344,7 @@ int Dungeon::Reaction()
 	{
 		if (battle->Reaction() == 5) //戦闘から逃げた場合
 		{
-			state = 9;
+			state = GO_ONE_RETURN;
 		}
 
 		if (Flags::battleflag == -1)
@@ -341,8 +371,8 @@ void Dungeon::nfscanf_(const int line, const char* file, FILE* scan_target, cons
 	va_start(args, format_text);
 	ret = vfscanf(scan_target, format_text, args);
 	va_end(args);
-
 }
+
 
 void Dungeon::GetMonsterKind()
 {
@@ -394,7 +424,7 @@ void Dungeon::GetMonsterKind()
 int Dungeon::DrawSquare(float pos_x_lu, float pos_y_lu, float pos_z_lu, float pos_x_rd, float pos_y_rd, float pos_z_rd)
 //左上の座標と右下の座標を入力
 {
-	
+
 	VERTEX3D Vertex[4];
 	WORD Index[6];
 	for (int i = 0; i < 4; i++)
@@ -437,7 +467,7 @@ int Dungeon::DrawSquare(float pos_x_lu, float pos_y_lu, float pos_z_lu, float po
 	Index[3] = 3;
 	Index[4] = 2;
 	Index[5] = 1;
-	
+
 	return DrawPolygonIndexed3D(Vertex, 4, Index, 2, kabe_handle, FALSE);
 }
 
@@ -683,7 +713,7 @@ void Dungeon::GoForward()
 			break;
 		}
 		flaging = 0;
-		state = 0;
+		state = NEUTRAL;
 		time = 0;
 	}
 }
@@ -706,7 +736,7 @@ void Dungeon::ReturnBack()
 		down_help++;
 		if (down_help>1) //右転回を2回呼び出す
 		{
-		state = 0;
+		state = NEUTRAL;
 		down_help = 0;
 		}
 		}*/
@@ -724,7 +754,7 @@ void Dungeon::ReturnBack()
 		else
 		{
 		time = 0;
-		state = 0;
+		state = NEUTRAL;
 		}*/
 		if (time < 100)
 		{
@@ -764,7 +794,7 @@ void Dungeon::ReturnBack()
 		else
 		{
 			time = 0;
-			state = 0;
+			state = NEUTRAL;
 			muki = 2;
 		}
 		break;
@@ -808,7 +838,7 @@ void Dungeon::ReturnBack()
 		else
 		{
 			time = 0;
-			state = 0;
+			state = NEUTRAL;
 			muki = 3;
 		}
 		break;
@@ -852,7 +882,7 @@ void Dungeon::ReturnBack()
 		else
 		{
 			time = 0;
-			state = 0;
+			state = NEUTRAL;
 			muki = 0;
 		}
 		break;
@@ -896,7 +926,7 @@ void Dungeon::ReturnBack()
 		else
 		{
 			time = 0;
-			state = 0;
+			state = NEUTRAL;
 			muki = 1;
 		}
 		break;
@@ -980,7 +1010,7 @@ void Dungeon::ReturnLeft()
 	else
 	{
 		time = 0;
-		state = 0;
+		state = NEUTRAL;
 	}
 
 	if (!revflag)
@@ -1051,7 +1081,7 @@ void Dungeon::GoRight()
 		}
 		flaging = 0;
 		time = 0;
-		state = 0;
+		state = NEUTRAL;
 	}
 }
 
@@ -1121,7 +1151,7 @@ void Dungeon::GoLeft()
 		}
 		flaging = 0;
 		time = 0;
-		state = 0;
+		state = NEUTRAL;
 	}
 }
 
@@ -1186,7 +1216,7 @@ void Dungeon::GoBack()
 			break;
 		}
 		flaging = 0;
-		state = 0;
+		state = NEUTRAL;
 		time = 0;
 	}
 }
@@ -1261,12 +1291,12 @@ void Dungeon::LoadDungeon() //行く予定の階層の情報を読み込むかつ初期化
 	//情報の初期化
 	pos_x = start_x;
 	pos_z = start_z;
-	state = 0;
+	state = NEUTRAL;
 	time = 0;
 	muki = 0;
 	nowchoose = 0;
 	non_walk_flag++;
-	state = 0;
+	state = NEUTRAL;
 	minimap_flag = 1;
 
 	//カメラの初期化
@@ -1363,7 +1393,7 @@ void Dungeon::DrawMiniMap()
 
 bool Dungeon::CheckCanEscape()
 {
-	
+
 	//もう少しまとめて書きたいけど読みにくくなる方法しか思いつかない
 	if (lastact == 8)
 	{

@@ -7,6 +7,7 @@
 #include"Party.h"
 #include"Battle.h"
 #include"BattleEffect.h"
+#include"Camp.h"
 
 class Dungeon :
 	public SceneBase
@@ -31,8 +32,23 @@ public:
 	VECTOR target_camera;
 	VECTOR player_camera;
 	int y = 1;
-	int state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。
-			   //5で右平行移動。6で左平行移動。7でエンカウント開始。8で後退。9で一歩戻る
+	typedef enum _STATE {
+		NEUTRAL = 0,
+		GO_FORWARD,
+		TURN_RIGHT,
+		TURN_BACK,
+		TURN_LEFT,
+		GO_RIGHT,
+		GO_LEFT,
+		ENCOUNT,
+		GO_BACK,
+		GO_ONE_RETURN,
+		CAMP
+	}STATE;
+	//この辺いい加減enumしよう
+	STATE state; //状態を表す変数。1で前進中。2で右転回。3で逆を向く。4で左転回。
+			   //5で右平行移動。6で左平行移動。7でエンカウント開始。8で後退。9で一歩戻る。10でキャンプ画面
+	STATE lastact; //逃げた場合にやる事。state依存
 	int revflag = 0; //回転しているフラグ。要するに回転時はエンカウントしないため
 	int time; //状態にかかっている時間を保持。
 	void Return_right(); //右転回
@@ -72,7 +88,9 @@ public:
 	int monster_number[5];
 	int numenemy = 0;
 	void nfscanf_(const int line, const char* file, FILE* scan_target, const char* format_text, ...);
-	int lastact = -1; //逃げた場合にやる事。state依存
 	bool CheckCanEscape(); //逃走可能か調べる
 	BattleEffect* battleeffect; //パーティーより後に描画するため
+
+private: //最初はm_なしpublicでやってたためこんなことになってる
+	Camp* m_camp;
 };
