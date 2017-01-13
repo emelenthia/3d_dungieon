@@ -24,6 +24,7 @@
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="Defines.cpp" />
     <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="DXListBox.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="FPSer.cpp" />
     <ClCompile Include="Functions_3DD.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="DXListBox.h" />
     <ClInclude Include="Flags.h" />
     <ClInclude Include="FPSer.h" />
     <ClInclude Include="Functions_3DD.h" />

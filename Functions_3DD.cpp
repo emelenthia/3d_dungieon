@@ -40,3 +40,12 @@ void LoadInts(FILE * fp, int * dest, int num)
 		i++;
 	}
 }
+
+
+void LoadStrings(FILE* fp, string* dest, char splitter)
+{
+	string temp_str;
+
+	fscanf(fp, "%s", temp_str);
+
+}

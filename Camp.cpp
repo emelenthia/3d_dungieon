@@ -13,20 +13,38 @@ Camp::Camp()
 	m_options = Options::GetInstance();
 	char_pt = Characters::GetInstance();
 	m_options = Options::GetInstance();
+	m_itemList = ItemList::GetInstance();
 	guild_pt = new Guild_PT;
 	char_ran = 0;
-	m_choose_now = 0;
 	m_party = Party::GetInstance();
 	m_1f_flag = TRUE;
+
+	//キャンプ画面のメニューリストの設定
+	m_dxLB_CampMenu = new DXListBox;
+	if (m_dxLB_CampMenu != nullptr)
+	{
+		for (int i = 0; i < list_max; i++)
+		{
+			string temp = m_menu_list[i];
+			m_dxLB_CampMenu->AddNameList(temp);
+			temp = m_menu_explanation[i];
+			m_dxLB_CampMenu->AddExplanationList(temp);
+		}
+		m_dxLB_CampMenu->SetExplanationFlag(true);
+		int temp_size_x = str_size_max + 36;
+		m_dxLB_CampMenu->SetPos(18, 39, temp_size_x, list_max * 20);
+	}
+
 	//choosed_number = -1;
 	//savedata = SaveData::GetInstance();
-//	character_show = NULL;
+	//character_show = NULL;
 }
 
 
 Camp::~Camp()
 {
 }
+
 
 void Camp::Draw()
 {
@@ -41,24 +59,9 @@ void Camp::Draw()
 			//TODO:キャラの画像表をここで弄る
 			DrawRotaGraph(480, 300, 0.5, 0, char_pt->char_h[char_ran][char_pt->job[char_ran] - 1], TRUE);
 		}
-
-		DrawBox(2 + temp_size_x, 39, 4 + temp_size_x, list_max * 20 + 42, Colors::yellow, TRUE); //台詞欄の周り右
-		DrawBox(18, 39, 20, list_max * 20 + 42, Colors::yellow, TRUE); //台詞欄の周り左
-		DrawBox(19, 38, 4 + temp_size_x, 40, Colors::yellow, TRUE); //台詞欄の周り上
-		DrawBox(19, list_max * 20 + 41, 4 + temp_size_x, list_max * 20 + 43, Colors::yellow, TRUE); //台詞欄の周り下
-
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 144); //透過
-		DrawBox(20, 40, 2 + temp_size_x, list_max * 20 + 40, Colors::black, TRUE); //台詞欄
-		DrawBox(0, 0, 640, 20, Colors::blue, TRUE); //説明欄
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); //元に戻す
-
-		DrawBox(21, 41 + m_choose_now * 20, 1 + temp_size_x, 60 + m_choose_now * 20, Colors::yellow, TRUE); //選択中のを示す
-		DrawFormatString(22, 2, Colors::white, "%s", m_menu_explanation[m_choose_now], TRUE); //説明しよう
-
-		for (int i = 0; i < list_max; i++)
-		{
-			DrawFormatString(22, 42 + i * 20, (m_choose_now == i ? Colors::black : Colors::white), " %s", m_menu_list[i]); //選ばれたのは、黒でした
-		}
+		
+		//メニュー欄の描画
+		m_dxLB_CampMenu->Draw();
 
 		//パーティの描画
 		m_party->Draw();
@@ -76,6 +79,17 @@ void Camp::Draw()
 		guild_pt->Draw();
 	}
 }
+
+
+void Camp::DrawBag()
+{
+	int numitem = 0;
+	for (int i = 0; i < numitem; i++)
+	{
+
+	}
+}
+
 
 
 int Camp::Reaction()
@@ -100,15 +114,15 @@ int Camp::Reaction()
 		}
 		else if (Key_Input::buff_time[KEY_INPUT_Z] == 1)
 		{
-			choosed_number = m_choose_now;
+			choosed_number = m_dxLB_CampMenu->GetChoose();
 		}
 		else if (Key_Input::buff_time[KEY_INPUT_UP] % 10 == 1 && Key_Input::buff_time[KEY_INPUT_UP] != 11)
 		{
-			m_choose_now = (m_choose_now > 0 ? m_choose_now - 1 : list_max - 1); //ループできるように
+			m_dxLB_CampMenu->UpChoose();
 		}
 		else if (Key_Input::buff_time[KEY_INPUT_DOWN] % 10 == 1 && Key_Input::buff_time[KEY_INPUT_DOWN] != 11)
 		{
-			m_choose_now = (m_choose_now < list_max - 1 ? m_choose_now + 1 : 0);
+			m_dxLB_CampMenu->DownChoose();
 		}
 		
 

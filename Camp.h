@@ -5,6 +5,8 @@
 #include"Guild_PT.h"
 #include"Character_Show.h"
 #include"Key_Input.h"
+#include "ItemList.h"
+#include"DXListBox.h"
 
 //基本的にGuild_Mainを流用…というか、ちゃんと作ってこれをGuild_Mainとかで使いまわすべきだよね
 class Camp
@@ -25,7 +27,6 @@ private:
 	Guild_PT *guild_pt;
 	int list_max; //menu_listの数
 	Party *m_party;
-	int m_choose_now;
 	char m_menu_explanation[20][100];
 	char m_menu_list[20][20]; //行先の一覧
 	Character_Show *m_character_show;
@@ -46,6 +47,9 @@ private:
 		TITLE,
 		CLOSE
 	}camp_list;
+	ItemList* m_itemList;
+	void DrawBag();
+	DXListBox* m_dxLB_CampMenu;
 	/*
 	
 #include"Party.h" //PTの表示
